@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VLNN writes generalistic stuff</title>
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">VLNN writes generalistic stuff</h1>
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2022-08-04 Thu&gt;</span></span>
+</p>
+<div id="outline-container-orgd0acd67" class="outline-2">
+<h2 id="orgd0acd67">SQL as the Data Analysis&rsquo; Volapük&#xa0;&#xa0;&#xa0;<span class="tag"><span class="data">data</span>&#xa0;<span class="language">language</span>&#xa0;<span class="sql">sql</span></span></h2>
+<div class="outline-text-2" id="text-orgd0acd67">
+<p>
+Lately I&rsquo;ve started to work with <a href="https://druid.apache.org/">Apache Druid</a> that is &ldquo;real-time database to power modern analytics applications&rdquo;. This is great piece of software, being in it&rsquo;s late version 0.23.0, providing blazing-fast queries to your data. Surely enough, you always pay for the speed: sometimes with old good money (e.g. buy more resources from the powerhouses), sometimes with time needed to prepare the data for being queries (e.g. indexing), sometimes with absence of generality (e.g. make your highly intricate specific DB and go struggle when business needs something unsupported), sometimes just with your brainpower needed to understand and implement new stuff. At the moment, I think Druid is being paid mainly with two latter currencies.
+</p>
+
+<p>
+So, having a bit of experience in Data warehouse project (5 years ago? eternity!), I was really interested how exactly the speed is being gained. If you&rsquo;re interested, please take a look at <a href="https://druid.apache.org/faq">this FAQ page</a> (spoiler: inverted indexes and intricate metadata model). This post is not about it. This post is about SQL that is currently being used as defacto standard for thinking about data &#x2013; even when &ldquo;real&rdquo; data is not stored in RDBMS.
+</p>
+
+<p>
+As most of the industry-grade programming languages, SQL has lots of qualities from different areas: it&rsquo;s mainly declarative, but has procedural mechanisms. It&rsquo;s made for queries but creates databases and tables. It&rsquo;s based on relational algebra, but  It&rsquo;s structured but sometimes it&rsquo;s hard to find the structure behind 30 screens of the statement. At last, it has been designed for managers and now DB-team is usually sitting very far away from the commercial department. This is how evolution works, nothing unusual here.
+</p>
+
+<p>
+But, being widely used, SQL get into the fields, where I was surprised to see it &#x2013; for instance in the NoSQL world. Check out how similar is Cassandra&rsquo;s CQL, even though Cassandra is famous NoSQL DB! Excel files <a href="https://docs.microsoft.com/en-us/power-automate/desktop-flows/how-to/sql-queries-excel">could be used as SQL data bases</a>! Even very non-usual languages like Q are calling the some data-manipulating functions <a href="https://code.kx.com/q4m3/9_Queries_q-sql/">q-sql</a>, using different syntax, but at least partially sharing same mental model of the data manipulation.
+</p>
+
+<p>
+This leads me to the point, at which I should make a bold statement: I don&rsquo;t think SQL is a good programming language. I mean, it&rsquo;s good, but it&rsquo;s not <b>that good</b>, it&rsquo;s not the default language when you write or think about the data. Its main feature is universality, sure; but being wide-spread across the industry, it effectively wipes out all the other possible ways of thinking around the data. It&rsquo;s liek bad english of the internetz: you want to say <b>I love you so much</b>, but sending 🔥🔥🔥 instead; you want to know who wrote the hit and writing
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="font-weight: bold;">SELECT</span> song_id <span style="font-weight: bold;">FROM</span> charts <span style="font-weight: bold;">FETCH</span> <span style="font-weight: bold;">FIRST</span> <span style="color: #8a3b3c; font-weight: bold;">1</span> <span style="font-weight: bold;">ROWS</span> <span style="font-weight: bold;">ONLY</span>
+</pre>
+</div>
+<p>
+instead, panicking how long will become the join to the composers table. It&rsquo;s really similar to Volapük in many contexts: it&rsquo;s as artificial, it&rsquo;s designed to be widely used, it&rsquo;s good but not necessary best, and it may be scorched out with some new technology (Esperanto in Volapük&rsquo;s case). Not sure if I will see the dawn of SQL, but it could be a wonderful view!
+</p>
+
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2022-08-04 Thu&gt;</span></span>
+</p>
+</div>
+</div>
+<div id="outline-container-org0448e8f" class="outline-2">
+<h2 id="org0448e8f">First post, nothing goes past here</h2>
+<div class="outline-text-2" id="text-org0448e8f">
+<p>
+Hello, the world of wonders!
+Привіт, чудовий світе!
+</p>
+</div>
+</div>
+</div>
+</body>
+</html>
