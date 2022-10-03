@@ -5,6 +5,12 @@
 #+OPTIONS: num:nil
 #+OPTIONS: author:nil
 
+* Optimism and wartime                                               :war:www:
+
+As you may see now I moved this tech-log from https://vlnn.github.io to separate domain [[https://vlnn.dev][vlnn.dev]. This is not related to lessen chances of russia to kill or torture me. This is related to my plans to make everything I have to do during the war: support Ukrainian army, spend money for Ukrainian goods, and also represent Ukraine in every possible way. We are here. Some of us are still alive. We're kicking.
+
+And we'll never forgive russians for what they did.
+
   <2022-08-04 Thu>
 * SQL as the Data Analysis' Volapük                          :data:language:sql:
 
