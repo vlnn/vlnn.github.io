@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title><![CDATA[vlnn.dev]]></title>
+<description><![CDATA[vlnn.dev]]></description>
+<link>https://vlnn.dev/</link>
+<lastBuildDate>Sun, 09 Oct 2022 17:11:31 +0300</lastBuildDate>
+<item>
+  <title><![CDATA[Привіт, чудовий світе]]></title>
+  <description><![CDATA[
+
+<div id="outline-container-org3894f23" class="outline-2">
+<h2 id="org3894f23">WHO:</h2>
+<div class="outline-text-2" id="text-org3894f23">
+<p>
+My name is Volodymyr Anokhin and this is my blog. You may know me as VLNN (mostly at <a href="https://github.com/vlnn">vlnn@github.com)</a>. I&rsquo;m Ukrainian and that&rsquo;s why instead of &ldquo;Hello, wonderful world&rdquo; you may see some Cyrillics in the title of this record.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgaa2047e" class="outline-2">
+<h2 id="orgaa2047e">WHAT:</h2>
+<div class="outline-text-2" id="text-orgaa2047e">
+<p>
+This is another try to set up minimalistic mostly technical blog. I plan to write things about my current projects which are mostly software-related at the moment. I was working as a Radio Engineer, as an Engineering Manager, and now I am a software developer. Somehow I always have chosen less-popular programming languages, and so I was writing production code in J, FORTH and APL. Now I moved a bit to more conventional side of Clojure.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4973cb3" class="outline-2">
+<h2 id="org4973cb3">WHY:</h2>
+<div class="outline-text-2" id="text-org4973cb3">
+<p>
+It&rsquo;s not my first try to set up a place to share some technical or not-that-technical stuff across the internet. But somehow all the &ldquo;social&rdquo; platforms tend to become a social burden, and &ldquo;technical&rdquo; platforms tend to become more social with time. So I want to create a small piece of the network here, with smaller auditory but much bigger calmness. I&rsquo;m not even sure that I will enable comments here!
+</p>
+</div>
+</div>
+
+<div id="outline-container-org665ab7f" class="outline-2">
+<h2 id="org665ab7f">WHEN:</h2>
+<div class="outline-text-2" id="text-org665ab7f">
+<p>
+It&rsquo;s a wartime, joint forces of russia and belorussia are attacking and occupying parts of Ukraine right now. Perhaps not the best time to start a blog! But it&rsquo;s creation is not related to less chances of russia to kill or torture me. This is directly related to my plans to make everything I have to do during the war: support Ukrainian army, spend money for Ukrainian goods, and also represent Ukraine in every possible way. We are here. Some of us are still alive. We&rsquo;re kicking.
+</p>
+
+<p>
+And we&rsquo;ll never forgive russians for what they did.
+</p>
+</div>
+</div>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-admin.html">admin</a> <a href="https://vlnn.dev/tag-migration.html">migration</a> <a href="https://vlnn.dev/tag-war.html">war</a> ]]></description>
+  <category><![CDATA[admin]]></category>
+  <category><![CDATA[migration]]></category>
+  <category><![CDATA[war]]></category>
+  <link>https://vlnn.dev/2022-10-08-%D0%BF%D1%80%D0%B8%D0%B2%D1%96%D1%82,-%D1%87%D1%83%D0%B4%D0%BE%D0%B2%D0%B8%D0%B9-%D1%81%D0%B2%D1%96%D1%82%D0%B5.html</link>
+  <guid>https://vlnn.dev/2022-10-08-%D0%BF%D1%80%D0%B8%D0%B2%D1%96%D1%82,-%D1%87%D1%83%D0%B4%D0%BE%D0%B2%D0%B8%D0%B9-%D1%81%D0%B2%D1%96%D1%82%D0%B5.html</guid>
+  <pubDate>Sat, 08 Oct 2022 23:04:00 +0300</pubDate>
+</item>
+<item>
+  <title><![CDATA[SQL as the Data Analysis' Volapük]]></title>
+  <description><![CDATA[
+<p>
+Lately I&rsquo;ve started to work with <a href="https://druid.apache.org/">Apache Druid</a> that is &ldquo;real-time database to power modern analytics applications&rdquo;. This is great piece of software, being in it&rsquo;s late version 0.23.0, providing blazing-fast queries to your data. Surely enough, you always pay for the speed: sometimes with old good money (e.g. buy more resources from the powerhouses), sometimes with time needed to prepare the data for being queries (e.g. indexing), sometimes with absence of generality (e.g. make your highly intricate specific DB and go struggle when business needs something unsupported), sometimes just with your brainpower needed to understand and implement new stuff. At the moment, I think Druid is being paid mainly with two latter currencies.
+</p>
+
+<p>
+So, having a bit of experience in Data warehouse project (5 years ago? eternity!), I was really interested how exactly the speed is being gained. If you&rsquo;re interested, please take a look at <a href="https://druid.apache.org/faq">this FAQ page</a> (spoiler: inverted indexes and intricate metadata model). This post is not about it. This post is about SQL that is currently being used as defacto standard for thinking about data &#x2013; even when &ldquo;real&rdquo; data is not stored in RDBMS.
+</p>
+
+<p>
+As most of the industry-grade programming languages, SQL has lots of qualities from different areas: it&rsquo;s mainly declarative, but has procedural mechanisms. It&rsquo;s made for queries but creates databases and tables. It&rsquo;s based on relational algebra, but  It&rsquo;s structured but sometimes it&rsquo;s hard to find the structure behind 30 screens of the statement. At last, it has been designed for managers and now DB-team is usually sitting very far away from the commercial department. This is how evolution works, nothing unusual here.
+</p>
+
+<p>
+But, being widely used, SQL get into the fields, where I was surprised to see it &#x2013; for instance in the NoSQL world. Check out how similar is Cassandra&rsquo;s CQL, even though Cassandra is famous NoSQL DB! Excel files <a href="https://docs.microsoft.com/en-us/power-automate/desktop-flows/how-to/sql-queries-excel">could be used as SQL data bases</a>! Even very non-usual languages like Q are calling the some data-manipulating functions <a href="https://code.kx.com/q4m3/9_Queries_q-sql/">q-sql</a>, using different syntax, but at least partially sharing same mental model of the data manipulation.
+</p>
+
+<p>
+This leads me to the point, at which I should make a bold statement: I don&rsquo;t think SQL is a good programming language. I mean, it&rsquo;s good, but it&rsquo;s not <b>that good</b>, it&rsquo;s not the default language when you write or think about the data. Its main feature is universality, sure; but being wide-spread across the industry, it effectively wipes out all the other possible ways of thinking around the data. It&rsquo;s liek bad english of the internetz: you want to say <b>I love you so much</b>, but sending 🔥🔥🔥 instead; you want to know who wrote the hit and writing
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="font-weight: bold;">SELECT</span> song_id <span style="font-weight: bold;">FROM</span> charts <span style="font-weight: bold;">FETCH</span> <span style="font-weight: bold;">FIRST</span> <span style="color: #8a3b3c; font-weight: bold;">1</span> <span style="font-weight: bold;">ROWS</span> <span style="font-weight: bold;">ONLY</span>
+</pre>
+</div>
+<p>
+instead, panicking how long will become the join to the composers table. It&rsquo;s really similar to Volapük in many contexts: it&rsquo;s as artificial, it&rsquo;s designed to be widely used, it&rsquo;s good but not necessary best, and it may be scorched out with some new technology (Esperanto in Volapük&rsquo;s case). Not sure if I will see the dawn of SQL, but it could be a wonderful view!
+</p>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-data.html">data</a> <a href="https://vlnn.dev/tag-sql.html">sql</a> <a href="https://vlnn.dev/tag-language.html">language</a> ]]></description>
+  <category><![CDATA[data]]></category>
+  <category><![CDATA[sql]]></category>
+  <category><![CDATA[language]]></category>
+  <link>https://vlnn.dev/2022-09-19-sql-as-the-data-analysis'-volap%C3%BCk.html</link>
+  <guid>https://vlnn.dev/2022-09-19-sql-as-the-data-analysis'-volap%C3%BCk.html</guid>
+  <pubDate>Mon, 19 Sep 2022 14:52:00 +0300</pubDate>
+</item>
+</channel>
+</rss>

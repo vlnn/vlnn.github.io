@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://vlnn.dev/rss.xml"
+      title="RSS feed for https://vlnn.dev/">
+<title>vlnn.dev</title>
+<meta name="author" content="Volodymyr Anokhin">
+<meta name="referrer" content="no-referrer">
+<link href= "static/style.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="static/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="static/favicon-152.png">
+<link rel="msapplication-TitleImage" href="static/favicon-144.png">
+<link rel="msapplication-TitleColor" href="#0141ff">
+<script src="static/katex.min.js"></script>
+<script src="static/auto-render.min.js"></script>
+<script src="static/lightbox.js"></script>
+<link rel="stylesheet" href="static/katex.min.css">
+<script>document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body); });</script>
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
+<meta name="viewport" content="initial-scale=1,width=device-width,minimum-scale=1"></head>
+<body>
+<div id="preamble" class="status"><div class="h1">
+  <a href="https://vlnn.dev">Generalistic stuff VLNN writes</a>
+  <div class="sitelinks">
+    <a href="https://github.com/vlnn">Github</a> | <a href="https://vlnn.dev/projects.html">Projects</a>
+  </div>
+</div></div>
+<div id="content">
+<h1 class="title">Posts tagged "language":</h1>
+<div class="post-date">19 Sep 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-09-19-sql-as-the-data-analysis'-volapük.html">SQL as the Data Analysis' Volapük</a></h1>
+<p>
+Lately I&rsquo;ve started to work with <a href="https://druid.apache.org/">Apache Druid</a> that is &ldquo;real-time database to power modern analytics applications&rdquo;. This is great piece of software, being in it&rsquo;s late version 0.23.0, providing blazing-fast queries to your data. Surely enough, you always pay for the speed: sometimes with old good money (e.g. buy more resources from the powerhouses), sometimes with time needed to prepare the data for being queries (e.g. indexing), sometimes with absence of generality (e.g. make your highly intricate specific DB and go struggle when business needs something unsupported), sometimes just with your brainpower needed to understand and implement new stuff. At the moment, I think Druid is being paid mainly with two latter currencies.
+</p>
+
+<p>
+So, having a bit of experience in Data warehouse project (5 years ago? eternity!), I was really interested how exactly the speed is being gained. If you&rsquo;re interested, please take a look at <a href="https://druid.apache.org/faq">this FAQ page</a> (spoiler: inverted indexes and intricate metadata model). This post is not about it. This post is about SQL that is currently being used as defacto standard for thinking about data &#x2013; even when &ldquo;real&rdquo; data is not stored in RDBMS.
+</p>
+
+<p>
+As most of the industry-grade programming languages, SQL has lots of qualities from different areas: it&rsquo;s mainly declarative, but has procedural mechanisms. It&rsquo;s made for queries but creates databases and tables. It&rsquo;s based on relational algebra, but  It&rsquo;s structured but sometimes it&rsquo;s hard to find the structure behind 30 screens of the statement. At last, it has been designed for managers and now DB-team is usually sitting very far away from the commercial department. This is how evolution works, nothing unusual here.
+</p>
+
+<p>
+But, being widely used, SQL get into the fields, where I was surprised to see it &#x2013; for instance in the NoSQL world. Check out how similar is Cassandra&rsquo;s CQL, even though Cassandra is famous NoSQL DB! Excel files <a href="https://docs.microsoft.com/en-us/power-automate/desktop-flows/how-to/sql-queries-excel">could be used as SQL data bases</a>! Even very non-usual languages like Q are calling the some data-manipulating functions <a href="https://code.kx.com/q4m3/9_Queries_q-sql/">q-sql</a>, using different syntax, but at least partially sharing same mental model of the data manipulation.
+</p>
+
+<p>
+This leads me to the point, at which I should make a bold statement: I don&rsquo;t think SQL is a good programming language. I mean, it&rsquo;s good, but it&rsquo;s not <b>that good</b>, it&rsquo;s not the default language when you write or think about the data. Its main feature is universality, sure; but being wide-spread across the industry, it effectively wipes out all the other possible ways of thinking around the data. It&rsquo;s liek bad english of the internetz: you want to say <b>I love you so much</b>, but sending 🔥🔥🔥 instead; you want to know who wrote the hit and writing
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="font-weight: bold;">SELECT</span> song_id <span style="font-weight: bold;">FROM</span> charts <span style="font-weight: bold;">FETCH</span> <span style="font-weight: bold;">FIRST</span> <span style="color: #8a3b3c; font-weight: bold;">1</span> <span style="font-weight: bold;">ROWS</span> <span style="font-weight: bold;">ONLY</span>
+</pre>
+</div>
+<p>
+instead, panicking how long will become the join to the composers table. It&rsquo;s really similar to Volapük in many contexts: it&rsquo;s as artificial, it&rsquo;s designed to be widely used, it&rsquo;s good but not necessary best, and it may be scorched out with some new technology (Esperanto in Volapük&rsquo;s case). Not sure if I will see the dawn of SQL, but it could be a wonderful view!
+</p>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-data.html">data</a> <a href="https://vlnn.dev/tag-sql.html">sql</a> <a href="https://vlnn.dev/tag-language.html">language</a> <div id="archive">
+<a href="https://vlnn.dev/archive.html">Other posts</a>
+</div>
+</div>
+<div id="postamble" class="status"><div id="archive">
+  <a href="https://vlnn.dev/archive.html">Other posts may be not available</a>
+</div> </div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+#+title: Projects
+#+description:
+#+filetags: project
+* Current projects:
+** Tech-blog [[https://vlnn.dev/blog][VLNN writes]]
+** Kinesis Advantage customized layout
+I've tried to create a layout which is symmetrical and home-row driven. You may find it [[https://github.com/vlnn/kinesis-advantage-2][here]].
+The project is mostly done for now, as I have no interest to support official firmware anymore, and QMK-stuff has been unchanged for months. Still, I plan to create MacOS version in future. Still it's being supported.
+** Zesty
+*VERY EARLY DEVELOPMENT STAGE* I'm playing around with Clojure's ways of code generation, thus there's simple Z80 assembler written in Clojure.
+
+* Cancelled or frozen projects
+** TODO
