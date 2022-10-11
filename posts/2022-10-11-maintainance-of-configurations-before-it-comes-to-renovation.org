@@ -1,0 +1,18 @@
+#+title: Configuration maintainance vs renovation
+#+date: <2022-10-11 14:33>
+#+description:
+#+filetags: emacs macbook chores
+
+It's astonishing how much time it takes to support things that are already working. E.g. every upgrade of [[https://github.com/doomemacs/doomemacs/][Doom Emacs]] (which I *love* to use but hate to tinker with) is about several things at once:
+1. Upgrade itself e.g. `doom upgrade` and fixing stuff if something goes wrong. It usually does need a bit of research to find out how to fix it. Would be nice to have `doom rollback` working, but it's impossible as of now.
+2. Manually check if upgrade broke something: I use several different "stacks" in my setup, e.g. a bit of org, clojure, common lisp, C# from time to time, dictionaries, org agenda.
+   This is one of most time consuming and unpredictible part of the upgrade; it's not automated and I'm not sure if it's ever will be; you never sure everything is tested; you have to try it against your real work.
+3. I have to formalize all the small "current fixes" of my configuration as commits or backups, which is too often becomes a batch of changes called "system as of 2022". Good luck with understanding why exactly you put this strange line somewhere in the custom.el!
+
+I like computers. I like programming computers. I don't like computers programming me. But real reason for this problem is wrong level of abstraction. It's something similar to docker images: you find a brittle shitty solution and put it under the clone machine so every time it breaks you just clone same brittle shitty solution. This is fun and techy, but this does not resolve the root of the problem: you had a shitty solution!
+
+But what can we do about this burden of the maintainance? Could we pay someone else to do it (we do with gmail so we don't administer mail servers ourselves)? Could we make better automation for keeping the system in revertable state (we do it with making system images or dockers)? Could we just throw away the need that made us use the configurable software we have?
+
+Sorry, I guess this is all wrong approaches, or rather they are all right approaches that are partly applicable. We will outsource lots of things to services, we will have better automation for backups, we will reduce the needs (like soldering your own PC) and get new ones (like, uhmmm, getting subscriptions for time without internet access). But this is not a solution. These are palliatives.
+
+Renovation is my metaphor for life with similar, but better things around. You have your house, it have leaking tubes and small dirty windows: fix tubes, change floors, clean or change windows, call it a day. But *use* those tubes. *Look* through the windows. Noone is renovating their house just because they like to tinker around: there's always a more or less clear goal, when you will say "We're done!" or at least "We're out of money!". I guess the metaphor is working -- you're either cleaning your floors every day from what shit that is leaking or you fix the tubes. Software tubes are leaking all the time, mind you: rss feeds become outdated, old programs that you're not even using keep charging you for the licenses, new computer can't open old formats etc. Don't use docker for this: own the problem, make it formal, write it down, add it to the todo list. And -- perhaps! -- there will be a precious time when you fix it and say: this is my emacs configuration which I hone since times immemorial and it still does things for me!

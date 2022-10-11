@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://vlnn.dev/rss.xml"
+      title="RSS feed for https://vlnn.dev/">
+<title>vlnn.dev</title>
+<meta name="author" content="Volodymyr Anokhin">
+<meta name="referrer" content="no-referrer">
+<link href= "static/style.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="static/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="static/favicon-152.png">
+<link rel="msapplication-TitleImage" href="static/favicon-144.png">
+<link rel="msapplication-TitleColor" href="#0141ff">
+<script src="static/katex.min.js"></script>
+<script src="static/auto-render.min.js"></script>
+<script src="static/lightbox.js"></script>
+<link rel="stylesheet" href="static/katex.min.css">
+<script>document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body); });</script>
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
+<meta name="viewport" content="initial-scale=1,width=device-width,minimum-scale=1"></head>
+<body>
+<div id="preamble" class="status"><div class="h1">
+  <a href="https://vlnn.dev">Generalistic stuff VLNN writes</a>
+  <div class="sitelinks">
+    <a href="https://github.com/vlnn">Github</a> | <a href="https://vlnn.dev/projects.html">Projects</a> | <a href="https://www.linkedin.com/in/volodymyr-anokhin/">Linkedin</a>
+  </div>
+</div></div>
+<div id="content">
+<h1 class="title">Posts tagged "chores":</h1>
+<div class="post-date">11 Oct 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-10-11-maintainance-of-configurations-before-it-comes-to-renovation.html">Configuration maintainance vs renovation</a></h1>
+<p>
+It&rsquo;s astonishing how much time it takes to support things that are already working. E.g. every upgrade of <a href="https://github.com/doomemacs/doomemacs/">Doom Emacs</a> (which I <b>love</b> to use but hate to tinker with) is about several things at once:
+</p>
+<ol class="org-ol">
+<li>Upgrade itself e.g. `doom upgrade` and fixing stuff if something goes wrong. It usually does need a bit of research to find out how to fix it. Would be nice to have `doom rollback` working, but it&rsquo;s impossible as of now.</li>
+<li>Manually check if upgrade broke something: I use several different &ldquo;stacks&rdquo; in my setup, e.g. a bit of org, clojure, common lisp, C# from time to time, dictionaries, org agenda.
+This is one of most time consuming and unpredictible part of the upgrade; it&rsquo;s not automated and I&rsquo;m not sure if it&rsquo;s ever will be; you never sure everything is tested; you have to try it against your real work.</li>
+<li>I have to formalize all the small &ldquo;current fixes&rdquo; of my configuration as commits or backups, which is too often becomes a batch of changes called &ldquo;system as of 2022&rdquo;. Good luck with understanding why exactly you put this strange line somewhere in the custom.el!</li>
+</ol>
+
+<p>
+I like computers. I like programming computers. I don&rsquo;t like computers programming me. But real reason for this problem is wrong level of abstraction. It&rsquo;s something similar to docker images: you find a brittle shitty solution and put it under the clone machine so every time it breaks you just clone same brittle shitty solution. This is fun and techy, but this does not resolve the root of the problem: you had a shitty solution!
+</p>
+
+<p>
+But what can we do about this burden of the maintainance? Could we pay someone else to do it (we do with gmail so we don&rsquo;t administer mail servers ourselves)? Could we make better automation for keeping the system in revertable state (we do it with making system images or dockers)? Could we just throw away the need that made us use the configurable software we have?
+</p>
+
+<p>
+Sorry, I guess this is all wrong approaches, or rather they are all right approaches that are partly applicable. We will outsource lots of things to services, we will have better automation for backups, we will reduce the needs (like soldering your own PC) and get new ones (like, uhmmm, getting subscriptions for time without internet access). But this is not a solution. These are palliatives.
+</p>
+
+<p>
+Renovation is my metaphor for life with similar, but better things around. You have your house, it have leaking tubes and small dirty windows: fix tubes, change floors, clean or change windows, call it a day. But <b>use</b> those tubes. <b>Look</b> through the windows. Noone is renovating their house just because they like to tinker around: there&rsquo;s always a more or less clear goal, when you will say &ldquo;We&rsquo;re done!&rdquo; or at least &ldquo;We&rsquo;re out of money!&rdquo;. I guess the metaphor is working &#x2013; you&rsquo;re either cleaning your floors every day from what shit that is leaking or you fix the tubes. Software tubes are leaking all the time, mind you: rss feeds become outdated, old programs that you&rsquo;re not even using keep charging you for the licenses, new computer can&rsquo;t open old formats etc. Don&rsquo;t use docker for this: own the problem, make it formal, write it down, add it to the todo list. And &#x2013; perhaps! &#x2013; there will be a precious time when you fix it and say: this is my emacs configuration which I hone since times immemorial and it still does things for me!
+</p>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-emacs.html">emacs</a> <a href="https://vlnn.dev/tag-macbook.html">macbook</a> <a href="https://vlnn.dev/tag-chores.html">chores</a> <div id="archive">
+<a href="https://vlnn.dev/archive.html">Other posts</a>
+</div>
+</div>
+<div id="postamble" class="status"><div id="archive">
+  <a href="https://vlnn.dev/archive.html">Other posts may be not available</a>
+</div> </div>
+</body>
+</html>
