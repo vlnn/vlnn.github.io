@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://vlnn.dev/rss.xml"
+      title="RSS feed for https://vlnn.dev/">
+<title>vlnn.dev</title>
+<meta name="author" content="Volodymyr Anokhin">
+<meta name="referrer" content="no-referrer">
+<link href= "static/style.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="static/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="static/favicon-152.png">
+<link rel="msapplication-TitleImage" href="static/favicon-144.png">
+<link rel="msapplication-TitleColor" href="#0141ff">
+<script src="static/katex.min.js"></script>
+<script src="static/auto-render.min.js"></script>
+<script src="static/lightbox.js"></script>
+<link rel="stylesheet" href="static/katex.min.css">
+<script>document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body); });</script>
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
+<meta name="viewport" content="initial-scale=1,width=device-width,minimum-scale=1"></head>
+<body>
+<div id="preamble" class="status"><div class="h1">
+  <a href="https://vlnn.dev">Generalistic stuff VLNN writes</a>
+  <div class="sitelinks">
+    <a href="https://github.com/vlnn">Github</a> | <a href="https://vlnn.dev/projects.html">Projects</a> | <a href="https://www.linkedin.com/in/volodymyr-anokhin/">Linkedin</a>
+  </div>
+</div></div>
+<div id="content">
+<h1 class="title">Posts tagged "lisp":</h1>
+<div class="post-date">12 Oct 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-10-12-art-of-lisp-questions.html">#+title: Art of Lisp questions</a></h1>
+
+<div id="outline-container-org1830ddb" class="outline-2">
+<h2 id="org1830ddb">What&rsquo;s that</h2>
+<div class="outline-text-2" id="text-org1830ddb">
+<p>
+I&rsquo;m reading a book, I&rsquo;m taking notes. Here will be notes for the book &ldquo;Art of Lisp Programing&rdquo;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5050e0c" class="outline-2">
+<h2 id="org5050e0c">What is Art of Lisp Programming</h2>
+<div class="outline-text-2" id="text-org5050e0c">
+<p>
+A 1987 book by Robin Jones and Ian Stewart, seems to be quite a primitive introduction to the LISP. Still, it&rsquo;s written pretty well, illustrated with pictures from Alice in Wonderland and is, well, interesting! Also authors are from ZX Spectrum clique, that is +100500 to their nerdiness.
+</p>
+</div>
+</div>
+<div id="outline-container-orgcb059fd" class="outline-2">
+<h2 id="orgcb059fd">Try simple things</h2>
+<div class="outline-text-2" id="text-orgcb059fd">
+</div>
+<div id="outline-container-orgc155b11" class="outline-3">
+<h3 id="orgc155b11">car/cdr are named so due to historical reasons, i.e. assembly mnemonics of long gone IBM 709. Let&rsquo;s use <b>head</b> and <b>tail</b> instead.</h3>
+<div class="outline-text-3" id="text-orgc155b11">
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #014980;">(</span><span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">head</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>car x<span style="color: #a626a4;">)</span><span style="color: #014980;">)</span>
+<span style="color: #014980;">(</span><span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">tail</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span>cdr x<span style="color: #a626a4;">)</span><span style="color: #014980;">)</span>
+<span style="color: #014980;">(</span>- <span style="color: #a626a4;">(</span>head '<span style="color: #556b2f;">(</span><span style="color: #8a3b3c; font-weight: bold;">4</span> <span style="color: #8a3b3c; font-weight: bold;">3</span> <span style="color: #8a3b3c; font-weight: bold;">2</span> <span style="color: #8a3b3c; font-weight: bold;">1</span><span style="color: #556b2f;">)</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">(</span>head <span style="color: #556b2f;">(</span>tail '<span style="color: #b751b6;">(</span><span style="color: #8a3b3c; font-weight: bold;">4</span> <span style="color: #8a3b3c; font-weight: bold;">3</span> <span style="color: #8a3b3c; font-weight: bold;">2</span> <span style="color: #8a3b3c; font-weight: bold;">1</span><span style="color: #b751b6;">)</span><span style="color: #556b2f;">)</span><span style="color: #a626a4;">)</span><span style="color: #014980;">)</span>  <span style="color: #556b2f;">;; </span><span style="color: #556b2f;">1 is expected as (- 4 3)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-results">1
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-lisp.html">lisp</a> <a href="https://vlnn.dev/tag-examples.html">examples</a> <div id="archive">
+<a href="https://vlnn.dev/archive.html">Other posts</a>
+</div>
+</div>
+<div id="postamble" class="status"><div id="archive">
+  <a href="https://vlnn.dev/archive.html">Other posts may be not available</a>
+</div> </div>
+</body>
+</html>

@@ -30,6 +30,104 @@
 </div></div>
 <div id="content">
 
+<div class="post-date">12 Oct 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-10-12-daylight-lamp:-first-day.html">Daylight lamp: first day</a></h1>
+<p>
+I&rsquo;ve bought a daylight lamp and not sure about it.
+</p>
+
+<p>
+The idea beside this product is that if human being has less daylight than usual due to bad weather or wrong lifestyle, they may use artificial light source with the spectrum of emission that is similar to natural sunlight. Moreover, it may be constructed in such a way, that no harmful UV radiation is created. And, of course, but companies decided that it&rsquo;s time to make a big buck selling cheap lamps. Let&rsquo;s see how it goes.
+</p>
+
+<p>
+I&rsquo;m using Beurer TL 100 lamp. This is not a proper review or paid promotion. This is my first day impressions.
+</p>
+
+<div id="outline-container-org2d9b260" class="outline-2">
+<h2 id="org2d9b260">First look</h2>
+<div class="outline-text-2" id="text-org2d9b260">
+
+<figure id="org17fbea0">
+<img src="static/daylight-lamp.gif" alt="daylight-lamp.gif">
+
+</figure>
+
+<p>
+Big, round, milky white lamp needs constant connection to the power outlet. Using buttons on the unit you may switch it on/off and control brightness to some extent.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org04ce9aa" class="outline-2">
+<h2 id="org04ce9aa">Another sun</h2>
+<div class="outline-text-2" id="text-org04ce9aa">
+<p>
+Imagine you close the curtains and then go out of room. When you return to the room first you think that someone has opened the curtains and it&rsquo;s a sunny outside. Everything is illuminated with nice (and surprizingly cold &#x2013; meaning more to the blue side of spectrum) light. This is how the lamp is working. The picture doesn&rsquo;t present it too good, but it was pretty sunny even without the lamp switched on, but with the light from the lamp everything else looks like deep shadow. Also it&rsquo;s nice to have two sources of light that comes from different directions (there&rsquo;s even a specific pattern called &ldquo;Light on Two Sides of Every Room&rdquo; in a book &ldquo;A Pattern Language&rdquo; by Christopher Alexander).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5eabd5b" class="outline-2">
+<h2 id="org5eabd5b">Good</h2>
+<div class="outline-text-2" id="text-org5eabd5b">
+<p>
+Lots of things are better when illuminated. I like how everything looks under the daylight lamp. This made me a bit happier, of course, but not sure if it&rsquo;s antistress effect of shopping or lamp really works in this context.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7e4db69" class="outline-2">
+<h2 id="org7e4db69">Bad</h2>
+<div class="outline-text-2" id="text-org7e4db69">
+<p>
+My eyes seems to be a bit sore due to constant bright thingy in unusual place. I&rsquo;ve switched the lamp after 2-3 hours of test on it&rsquo;s lowest level.
+</p>
+</div>
+</div>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-light.html">light</a> <a href="https://vlnn.dev/tag-lamp.html">lamp</a> <a href="https://vlnn.dev/tag-health.html">health</a>
+<div class="post-date">12 Oct 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-10-12-art-of-lisp-questions.html">#+title: Art of Lisp questions</a></h1>
+
+<div id="outline-container-org1830ddb" class="outline-2">
+<h2 id="org1830ddb">What&rsquo;s that</h2>
+<div class="outline-text-2" id="text-org1830ddb">
+<p>
+I&rsquo;m reading a book, I&rsquo;m taking notes. Here will be notes for the book &ldquo;Art of Lisp Programing&rdquo;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5050e0c" class="outline-2">
+<h2 id="org5050e0c">What is Art of Lisp Programming</h2>
+<div class="outline-text-2" id="text-org5050e0c">
+<p>
+A 1987 book by Robin Jones and Ian Stewart, seems to be quite a primitive introduction to the LISP. Still, it&rsquo;s written pretty well, illustrated with pictures from Alice in Wonderland and is, well, interesting! Also authors are from ZX Spectrum clique, that is +100500 to their nerdiness.
+</p>
+</div>
+</div>
+<div id="outline-container-orgcb059fd" class="outline-2">
+<h2 id="orgcb059fd">Try simple things</h2>
+<div class="outline-text-2" id="text-orgcb059fd">
+</div>
+<div id="outline-container-orgc155b11" class="outline-3">
+<h3 id="orgc155b11">car/cdr are named so due to historical reasons, i.e. assembly mnemonics of long gone IBM 709. Let&rsquo;s use <b>head</b> and <b>tail</b> instead.</h3>
+<div class="outline-text-3" id="text-orgc155b11">
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #014980;">(</span><span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">head</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>car x<span style="color: #a626a4;">)</span><span style="color: #014980;">)</span>
+<span style="color: #014980;">(</span><span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">tail</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span>cdr x<span style="color: #a626a4;">)</span><span style="color: #014980;">)</span>
+<span style="color: #014980;">(</span>- <span style="color: #a626a4;">(</span>head '<span style="color: #556b2f;">(</span><span style="color: #8a3b3c; font-weight: bold;">4</span> <span style="color: #8a3b3c; font-weight: bold;">3</span> <span style="color: #8a3b3c; font-weight: bold;">2</span> <span style="color: #8a3b3c; font-weight: bold;">1</span><span style="color: #556b2f;">)</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">(</span>head <span style="color: #556b2f;">(</span>tail '<span style="color: #b751b6;">(</span><span style="color: #8a3b3c; font-weight: bold;">4</span> <span style="color: #8a3b3c; font-weight: bold;">3</span> <span style="color: #8a3b3c; font-weight: bold;">2</span> <span style="color: #8a3b3c; font-weight: bold;">1</span><span style="color: #b751b6;">)</span><span style="color: #556b2f;">)</span><span style="color: #a626a4;">)</span><span style="color: #014980;">)</span>  <span style="color: #556b2f;">;; </span><span style="color: #556b2f;">1 is expected as (- 4 3)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-results">1
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-lisp.html">lisp</a> <a href="https://vlnn.dev/tag-examples.html">examples</a>
 <div class="post-date">11 Oct 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-10-11-maintainance-of-configurations-before-it-comes-to-renovation.html">Configuration maintainance vs renovation</a></h1>
 <p>
 It&rsquo;s astonishing how much time it takes to support things that are already working. E.g. every upgrade of <a href="https://github.com/doomemacs/doomemacs/">Doom Emacs</a> (which I <b>love</b> to use but hate to tinker with) is about several things at once:
@@ -54,9 +152,25 @@ Sorry, I guess this is all wrong approaches, or rather they are all right approa
 </p>
 
 <p>
-Renovation is my metaphor for life with similar, but better things around. You have your house, it have leaking tubes and small dirty windows: fix tubes, change floors, clean or change windows, call it a day. But <b>use</b> those tubes. <b>Look</b> through the windows. Noone is renovating their house just because they like to tinker around: there&rsquo;s always a more or less clear goal, when you will say &ldquo;We&rsquo;re done!&rdquo; or at least &ldquo;We&rsquo;re out of money!&rdquo;. I guess the metaphor is working &#x2013; you&rsquo;re either cleaning your floors every day from what shit that is leaking or you fix the tubes. Software tubes are leaking all the time, mind you: rss feeds become outdated, old programs that you&rsquo;re not even using keep charging you for the licenses, new computer can&rsquo;t open old formats etc. Don&rsquo;t use docker for this: own the problem, make it formal, write it down, add it to the todo list. And &#x2013; perhaps! &#x2013; there will be a precious time when you fix it and say: this is my emacs configuration which I hone since times immemorial and it still does things for me!
+Renovation is my metaphor for creating life with similar, but better things around. You have your house, it has leaking tubes and small dirty windows: fix tubes, change floors, clean or change windows, call it a day. But <b>use</b> those tubes. <b>Look</b> through the windows. Noone is renovating their house just because they like to tinker around: there&rsquo;s always a more or less clear goal, when you will say &ldquo;We&rsquo;re done!&rdquo; or at least &ldquo;We&rsquo;re out of money!&rdquo;. I guess the metaphor is working &#x2013; you&rsquo;re either cleaning your floors every day from what shit that is leaking or you fix the tubes. Software tubes are leaking all the time, mind you: rss feeds become outdated, old programs that you&rsquo;re not even using keep charging you for the licenses, new computer can&rsquo;t open old formats etc. Don&rsquo;t use docker for this: own the problem, make it formal, write it down, add it to the todo list. And &#x2013; perhaps! &#x2013; there will be a precious time when you fix it and say: this is my emacs configuration which I hone since times immemorial and it still does things for me!
 </p>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-emacs.html">emacs</a> <a href="https://vlnn.dev/tag-macbook.html">macbook</a> <a href="https://vlnn.dev/tag-chores.html">chores</a>
+
+<div id="outline-container-orge797848" class="outline-2">
+<h2 id="orge797848">TL;DR</h2>
+<div class="outline-text-2" id="text-orge797848">
+<ol class="org-ol">
+<li>Acknowledge and understand your problem (e.g. acknowledge that you&rsquo;ve spent whole day yesterday juggling REST requests and it took long time to find correct format of request and answer)</li>
+<li>Investigate existing tooling that resolves this kinds of problems.
+<ol class="org-ol">
+<li>Try to find existing solutions, preferably old ones but currently supported.</li>
+<li>Write yours only if you&rsquo;re sure you have failed with previous suggestion.</li>
+</ol></li>
+<li>Configure this tooling and use it for some time (at least couple days), experimenting and reconfiguring things as it goes.</li>
+<li><code>IF</code> problem seems different now <code>GOTO 1</code>.</li>
+</ol>
+</div>
+</div>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-emacs.html">emacs</a> <a href="https://vlnn.dev/tag-macbook.html">macbook</a> <a href="https://vlnn.dev/tag-chores.html">chores</a> <a href="https://vlnn.dev/tag-howto.html">howto</a>
 <div class="post-date">08 Oct 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-10-08-привіт,-чудовий-світе.html">Привіт, чудовий світе (once again)</a></h1>
 <p>
 This is to declare that the stuff has been moved from <a href="https://vlnn.github.io">vlnn.github.io</a> to <a href="https://vlnn.dev/">vlnn.dev</a>.

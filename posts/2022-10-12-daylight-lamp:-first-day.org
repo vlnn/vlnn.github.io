@@ -1,0 +1,24 @@
+#+title: Daylight lamp: first day
+#+date: <2022-10-12 15:07>
+#+description:
+#+filetags: light lamp health
+
+I've bought a daylight lamp and not sure about it.
+
+The idea beside this product is that if human being has less daylight than usual due to bad weather or wrong lifestyle, they may use artificial light source with the spectrum of emission that is similar to natural sunlight. Moreover, it may be constructed in such a way, that no harmful UV radiation is created. And, of course, but companies decided that it's time to make a big buck selling cheap lamps. Let's see how it goes.
+
+I'm using Beurer TL 100 lamp. This is not a proper review or paid promotion. This is my first day impressions.
+
+** First look
+[[file:static/daylight-lamp.gif]]
+
+Big, round, milky white lamp needs constant connection to the power outlet. Using buttons on the unit you may switch it on/off and control brightness to some extent.
+
+** Another sun
+Imagine you close the curtains and then go out of room. When you return to the room first you think that someone has opened the curtains and it's a sunny outside. Everything is illuminated with nice (and surprizingly cold -- meaning more to the blue side of spectrum) light. This is how the lamp is working. The picture doesn't present it too good, but it was pretty sunny even without the lamp switched on, but with the light from the lamp everything else looks like deep shadow. Also it's nice to have two sources of light that comes from different directions (there's even a specific pattern called "Light on Two Sides of Every Room" in a book "A Pattern Language" by Christopher Alexander).
+
+** Good
+Lots of things are better when illuminated. I like how everything looks under the daylight lamp. This made me a bit happier, of course, but not sure if it's antistress effect of shopping or lamp really works in this context.
+
+** Bad
+My eyes seems to be a bit sore due to constant bright thingy in unusual place. I've switched the lamp after 2-3 hours of test on it's lowest level.
