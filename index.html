@@ -30,6 +30,29 @@
 </div></div>
 <div id="content">
 
+<div class="post-date">12 Oct 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-10-12-historical-bits-and-pieces.html">Historical bits and pieces</a></h1>
+<p>
+Some time ago I was a part of a team who introduced modern software development processes (text-based sources, CI, CD, cloud here and there) across the company with humongous and very cleverly written monolith. Yup, internally sources were not stored as text files. Yup, the format was created in-house. Yup, you had to use internal toolings only to work with this code. Yup, it was a great revelation for me to understand how different real work is from the world of js-hipsters deploying things over heroku.
+</p>
+
+<p>
+Interestingly enough, the core of the my team was consisted of people who actually wrote the most clever parts. I was a part of this project for couple years trying my best and watching superheroes around me trying their best to finish this project. At some point I left the company and all I have now is this screenshot of one-week project of providing developers possibility to load customized tools into the work environment.
+</p>
+
+
+<figure id="orga3bda79">
+<img src="./static/things-i-did.jpeg" alt="things-i-did.jpeg">
+
+</figure>
+
+<p>
+Two unsettling ideas arise in my brain after I share the picture above:
+</p>
+<ol class="org-ol">
+<li>Software industry is expanding so fast that half of your colleagues perhaps have less than 5 years of experience (stole the idea from someone, but it&rsquo;s as unsettling as my one).</li>
+<li>Some senior clever guys and girls right now are trying to help &rsquo;newcomers&rsquo; to work with legacy code bases they themeselves developed over the years. This task may be much harder than actually developing the legacy code base.</li>
+</ol>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-apl.html">apl</a> <a href="https://vlnn.dev/tag-git.html">git</a> <a href="https://vlnn.dev/tag-legacy.html">legacy</a>
 <div class="post-date">12 Oct 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-10-12-daylight-lamp:-first-day.html">Daylight lamp: first day</a></h1>
 <p>
 I&rsquo;ve bought a daylight lamp and not sure about it.
@@ -133,7 +156,7 @@ A 1987 book by Robin Jones and Ian Stewart, seems to be quite a primitive introd
 It&rsquo;s astonishing how much time it takes to support things that are already working. E.g. every upgrade of <a href="https://github.com/doomemacs/doomemacs/">Doom Emacs</a> (which I <b>love</b> to use but hate to tinker with) is about several things at once:
 </p>
 <ol class="org-ol">
-<li>Upgrade itself e.g. `doom upgrade` and fixing stuff if something goes wrong. It usually does need a bit of research to find out how to fix it. Would be nice to have `doom rollback` working, but it&rsquo;s impossible as of now.</li>
+<li>Upgrade itself e.g. <code>doom upgrade</code> and fixing stuff if something goes wrong. It usually does need a bit of research to find out how to fix it. Would be nice to have <code>doom rollback</code> working, but it&rsquo;s impossible as of now.</li>
 <li>Manually check if upgrade broke something: I use several different &ldquo;stacks&rdquo; in my setup, e.g. a bit of org, clojure, common lisp, C# from time to time, dictionaries, org agenda.
 This is one of most time consuming and unpredictible part of the upgrade; it&rsquo;s not automated and I&rsquo;m not sure if it&rsquo;s ever will be; you never sure everything is tested; you have to try it against your real work.</li>
 <li>I have to formalize all the small &ldquo;current fixes&rdquo; of my configuration as commits or backups, which is too often becomes a batch of changes called &ldquo;system as of 2022&rdquo;. Good luck with understanding why exactly you put this strange line somewhere in the custom.el!</li>
@@ -155,9 +178,9 @@ Sorry, I guess this is all wrong approaches, or rather they are all right approa
 Renovation is my metaphor for creating life with similar, but better things around. You have your house, it has leaking tubes and small dirty windows: fix tubes, change floors, clean or change windows, call it a day. But <b>use</b> those tubes. <b>Look</b> through the windows. Noone is renovating their house just because they like to tinker around: there&rsquo;s always a more or less clear goal, when you will say &ldquo;We&rsquo;re done!&rdquo; or at least &ldquo;We&rsquo;re out of money!&rdquo;. I guess the metaphor is working &#x2013; you&rsquo;re either cleaning your floors every day from what shit that is leaking or you fix the tubes. Software tubes are leaking all the time, mind you: rss feeds become outdated, old programs that you&rsquo;re not even using keep charging you for the licenses, new computer can&rsquo;t open old formats etc. Don&rsquo;t use docker for this: own the problem, make it formal, write it down, add it to the todo list. And &#x2013; perhaps! &#x2013; there will be a precious time when you fix it and say: this is my emacs configuration which I hone since times immemorial and it still does things for me!
 </p>
 
-<div id="outline-container-orge797848" class="outline-2">
-<h2 id="orge797848">TL;DR</h2>
-<div class="outline-text-2" id="text-orge797848">
+<div id="outline-container-org9b7998b" class="outline-2">
+<h2 id="org9b7998b">TL;DR</h2>
+<div class="outline-text-2" id="text-org9b7998b">
 <ol class="org-ol">
 <li>Acknowledge and understand your problem (e.g. acknowledge that you&rsquo;ve spent whole day yesterday juggling REST requests and it took long time to find correct format of request and answer)</li>
 <li>Investigate existing tooling that resolves this kinds of problems.
@@ -215,35 +238,7 @@ And I&rsquo;ll never forgive russians for what they did.
 </p>
 </div>
 </div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-admin.html">admin</a> <a href="https://vlnn.dev/tag-migration.html">migration</a> <a href="https://vlnn.dev/tag-war.html">war</a>
-<div class="post-date">19 Sep 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-09-19-sql-as-the-data-analysis'-volapük.html">SQL as the Data Analysis' Volapük</a></h1>
-<p>
-Lately I&rsquo;ve started to work with <a href="https://druid.apache.org/">Apache Druid</a> that is &ldquo;real-time database to power modern analytics applications&rdquo;. This is great piece of software, being in it&rsquo;s late version 0.23.0, providing blazing-fast queries to your data. Surely enough, you always pay for the speed: sometimes with old good money (e.g. buy more resources from the powerhouses), sometimes with time needed to prepare the data for being queries (e.g. indexing), sometimes with absence of generality (e.g. make your highly intricate specific DB and go struggle when business needs something unsupported), sometimes just with your brainpower needed to understand and implement new stuff. At the moment, I think Druid is being paid mainly with two latter currencies.
-</p>
-
-<p>
-So, having a bit of experience in Data warehouse project (5 years ago? eternity!), I was really interested how exactly the speed is being gained. If you&rsquo;re interested, please take a look at <a href="https://druid.apache.org/faq">this FAQ page</a> (spoiler: inverted indexes and intricate metadata model). This post is not about it. This post is about SQL that is currently being used as defacto standard for thinking about data &#x2013; even when &ldquo;real&rdquo; data is not stored in RDBMS.
-</p>
-
-<p>
-As most of the industry-grade programming languages, SQL has lots of qualities from different areas: it&rsquo;s mainly declarative, but has procedural mechanisms. It&rsquo;s made for queries but creates databases and tables. It&rsquo;s based on relational algebra, but  It&rsquo;s structured but sometimes it&rsquo;s hard to find the structure behind 30 screens of the statement. At last, it has been designed for managers and now DB-team is usually sitting very far away from the commercial department. This is how evolution works, nothing unusual here.
-</p>
-
-<p>
-But, being widely used, SQL get into the fields, where I was surprised to see it &#x2013; for instance in the NoSQL world. Check out how similar is Cassandra&rsquo;s CQL, even though Cassandra is famous NoSQL DB! Excel files <a href="https://docs.microsoft.com/en-us/power-automate/desktop-flows/how-to/sql-queries-excel">could be used as SQL data bases</a>! Even very non-usual languages like Q are calling the some data-manipulating functions <a href="https://code.kx.com/q4m3/9_Queries_q-sql/">q-sql</a>, using different syntax, but at least partially sharing same mental model of the data manipulation.
-</p>
-
-<p>
-This leads me to the point, at which I should make a bold statement: I don&rsquo;t think SQL is a good programming language. I mean, it&rsquo;s good, but it&rsquo;s not <b>that good</b>, it&rsquo;s not the default language when you write or think about the data. Its main feature is universality, sure; but being wide-spread across the industry, it effectively wipes out all the other possible ways of thinking around the data. It&rsquo;s liek bad english of the internetz: you want to say <b>I love you so much</b>, but sending 🔥🔥🔥 instead; you want to know who wrote the hit and writing
-</p>
-<div class="org-src-container">
-<pre class="src src-sql"><span style="font-weight: bold;">SELECT</span> song_id <span style="font-weight: bold;">FROM</span> charts <span style="font-weight: bold;">FETCH</span> <span style="font-weight: bold;">FIRST</span> <span style="color: #8a3b3c; font-weight: bold;">1</span> <span style="font-weight: bold;">ROWS</span> <span style="font-weight: bold;">ONLY</span>
-</pre>
-</div>
-<p>
-instead, panicking how long will become the join to the composers table. It&rsquo;s really similar to Volapük in many contexts: it&rsquo;s as artificial, it&rsquo;s designed to be widely used, it&rsquo;s good but not necessary best, and it may be scorched out with some new technology (Esperanto in Volapük&rsquo;s case). Not sure if I will see the dawn of SQL, but it could be a wonderful view!
-</p>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-data.html">data</a> <a href="https://vlnn.dev/tag-sql.html">sql</a> <a href="https://vlnn.dev/tag-language.html">language</a> <div id="archive">
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-admin.html">admin</a> <a href="https://vlnn.dev/tag-migration.html">migration</a> <a href="https://vlnn.dev/tag-war.html">war</a> <div id="archive">
 <a href="https://vlnn.dev/archive.html">Other posts</a>
 </div>
 </div>

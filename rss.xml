@@ -4,7 +4,39 @@
 <title><![CDATA[vlnn.dev]]></title>
 <description><![CDATA[vlnn.dev]]></description>
 <link>https://vlnn.dev/</link>
-<lastBuildDate>Wed, 12 Oct 2022 15:47:32 +0300</lastBuildDate>
+<lastBuildDate>Wed, 12 Oct 2022 22:01:23 +0300</lastBuildDate>
+<item>
+  <title><![CDATA[Historical bits and pieces]]></title>
+  <description><![CDATA[
+<p>
+Some time ago I was a part of a team who introduced modern software development processes (text-based sources, CI, CD, cloud here and there) across the company with humongous and very cleverly written monolith. Yup, internally sources were not stored as text files. Yup, the format was created in-house. Yup, you had to use internal toolings only to work with this code. Yup, it was a great revelation for me to understand how different real work is from the world of js-hipsters deploying things over heroku.
+</p>
+
+<p>
+Interestingly enough, the core of the my team was consisted of people who actually wrote the most clever parts. I was a part of this project for couple years trying my best and watching superheroes around me trying their best to finish this project. At some point I left the company and all I have now is this screenshot of one-week project of providing developers possibility to load customized tools into the work environment.
+</p>
+
+
+<figure id="orga3bda79">
+<img src="./static/things-i-did.jpeg" alt="things-i-did.jpeg">
+
+</figure>
+
+<p>
+Two unsettling ideas arise in my brain after I share the picture above:
+</p>
+<ol class="org-ol">
+<li>Software industry is expanding so fast that half of your colleagues perhaps have less than 5 years of experience (stole the idea from someone, but it&rsquo;s as unsettling as my one).</li>
+<li>Some senior clever guys and girls right now are trying to help &rsquo;newcomers&rsquo; to work with legacy code bases they themeselves developed over the years. This task may be much harder than actually developing the legacy code base.</li>
+</ol>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-apl.html">apl</a> <a href="https://vlnn.dev/tag-git.html">git</a> <a href="https://vlnn.dev/tag-legacy.html">legacy</a> ]]></description>
+  <category><![CDATA[apl]]></category>
+  <category><![CDATA[git]]></category>
+  <category><![CDATA[legacy]]></category>
+  <link>https://vlnn.dev/2022-10-12-historical-bits-and-pieces.html</link>
+  <guid>https://vlnn.dev/2022-10-12-historical-bits-and-pieces.html</guid>
+  <pubDate>Wed, 12 Oct 2022 21:43:00 +0300</pubDate>
+</item>
 <item>
   <title><![CDATA[Daylight lamp: first day]]></title>
   <description><![CDATA[
@@ -127,7 +159,7 @@ A 1987 book by Robin Jones and Ian Stewart, seems to be quite a primitive introd
 It&rsquo;s astonishing how much time it takes to support things that are already working. E.g. every upgrade of <a href="https://github.com/doomemacs/doomemacs/">Doom Emacs</a> (which I <b>love</b> to use but hate to tinker with) is about several things at once:
 </p>
 <ol class="org-ol">
-<li>Upgrade itself e.g. `doom upgrade` and fixing stuff if something goes wrong. It usually does need a bit of research to find out how to fix it. Would be nice to have `doom rollback` working, but it&rsquo;s impossible as of now.</li>
+<li>Upgrade itself e.g. <code>doom upgrade</code> and fixing stuff if something goes wrong. It usually does need a bit of research to find out how to fix it. Would be nice to have <code>doom rollback</code> working, but it&rsquo;s impossible as of now.</li>
 <li>Manually check if upgrade broke something: I use several different &ldquo;stacks&rdquo; in my setup, e.g. a bit of org, clojure, common lisp, C# from time to time, dictionaries, org agenda.
 This is one of most time consuming and unpredictible part of the upgrade; it&rsquo;s not automated and I&rsquo;m not sure if it&rsquo;s ever will be; you never sure everything is tested; you have to try it against your real work.</li>
 <li>I have to formalize all the small &ldquo;current fixes&rdquo; of my configuration as commits or backups, which is too often becomes a batch of changes called &ldquo;system as of 2022&rdquo;. Good luck with understanding why exactly you put this strange line somewhere in the custom.el!</li>
@@ -149,9 +181,9 @@ Sorry, I guess this is all wrong approaches, or rather they are all right approa
 Renovation is my metaphor for creating life with similar, but better things around. You have your house, it has leaking tubes and small dirty windows: fix tubes, change floors, clean or change windows, call it a day. But <b>use</b> those tubes. <b>Look</b> through the windows. Noone is renovating their house just because they like to tinker around: there&rsquo;s always a more or less clear goal, when you will say &ldquo;We&rsquo;re done!&rdquo; or at least &ldquo;We&rsquo;re out of money!&rdquo;. I guess the metaphor is working &#x2013; you&rsquo;re either cleaning your floors every day from what shit that is leaking or you fix the tubes. Software tubes are leaking all the time, mind you: rss feeds become outdated, old programs that you&rsquo;re not even using keep charging you for the licenses, new computer can&rsquo;t open old formats etc. Don&rsquo;t use docker for this: own the problem, make it formal, write it down, add it to the todo list. And &#x2013; perhaps! &#x2013; there will be a precious time when you fix it and say: this is my emacs configuration which I hone since times immemorial and it still does things for me!
 </p>
 
-<div id="outline-container-orge797848" class="outline-2">
-<h2 id="orge797848">TL;DR</h2>
-<div class="outline-text-2" id="text-orge797848">
+<div id="outline-container-org9b7998b" class="outline-2">
+<h2 id="org9b7998b">TL;DR</h2>
+<div class="outline-text-2" id="text-org9b7998b">
 <ol class="org-ol">
 <li>Acknowledge and understand your problem (e.g. acknowledge that you&rsquo;ve spent whole day yesterday juggling REST requests and it took long time to find correct format of request and answer)</li>
 <li>Investigate existing tooling that resolves this kinds of problems.
