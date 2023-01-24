@@ -30,6 +30,28 @@
 </div></div>
 <div id="content">
 
+<div class="post-date">24 Jan 2023</div><h1 class="post-title"><a href="https://vlnn.dev/2023-01-24-macos-problem-with-hex-input.html">Macos problem with HEX input</a></h1>
+<p>
+If you&rsquo;re typing using non-english symbols like ς or ґ you might have problems with entering those into modern computers &#x2013; there are different encoding systems, as well as different keyboard layouts, and it&rsquo;s not that unusual to have problems with one that you can live with. Then you build yourself QMK or ZMK keyboard. They are programmable &#x2013; you can make them type anything. ANYTHING! Right? RIGHT?
+</p>
+
+<p>
+No, that&rsquo;s not true. You can&rsquo;t go fully independent of OS language layouts, that are converting scancodes into the keycodes and then into the characters themselves. You press [Q] in the UA mode, it gets to the OS as [Q], layout mapping makes it [Й], and you see it like that in the text you&rsquo;re typing. Among others, this should resolve problems with shortcuts like [CTRL+S] that may become unusable in cyrillic layout (as there&rsquo;s no such thing as [S] in Ukrainian, so you just can&rsquo;t save!) or get to some very different place on the keyboard if you use COLEMAK or something even weirder ([ASDF] in QWERTY maps to [ARDT] in Colemak).
+</p>
+
+<p>
+But why not make keyboard processor work even more? Why not provide the unicode code of the character instead of the scan code? Windows, Linux and Macos have their methods of the so-called [Unicode input](<a href="https://en.wikipedia.org/wiki/Unicode_input">https://en.wikipedia.org/wiki/Unicode_input</a>). Problem solved? Not really!
+</p>
+
+<p>
+Macos has long lasting [bug](<a href="https://discussions.apple.com/thread/253636848">https://discussions.apple.com/thread/253636848</a>) that prevents you from entering <b>some</b> codes using Unicode input. E.g. you may input [á] (code 0x00E1), but never could [à] (code 0x00E0). Similarly using the hex codes you can&rsquo;t enter greek pi (code 0x03C0). You can&rsquo;t enter cyrillic [р] (it <b>is</b> different from English [p]) &#x2013; seemingly just because their hex code ends with zero! (codes 0x0440).
+</p>
+
+<p>
+It seems to me that in my 40s anywhere I dig deep enough I get to something very different from the diamonds: I get more and more old rancid standards and piles of ancient bugs without wings.
+</p>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-macos,keyboard,ua.html">macos,keyboard,ua</a> </div>
+
 <div class="post-date">24 Jan 2023</div><h1 class="post-title"><a href="https://vlnn.dev/2023-01-24-antiprogress-of-the-dropbox.html">#+title: Antiprogress of the Dropbox</a></h1>
 <p>
 Not that long time ago (or was it long time? 10 years ago or so?) Dropbox was the new kind of the services &#x2013; very simple, very cheap, very direct kind of service. You want to share the photo or your hipster todo.txt, you put it in a special folder and that&rsquo;s it: it will be delivered automatically to everybody whom you informed the link, or to every PC where Dropbox is running under your creds. That&rsquo;s it! Super easy, super cool!
@@ -171,50 +193,6 @@ A 1987 book by Robin Jones and Ian Stewart, seems to be quite a primitive introd
 </div>
 </div>
 <div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-lisp.html">lisp</a> <a href="https://vlnn.dev/tag-examples.html">examples</a> </div>
-
-<div class="post-date">11 Oct 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-10-11-maintainance-of-configurations-before-it-comes-to-renovation.html">Configuration maintainance vs renovation</a></h1>
-<p>
-It&rsquo;s astonishing how much time it takes to support things that are already working. E.g. every upgrade of <a href="https://github.com/doomemacs/doomemacs/">Doom Emacs</a> (which I <b>love</b> to use but hate to tinker with) is about several things at once:
-</p>
-<ol class="org-ol">
-<li>Upgrade itself e.g. <code>doom upgrade</code> and fixing stuff if something goes wrong. It usually does need a bit of research to find out how to fix it. Would be nice to have <code>doom rollback</code> working, but it&rsquo;s impossible as of now.</li>
-<li>Manually check if upgrade broke something: I use several different &ldquo;stacks&rdquo; in my setup, e.g. a bit of org, clojure, common lisp, C# from time to time, dictionaries, org agenda.
-This is one of most time consuming and unpredictible part of the upgrade; it&rsquo;s not automated and I&rsquo;m not sure if it&rsquo;s ever will be; you never sure everything is tested; you have to try it against your real work.</li>
-<li>I have to formalize all the small &ldquo;current fixes&rdquo; of my configuration as commits or backups, which is too often becomes a batch of changes called &ldquo;system as of 2022&rdquo;. Good luck with understanding why exactly you put this strange line somewhere in the custom.el!</li>
-</ol>
-
-<p>
-I like computers. I like programming computers. I don&rsquo;t like computers programming me. But real reason for this problem is wrong level of abstraction. It&rsquo;s something similar to docker images: you find a brittle shitty solution and put it under the clone machine so every time it breaks you just clone same brittle shitty solution. This is fun and techy, but this does not resolve the root of the problem: you had a shitty solution!
-</p>
-
-<p>
-But what can we do about this burden of the maintainance? Could we pay someone else to do it (we do with gmail so we don&rsquo;t administer mail servers ourselves)? Could we make better automation for keeping the system in revertable state (we do it with making system images or dockers)? Could we just throw away the need that made us use the configurable software we have?
-</p>
-
-<p>
-Sorry, I guess this is all wrong approaches, or rather they are all right approaches that are partly applicable. We will outsource lots of things to services, we will have better automation for backups, we will reduce the needs (like soldering your own PC) and get new ones (like, uhmmm, getting subscriptions for time without internet access). But this is not a solution. These are palliatives.
-</p>
-
-<p>
-Renovation is my metaphor for creating life with similar, but better things around. You have your house, it has leaking tubes and small dirty windows: fix tubes, change floors, clean or change windows, call it a day. But <b>use</b> those tubes. <b>Look</b> through the windows. Noone is renovating their house just because they like to tinker around: there&rsquo;s always a more or less clear goal, when you will say &ldquo;We&rsquo;re done!&rdquo; or at least &ldquo;We&rsquo;re out of money!&rdquo;. I guess the metaphor is working &#x2013; you&rsquo;re either cleaning your floors every day from what shit that is leaking or you fix the tubes. Software tubes are leaking all the time, mind you: rss feeds become outdated, old programs that you&rsquo;re not even using keep charging you for the licenses, new computer can&rsquo;t open old formats etc. Don&rsquo;t use docker for this: own the problem, make it formal, write it down, add it to the todo list. And &#x2013; perhaps! &#x2013; there will be a precious time when you fix it and say: this is my emacs configuration which I hone since times immemorial and it still does things for me!
-</p>
-
-<div id="outline-container-org9b7998b" class="outline-2">
-<h2 id="org9b7998b">TL;DR</h2>
-<div class="outline-text-2" id="text-org9b7998b">
-<ol class="org-ol">
-<li>Acknowledge and understand your problem (e.g. acknowledge that you&rsquo;ve spent whole day yesterday juggling REST requests and it took long time to find correct format of request and answer)</li>
-<li>Investigate existing tooling that resolves this kinds of problems.
-<ol class="org-ol">
-<li>Try to find existing solutions, preferably old ones but currently supported.</li>
-<li>Write yours only if you&rsquo;re sure you have failed with previous suggestion.</li>
-</ol></li>
-<li>Configure this tooling and use it for some time (at least couple days), experimenting and reconfiguring things as it goes.</li>
-<li><code>IF</code> problem seems different now <code>GOTO 1</code>.</li>
-</ol>
-</div>
-</div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-emacs.html">emacs</a> <a href="https://vlnn.dev/tag-macbook.html">macbook</a> <a href="https://vlnn.dev/tag-chores.html">chores</a> <a href="https://vlnn.dev/tag-howto.html">howto</a> </div>
 <div id="archive">
 <a href="https://vlnn.dev/archive.html">Other posts</a>
 </div>

@@ -4,7 +4,36 @@
 <title><![CDATA[vlnn.dev]]></title>
 <description><![CDATA[vlnn.dev]]></description>
 <link>https://vlnn.dev/</link>
-<lastBuildDate>Tue, 24 Jan 2023 14:57:26 +0200</lastBuildDate>
+<lastBuildDate>Tue, 24 Jan 2023 23:56:05 +0200</lastBuildDate>
+<item>
+  <title><![CDATA[Macos problem with HEX input]]></title>
+  <description><![CDATA[
+<p>
+If you&rsquo;re typing using non-english symbols like ς or ґ you might have problems with entering those into modern computers &#x2013; there are different encoding systems, as well as different keyboard layouts, and it&rsquo;s not that unusual to have problems with one that you can live with. Then you build yourself QMK or ZMK keyboard. They are programmable &#x2013; you can make them type anything. ANYTHING! Right? RIGHT?
+</p>
+
+<p>
+No, that&rsquo;s not true. You can&rsquo;t go fully independent of OS language layouts, that are converting scancodes into the keycodes and then into the characters themselves. You press [Q] in the UA mode, it gets to the OS as [Q], layout mapping makes it [Й], and you see it like that in the text you&rsquo;re typing. Among others, this should resolve problems with shortcuts like [CTRL+S] that may become unusable in cyrillic layout (as there&rsquo;s no such thing as [S] in Ukrainian, so you just can&rsquo;t save!) or get to some very different place on the keyboard if you use COLEMAK or something even weirder ([ASDF] in QWERTY maps to [ARDT] in Colemak).
+</p>
+
+<p>
+But why not make keyboard processor work even more? Why not provide the unicode code of the character instead of the scan code? Windows, Linux and Macos have their methods of the so-called [Unicode input](<a href="https://en.wikipedia.org/wiki/Unicode_input">https://en.wikipedia.org/wiki/Unicode_input</a>). Problem solved? Not really!
+</p>
+
+<p>
+Macos has long lasting [bug](<a href="https://discussions.apple.com/thread/253636848">https://discussions.apple.com/thread/253636848</a>) that prevents you from entering <b>some</b> codes using Unicode input. E.g. you may input [á] (code 0x00E1), but never could [à] (code 0x00E0). Similarly using the hex codes you can&rsquo;t enter greek pi (code 0x03C0). You can&rsquo;t enter cyrillic [р] (it <b>is</b> different from English [p]) &#x2013; seemingly just because their hex code ends with zero! (codes 0x0440).
+</p>
+
+<p>
+It seems to me that in my 40s anywhere I dig deep enough I get to something very different from the diamonds: I get more and more old rancid standards and piles of ancient bugs without wings.
+</p>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-macos,keyboard,ua.html">macos,keyboard,ua</a> </div>
+]]></description>
+  <category><![CDATA[macos,keyboard,ua]]></category>
+  <link>https://vlnn.dev/2023-01-24-macos-problem-with-hex-input.html</link>
+  <guid>https://vlnn.dev/2023-01-24-macos-problem-with-hex-input.html</guid>
+  <pubDate>Tue, 24 Jan 2023 23:32:00 +0200</pubDate>
+</item>
 <item>
   <title><![CDATA[#+title: Antiprogress of the Dropbox]]></title>
   <description><![CDATA[
