@@ -4,7 +4,32 @@
 <title><![CDATA[vlnn.dev]]></title>
 <description><![CDATA[vlnn.dev]]></description>
 <link>https://vlnn.dev/</link>
-<lastBuildDate>Wed, 12 Oct 2022 22:01:23 +0300</lastBuildDate>
+<lastBuildDate>Tue, 24 Jan 2023 14:57:26 +0200</lastBuildDate>
+<item>
+  <title><![CDATA[#+title: Antiprogress of the Dropbox]]></title>
+  <description><![CDATA[
+<p>
+Not that long time ago (or was it long time? 10 years ago or so?) Dropbox was the new kind of the services &#x2013; very simple, very cheap, very direct kind of service. You want to share the photo or your hipster todo.txt, you put it in a special folder and that&rsquo;s it: it will be delivered automatically to everybody whom you informed the link, or to every PC where Dropbox is running under your creds. That&rsquo;s it! Super easy, super cool!
+</p>
+
+<p>
+I just used current version of Dropbox app for Android, and it is just terrifyingly awful. For starters, it has tutorial wizards that break my needs; I want to press a button, but it is covered with a text cloud of a tutorial. Next, I want to download some video files to my android device: there are buttons &ldquo;Sync&rdquo;, &ldquo;Make available offline&rdquo; and &ldquo;Save to Device&rdquo; &#x2013; and also &ldquo;Duplicate&rdquo;. Next, it asks to access my photos and my camera. And moreover, it shares the names of people who have access to the folder to anybody who has it already.
+</p>
+
+<p>
+I can&rsquo;t even&#x2026;
+</p>
+
+<p>
+I understand Syncthing could be infuriatingly complex, but at least it does one thing, and does it good.
+</p>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-getting-older,dropbox,web.html">getting-older,dropbox,web</a> </div>
+]]></description>
+  <category><![CDATA[getting-older,dropbox,web]]></category>
+  <link>https://vlnn.dev/2023-01-24-antiprogress-of-the-dropbox.html</link>
+  <guid>https://vlnn.dev/2023-01-24-antiprogress-of-the-dropbox.html</guid>
+  <pubDate>Tue, 24 Jan 2023 14:44:00 +0200</pubDate>
+</item>
 <item>
   <title><![CDATA[Historical bits and pieces]]></title>
   <description><![CDATA[
@@ -29,7 +54,8 @@ Two unsettling ideas arise in my brain after I share the picture above:
 <li>Software industry is expanding so fast that half of your colleagues perhaps have less than 5 years of experience (stole the idea from someone, but it&rsquo;s as unsettling as my one).</li>
 <li>Some senior clever guys and girls right now are trying to help &rsquo;newcomers&rsquo; to work with legacy code bases they themeselves developed over the years. This task may be much harder than actually developing the legacy code base.</li>
 </ol>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-apl.html">apl</a> <a href="https://vlnn.dev/tag-git.html">git</a> <a href="https://vlnn.dev/tag-legacy.html">legacy</a> ]]></description>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-apl.html">apl</a> <a href="https://vlnn.dev/tag-git.html">git</a> <a href="https://vlnn.dev/tag-legacy.html">legacy</a> </div>
+]]></description>
   <category><![CDATA[apl]]></category>
   <category><![CDATA[git]]></category>
   <category><![CDATA[legacy]]></category>
@@ -93,7 +119,8 @@ My eyes seems to be a bit sore due to constant bright thingy in unusual place. I
 </p>
 </div>
 </div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-light.html">light</a> <a href="https://vlnn.dev/tag-lamp.html">lamp</a> <a href="https://vlnn.dev/tag-health.html">health</a> ]]></description>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-light.html">light</a> <a href="https://vlnn.dev/tag-lamp.html">lamp</a> <a href="https://vlnn.dev/tag-health.html">health</a> </div>
+]]></description>
   <category><![CDATA[light]]></category>
   <category><![CDATA[lamp]]></category>
   <category><![CDATA[health]]></category>
@@ -145,7 +172,8 @@ A 1987 book by Robin Jones and Ian Stewart, seems to be quite a primitive introd
 </div>
 </div>
 </div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-lisp.html">lisp</a> <a href="https://vlnn.dev/tag-examples.html">examples</a> ]]></description>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-lisp.html">lisp</a> <a href="https://vlnn.dev/tag-examples.html">examples</a> </div>
+]]></description>
   <category><![CDATA[lisp]]></category>
   <category><![CDATA[examples]]></category>
   <link>https://vlnn.dev/2022-10-12-art-of-lisp-questions.html</link>
@@ -196,7 +224,8 @@ Renovation is my metaphor for creating life with similar, but better things arou
 </ol>
 </div>
 </div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-emacs.html">emacs</a> <a href="https://vlnn.dev/tag-macbook.html">macbook</a> <a href="https://vlnn.dev/tag-chores.html">chores</a> <a href="https://vlnn.dev/tag-howto.html">howto</a> ]]></description>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-emacs.html">emacs</a> <a href="https://vlnn.dev/tag-macbook.html">macbook</a> <a href="https://vlnn.dev/tag-chores.html">chores</a> <a href="https://vlnn.dev/tag-howto.html">howto</a> </div>
+]]></description>
   <category><![CDATA[emacs]]></category>
   <category><![CDATA[macbook]]></category>
   <category><![CDATA[chores]]></category>
@@ -251,7 +280,8 @@ And I&rsquo;ll never forgive russians for what they did.
 </p>
 </div>
 </div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-admin.html">admin</a> <a href="https://vlnn.dev/tag-migration.html">migration</a> <a href="https://vlnn.dev/tag-war.html">war</a> ]]></description>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-admin.html">admin</a> <a href="https://vlnn.dev/tag-migration.html">migration</a> <a href="https://vlnn.dev/tag-war.html">war</a> </div>
+]]></description>
   <category><![CDATA[admin]]></category>
   <category><![CDATA[migration]]></category>
   <category><![CDATA[war]]></category>
@@ -288,7 +318,8 @@ This leads me to the point, at which I should make a bold statement: I don&rsquo
 <p>
 instead, panicking how long will become the join to the composers table. It&rsquo;s really similar to Volapük in many contexts: it&rsquo;s as artificial, it&rsquo;s designed to be widely used, it&rsquo;s good but not necessary best, and it may be scorched out with some new technology (Esperanto in Volapük&rsquo;s case). Not sure if I will see the dawn of SQL, but it could be a wonderful view!
 </p>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-data.html">data</a> <a href="https://vlnn.dev/tag-sql.html">sql</a> <a href="https://vlnn.dev/tag-language.html">language</a> ]]></description>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-data.html">data</a> <a href="https://vlnn.dev/tag-sql.html">sql</a> <a href="https://vlnn.dev/tag-language.html">language</a> </div>
+]]></description>
   <category><![CDATA[data]]></category>
   <category><![CDATA[sql]]></category>
   <category><![CDATA[language]]></category>
