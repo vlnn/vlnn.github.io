@@ -1,0 +1,36 @@
+#+title: Programming in wartime
+#+date: <2024-05-16 08:26>
+#+description:
+#+filetags: schedule war programming setup
+
+I'm Ukrainian, and Ukraine is fighting for its very existence right now. I'm a civilian (i.e. not conscripted yet) living in Kyiv. It's relatively quiet here now, except maybe one or two raid attacks alerts per day.
+
+This post is a mix of insights of how it is to work full day in wartime -- in no particular order or structure. Of course this is very limited point of view, as I'm describing my own experience and my own surroundings. Being in Kharkiv, for instance, I would experienced quite a different conditions (Kharkiv is under constant shellings and bombing for a good year now).
+
+* Hardware
+My current hardware setup was planned during my onboarding at Apptopia (great company, BTW!) in the beginning of 2022. I've decided to try MacOS for the first time in my life (was a Linux user for ~15 years), and have bought myself a M1 Macbook Pro. This was a great decision, mostly not due to the MacOS bells and whistles, but rather due to great battery life and capable processing power, that both led me through the time of blackouts in the late 2022. I was able to more or less use the whole stack locally, building and testing monorepo in around 30 minutes (including all integration tests that were based on services like Cassandra, Apache Druid and Spark ran in Docker Compose infrastructure).
+
+I'm also using quite big external monitor (34" Samsung Curved C34H890) that is connected to the M2 Mac Studio. This was my understanding of how ergonomic workplace should look like for me: standing desk, Kinesis Advantage with custom firmware (see https://github.com/vlnn/kinesis-advantage-2), the Apple Trackpad mounted on the keyboard etc. All this fine and dandy except one thing: this setup doesn't have a battery and is shut down during the power outage. After russian shellings to the pretty much all the Ukrainian power plants infrastructure we've experienced blackouts as long as for 12-18 hours per day. This have disrupted my work abilities even lower, making me sometime to work in chunks of 2 hours (of which the overhead of constant household chores like getting the power station ready, dishes clean and teapot hot and ready took pretty much a good half). So 1 hour of work with electricity on, then you go into unknown timeslot of darkness and bad internet (my ISP relied on usual power lines too much. Now I have 4 independent ISP lines, one of which is cellular (i.e. works until mobile network is up -- but unreliable and slow) and one is optical (was sluggish at first, requiring the hardware reboots, but quite OK in a year after the installation -- I'm actually posting this text during blackout and have no problems with the internet at all)).
+
+As I had some time and resources, the orders were made for some power supplies (or rather power accumulators) that made our life much easier. I have now two EcoFlows, the bigger one is connected to the fridge and is more of a reserve of electricity for even worse conditions, and the smaller one is powering the wifi APs and ISP's routers. As I said, desktop and monitor are fully shut down during the power outages, and for now I'm OK with that: I'm just using my macbook.
+
+But there's a slight problem -- instead of using the ergonomic way of work at my precious stand desk, with hilariously comfortable keyboard and big display, I've taught myself to work at macbook sitting at the sofa even when the electricity is allright. Actually I found that I'm more productive that way! Not sure how it works, I guess it's more of a bad habit becoming a second nature.
+
+* Software
+Main energy saving solutions I'm using now are Al Dente (program that controls the level of the battery to be always at the healthy level -- even though I'm not sure it's really that useful) and OrbStack instead of usual Docker Desktop. I've experienced *huge* energy saving after moving from OSS Docker Desktop to evil closed OrbStack. But let me tell you, this migration saved me a ton of time. OrbStack is really Docker made right, only proprietory. But we have to make our decisions.
+
+Syncing two computers both using MacOs is pretty easy (just use iCloud!) but unreliable (you never can tell if things are really same on both sides). E.g. syncing the directory with org files brings me conflicts every time I'm using org-agenda. I'm sure there is a way to make it work, but for now I'm just using org-mode for the documentation, and calendar (BusyCal) for work planning.
+
+Main power users on my system (according to Activity Monitor) are Emacs and Safari. Safari seems to be much easier on Memory and CPU consumption than Chrome or Arc, and also syncs good enough between phone and two Macs. So Safari it is.
+
+* General life tips
+1. Have all your shit charged when you have a possibility. That means all your phones, all your powerbanks, all your notebooks, tablets, kindles etc. Just get some kind of USB hub, and let it be busy every minute the power is on. You never know which 2% of battery could be converted into critical information or just a heart warming call from a friend. You need both.
+2. Prepare a stock of ramen-like stuff, anything that can be prepared quickly and easily. Let it be some high-priced tourist food or just a noodles from the nearest shop, have some extra. There are 1-minute instant soups, 2-minutes porridge, things ike that. Buy yourself a big box of candy or any sugar-high sweets, put it away and eat it when things are sour.
+3. Have a ready supply of hot drinking water: use thermos or anything like that, so you have have some tea, you can fill the heating bottle etc.
+4. Try to have your fridge working. I know people who just fill the freezer up so the freezed food itself was working as a cold accumulator, but I wonder how safe and sound the solution is. I'm using power station.
+5. Minimize the doomscrolling. It doesn't help at all, but it's very good in making yourself miserable. I mean it's really hard to live without information, but don't swim across the different opinions that don't really matters in the time, when your every day can be your last day. You better have some extra brain resources to live through.
+6. Don't expect to work full time. In reality I was able to work effectively around the half of my usual work time -- and this is my optimistic estimates.
+7. Overcommunicate. Document everything and send to your colleagues. Push every commit. Write in slack. Talk in zoom. You need the society and society kinda needs you (not really). But it's better to show that you're alive and kicking than disappear for a week and then return with some crazy good PR that is not really needed anymore.
+8. Buy yourself a proper headlamp -- they are crazy good now, with quite a long battery life. Buy your wife a headlamp. Buy a headlamp for your dog (I'm not joking).
+9. Don't use elevators at all times. It's easy for me, it's not that easy for everybody -- but you don't want to stuck in the elevator during the air raid.
+10. Put all the important papers (passports, money etc) in a water-proof package, put that package in a backpack, have this backpack right near the door at all times.

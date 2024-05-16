@@ -17,8 +17,7 @@
   <a href="https://vlnn.dev">Generalistic writings from @vlnn</a>
 </div></div>
 <div id="content">
-<h1> Github | Projects | Linkedin </h1>
-
+<h1 class="title">Posts tagged "programming":</h1>
 <div class="post-date">16 May 2024</div><h1 class="post-title"><a href="https://vlnn.dev/2024-05-16-programming-in-wartime.html">Programming in wartime</a></h1>
 <p>
 I&rsquo;m Ukrainian, and Ukraine is fighting for its very existence right now. I&rsquo;m a civilian (i.e. not conscripted yet) living in Kyiv. It&rsquo;s relatively quiet here now, except maybe one or two raid attacks alerts per day.
@@ -83,127 +82,7 @@ Main power users on my system (according to Activity Monitor) are Emacs and Safa
 </ol>
 </div>
 </div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-schedule.html">schedule</a> <a href="https://vlnn.dev/tag-war.html">war</a> <a href="https://vlnn.dev/tag-programming.html">programming</a> <a href="https://vlnn.dev/tag-setup.html">setup</a> </div>
-<div class="post-date">24 Jan 2023</div><h1 class="post-title"><a href="https://vlnn.dev/2023-01-24-macos-problem-with-hex-input.html">Macos problem with HEX input</a></h1>
-<p>
-If you&rsquo;re typing using non-english symbols like ς or ґ you might have problems with entering those into modern computers &#x2013; there are different encoding systems, as well as different keyboard layouts, and it&rsquo;s not that unusual to have problems with one that you can live with. Then you build yourself QMK or ZMK keyboard. They are programmable &#x2013; you can make them type anything. ANYTHING! Right? RIGHT?
-</p>
-
-<p>
-No, that&rsquo;s not true. You can&rsquo;t go fully independent of OS language layouts, that are converting scancodes into the keycodes and then into the characters themselves. You press [Q] in the UA mode, it gets to the OS as [Q], layout mapping makes it [Й], and you see it like that in the text you&rsquo;re typing. Among others, this should resolve problems with shortcuts like [CTRL+S] that may become unusable in cyrillic layout (as there&rsquo;s no such thing as [S] in Ukrainian, so you just can&rsquo;t save!) or get to some very different place on the keyboard if you use COLEMAK or something even weirder ([ASDF] in QWERTY maps to [ARDT] in Colemak).
-</p>
-
-<p>
-But why not make keyboard processor work even more? Why not provide the unicode code of the character instead of the scan code? Windows, Linux and Macos have their methods of the so-called [Unicode input](<a href="https://en.wikipedia.org/wiki/Unicode_input">https://en.wikipedia.org/wiki/Unicode_input</a>). Problem solved? Not really!
-</p>
-
-<p>
-Macos has long lasting [bug](<a href="https://discussions.apple.com/thread/253636848">https://discussions.apple.com/thread/253636848</a>) that prevents you from entering <b>some</b> codes using Unicode input. E.g. you may input [á] (code 0x00E1), but never could [à] (code 0x00E0). Similarly using the hex codes you can&rsquo;t enter greek pi (code 0x03C0). You can&rsquo;t enter cyrillic [р] (it <b>is</b> different from English [p]) &#x2013; seemingly just because their hex code ends with zero! (codes 0x0440).
-</p>
-
-<p>
-It seems to me that in my 40s anywhere I dig deep enough I get to something very different from the diamonds: I get more and more old rancid standards and piles of ancient bugs without wings.
-</p>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-macos,keyboard,ua.html">macos,keyboard,ua</a> </div>
-
-<div class="post-date">24 Jan 2023</div><h1 class="post-title"><a href="https://vlnn.dev/2023-01-24-antiprogress-of-the-dropbox.html">#+title: Antiprogress of the Dropbox</a></h1>
-<p>
-Not that long time ago (or was it long time? 10 years ago or so?) Dropbox was the new kind of the services &#x2013; very simple, very cheap, very direct kind of service. You want to share the photo or your hipster todo.txt, you put it in a special folder and that&rsquo;s it: it will be delivered automatically to everybody whom you informed the link, or to every PC where Dropbox is running under your creds. That&rsquo;s it! Super easy, super cool!
-</p>
-
-<p>
-I just used current version of Dropbox app for Android, and it is just terrifyingly awful. For starters, it has tutorial wizards that break my needs; I want to press a button, but it is covered with a text cloud of a tutorial. Next, I want to download some video files to my android device: there are buttons &ldquo;Sync&rdquo;, &ldquo;Make available offline&rdquo; and &ldquo;Save to Device&rdquo; &#x2013; and also &ldquo;Duplicate&rdquo;. Next, it asks to access my photos and my camera. And moreover, it shares the names of people who have access to the folder to anybody who has it already.
-</p>
-
-<p>
-I can&rsquo;t even&#x2026;
-</p>
-
-<p>
-I understand Syncthing could be infuriatingly complex, but at least it does one thing, and does it good.
-</p>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-getting-older,dropbox,web.html">getting-older,dropbox,web</a> </div>
-
-<div class="post-date">12 Oct 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-10-12-historical-bits-and-pieces.html">Historical bits and pieces</a></h1>
-<p>
-Some time ago I was a part of a team who introduced modern software development processes (text-based sources, CI, CD, cloud here and there) across the company with humongous and very cleverly written monolith. Yup, internally sources were not stored as text files. Yup, the format was created in-house. Yup, you had to use internal toolings only to work with this code. Yup, it was a great revelation for me to understand how different real work is from the world of js-hipsters deploying things over heroku.
-</p>
-
-<p>
-Interestingly enough, the core of the my team was consisted of people who actually wrote the most clever parts. I was a part of this project for couple years trying my best and watching superheroes around me trying their best to finish this project. At some point I left the company and all I have now is this screenshot of one-week project of providing developers possibility to load customized tools into the work environment.
-</p>
-
-
-<figure id="orga3bda79">
-<img src="./static/things-i-did.jpeg" alt="things-i-did.jpeg">
-
-</figure>
-
-<p>
-Two unsettling ideas arise in my brain after I share the picture above:
-</p>
-<ol class="org-ol">
-<li>Software industry is expanding so fast that half of your colleagues perhaps have less than 5 years of experience (stole the idea from someone, but it&rsquo;s as unsettling as my one).</li>
-<li>Some senior clever guys and girls right now are trying to help &rsquo;newcomers&rsquo; to work with legacy code bases they themeselves developed over the years. This task may be much harder than actually developing the legacy code base.</li>
-</ol>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-apl.html">apl</a> <a href="https://vlnn.dev/tag-git.html">git</a> <a href="https://vlnn.dev/tag-legacy.html">legacy</a> </div>
-
-<div class="post-date">12 Oct 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-10-12-daylight-lamp:-first-day.html">Daylight lamp: first day</a></h1>
-<p>
-I&rsquo;ve bought a daylight lamp and not sure about it.
-</p>
-
-<p>
-The idea beside this product is that if human being has less daylight than usual due to bad weather or wrong lifestyle, they may use artificial light source with the spectrum of emission that is similar to natural sunlight. Moreover, it may be constructed in such a way, that no harmful UV radiation is created. And, of course, but companies decided that it&rsquo;s time to make a big buck selling cheap lamps. Let&rsquo;s see how it goes.
-</p>
-
-<p>
-I&rsquo;m using Beurer TL 100 lamp. This is not a proper review or paid promotion. This is my first day impressions.
-</p>
-
-<div id="outline-container-org2d9b260" class="outline-2">
-<h2 id="org2d9b260">First look</h2>
-<div class="outline-text-2" id="text-org2d9b260">
-
-<figure id="org17fbea0">
-<img src="static/daylight-lamp.gif" alt="daylight-lamp.gif">
-
-</figure>
-
-<p>
-Big, round, milky white lamp needs constant connection to the power outlet. Using buttons on the unit you may switch it on/off and control brightness to some extent.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org04ce9aa" class="outline-2">
-<h2 id="org04ce9aa">Another sun</h2>
-<div class="outline-text-2" id="text-org04ce9aa">
-<p>
-Imagine you close the curtains and then go out of room. When you return to the room first you think that someone has opened the curtains and it&rsquo;s a sunny outside. Everything is illuminated with nice (and surprizingly cold &#x2013; meaning more to the blue side of spectrum) light. This is how the lamp is working. The picture doesn&rsquo;t present it too good, but it was pretty sunny even without the lamp switched on, but with the light from the lamp everything else looks like deep shadow. Also it&rsquo;s nice to have two sources of light that comes from different directions (there&rsquo;s even a specific pattern called &ldquo;Light on Two Sides of Every Room&rdquo; in a book &ldquo;A Pattern Language&rdquo; by Christopher Alexander).
-</p>
-</div>
-</div>
-
-<div id="outline-container-org5eabd5b" class="outline-2">
-<h2 id="org5eabd5b">Good</h2>
-<div class="outline-text-2" id="text-org5eabd5b">
-<p>
-Lots of things are better when illuminated. I like how everything looks under the daylight lamp. This made me a bit happier, of course, but not sure if it&rsquo;s antistress effect of shopping or lamp really works in this context.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org7e4db69" class="outline-2">
-<h2 id="org7e4db69">Bad</h2>
-<div class="outline-text-2" id="text-org7e4db69">
-<p>
-My eyes seems to be a bit sore due to constant bright thingy in unusual place. I&rsquo;ve switched the lamp after 2-3 hours of test on it&rsquo;s lowest level.
-</p>
-</div>
-</div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-light.html">light</a> <a href="https://vlnn.dev/tag-lamp.html">lamp</a> <a href="https://vlnn.dev/tag-health.html">health</a> </div>
-<div id="archive">
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-schedule.html">schedule</a> <a href="https://vlnn.dev/tag-war.html">war</a> <a href="https://vlnn.dev/tag-programming.html">programming</a> <a href="https://vlnn.dev/tag-setup.html">setup</a> </div><div id="archive">
 <a href="https://vlnn.dev/archive.html">Other posts</a>
 </div>
 </div>
