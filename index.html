@@ -17,8 +17,21 @@
   <a href="https://vlnn.dev">Generalistic writings from @vlnn</a>
 </div></div>
 <div id="content">
-<h1> Github | Projects | Linkedin </h1>
+<h5> Github | Projects | Linkedin </h5>
 
+<div class="post-date">20 May 2024</div><h1 class="post-title"><a href="https://vlnn.dev/2024-05-20-solution-to-the-repl-snippets-(using-emacs-ofc).html">THE Solution to the REPL snippets (using Emacs ofc)</a></h1>
+<p>
+Miro Bezjak wrote an interesting post called <a href="https://mbezjak.github.io/posts/what-to-do-with-evaluated-repl-expressions/">What to Do With Evaluated REPL Expressions?</a>. The problem he describes is actually a bit different from the one I thought of when saw the title: it&rsquo;s not about re-using evaluation results in the REPL (which is not really possible without re-evaluation or using weird numbering acces &#x2013; as far as I know). No, it&rsquo;s really about the expressions that should not go into the the released code, but the one the developer uses during the development &#x2013; small chunks of the code with ops-tasks, small checks, calls to the external systems etc. Miro suggests to create the out-of-classpath user directory for every project developer, and create a common place for all those code snippets called everything.clj or something like that. This file should be committed to the repo (thus shared and easily referenced between the developers), but not become the part of &ldquo;official code&rdquo; (hopefully not even being compiled while release process).
+</p>
+
+<p>
+I like the approach but I dislike several little problems that come with it. First of all, &ldquo;operational&rdquo; snippets are often bound to the exact configuration &#x2013; hostnames, port numbers etc. Even secrets! Thus, you shouldn&rsquo;t share it as is: they should either become some developer environment script, or go away with the repl history. Don&rsquo;t encourage other users look into the pie if you&rsquo;re not sure it is the same pie you&rsquo;re both having.
+</p>
+
+<p>
+But my main concern is that the problem is being resolved on wrong level. There are special programs that are perfect for using and managing snippets called text editors. Every text editor (and hopefully any IDE) provide search, copy and paste capability. Emacs even has a built-in buffer that can be used specifically for that reason called scratch buffer: something written there for the moment, edited, ran, saved somewhere else&#x2026; and then scratched out as new tasks are coming. You may even configure project-related scratch buffer that will not erase its text after restart of Emacs. So for the development itself you may safely use scratch buffer (or anything having same function in <span class="underline">your</span> editor of choice). But what if you want to reuse it? Create either a devenv script or yasnippet file. What if you want to share it with colleagues? Use gist (or even better internal wiki). In that way when the code will change the behaviour (due to your or your colleauges&rsquo; work on the code or infrastructure) the snippet will not be incorrectly bound to the updated code. The script is outdated? Well, update it on separate PR, or let someone else do it. Wiki is outdated? Fix it on the spot. The idea is that the production code should not be contaminated with the operational code &#x2013; or it should be a well-designed <span class="underline">part of the code</span>.
+</p>
+<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-discussion.html">discussion</a> <a href="https://vlnn.dev/tag-repl.html">repl</a> <a href="https://vlnn.dev/tag-clojure.html">clojure</a> <a href="https://vlnn.dev/tag-emacs.html">emacs</a> </div>
 <div class="post-date">16 May 2024</div><h1 class="post-title"><a href="https://vlnn.dev/2024-05-16-programming-in-wartime.html">Programming in wartime</a></h1>
 <p>
 I&rsquo;m Ukrainian, and Ukraine is fighting for its very existence right now. I&rsquo;m a civilian (i.e. not conscripted yet) living in Kyiv. It&rsquo;s relatively quiet here now, except maybe one or two raid attacks alerts per day.
@@ -147,62 +160,6 @@ Two unsettling ideas arise in my brain after I share the picture above:
 <li>Some senior clever guys and girls right now are trying to help &rsquo;newcomers&rsquo; to work with legacy code bases they themeselves developed over the years. This task may be much harder than actually developing the legacy code base.</li>
 </ol>
 <div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-apl.html">apl</a> <a href="https://vlnn.dev/tag-git.html">git</a> <a href="https://vlnn.dev/tag-legacy.html">legacy</a> </div>
-
-<div class="post-date">12 Oct 2022</div><h1 class="post-title"><a href="https://vlnn.dev/2022-10-12-daylight-lamp:-first-day.html">Daylight lamp: first day</a></h1>
-<p>
-I&rsquo;ve bought a daylight lamp and not sure about it.
-</p>
-
-<p>
-The idea beside this product is that if human being has less daylight than usual due to bad weather or wrong lifestyle, they may use artificial light source with the spectrum of emission that is similar to natural sunlight. Moreover, it may be constructed in such a way, that no harmful UV radiation is created. And, of course, but companies decided that it&rsquo;s time to make a big buck selling cheap lamps. Let&rsquo;s see how it goes.
-</p>
-
-<p>
-I&rsquo;m using Beurer TL 100 lamp. This is not a proper review or paid promotion. This is my first day impressions.
-</p>
-
-<div id="outline-container-org2d9b260" class="outline-2">
-<h2 id="org2d9b260">First look</h2>
-<div class="outline-text-2" id="text-org2d9b260">
-
-<figure id="org17fbea0">
-<img src="static/daylight-lamp.gif" alt="daylight-lamp.gif">
-
-</figure>
-
-<p>
-Big, round, milky white lamp needs constant connection to the power outlet. Using buttons on the unit you may switch it on/off and control brightness to some extent.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org04ce9aa" class="outline-2">
-<h2 id="org04ce9aa">Another sun</h2>
-<div class="outline-text-2" id="text-org04ce9aa">
-<p>
-Imagine you close the curtains and then go out of room. When you return to the room first you think that someone has opened the curtains and it&rsquo;s a sunny outside. Everything is illuminated with nice (and surprizingly cold &#x2013; meaning more to the blue side of spectrum) light. This is how the lamp is working. The picture doesn&rsquo;t present it too good, but it was pretty sunny even without the lamp switched on, but with the light from the lamp everything else looks like deep shadow. Also it&rsquo;s nice to have two sources of light that comes from different directions (there&rsquo;s even a specific pattern called &ldquo;Light on Two Sides of Every Room&rdquo; in a book &ldquo;A Pattern Language&rdquo; by Christopher Alexander).
-</p>
-</div>
-</div>
-
-<div id="outline-container-org5eabd5b" class="outline-2">
-<h2 id="org5eabd5b">Good</h2>
-<div class="outline-text-2" id="text-org5eabd5b">
-<p>
-Lots of things are better when illuminated. I like how everything looks under the daylight lamp. This made me a bit happier, of course, but not sure if it&rsquo;s antistress effect of shopping or lamp really works in this context.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org7e4db69" class="outline-2">
-<h2 id="org7e4db69">Bad</h2>
-<div class="outline-text-2" id="text-org7e4db69">
-<p>
-My eyes seems to be a bit sore due to constant bright thingy in unusual place. I&rsquo;ve switched the lamp after 2-3 hours of test on it&rsquo;s lowest level.
-</p>
-</div>
-</div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-light.html">light</a> <a href="https://vlnn.dev/tag-lamp.html">lamp</a> <a href="https://vlnn.dev/tag-health.html">health</a> </div>
 <div id="archive">
 <a href="https://vlnn.dev/archive.html">Other posts</a>
 </div>
