@@ -1,0 +1,6 @@
+#+title: Light Sources During The War
+#+date: <2026-07-29 19:36>
+#+description:
+#+filetags: light lamp health war
+
+[[show][file:notes/daylight-lamp-first-day]]
