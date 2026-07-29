@@ -217,9 +217,11 @@ body { display: flex; flex-direction: column; }
 .note-content img { max-width: 100%; border: 1px solid var(--rule); }
 .note-content a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
 .note-content a.note-link { color: var(--accent-warm); text-decoration-style: dotted; }
+.note-content a.tag-link { color: var(--green); text-decoration: none; }
+.note-content a.tag-link:hover { color: var(--green); text-decoration: underline; text-decoration-thickness: 1px; }
 .note-content a:hover { color: var(--green); text-decoration-thickness: 2px; }
 .note-content a.note-link:hover { text-decoration-thickness: 1px; }
-.note-content a:not(.note-link):not(:has(img))::after { content: "\2197"; font-size: 0.72em; vertical-align: super; margin-left: 1px; }
+.note-content a:not(.note-link):not(.tag-link):not(:has(img))::after { content: "\2197"; font-size: 0.72em; vertical-align: super; margin-left: 1px; }
 .note-content ol, .note-content ul { padding-left: 1.4em; }
 .note-content li { margin-bottom: 0.35em; }
 
