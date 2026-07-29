@@ -63,7 +63,7 @@ The timeline pane is a synthetic note (open `?stackedNotes=timeline` or the head
 
 ## Type scale
 
-Desktop body text is `--text: 20px` at the top of `notes.css`; headings, backlinks, and the title scale from it. Pane width is `--pane-width: clamp(520px, 33.3vw, 760px)` — roughly a third of the viewport, Matuschak-style, so ~3 panes fit side by side, clamped to keep the measure readable (~55–70 characters per line at 20px). To go bigger or smaller, change `--text` and the clamp bounds together. Mobile overrides `--text` to 16.5px in the media query.
+Body text is the system sans stack (`--sans`, Matuschak-style — SF on Mac, Segoe on Windows, zero webfont bytes) at `--text: 18px`; headings, backlinks, and the title scale from it. All mono surfaces — spines, modelines, tags, timeline dates, tooltips, code — use [Departure Mono](https://departuremono.com) (Helena Zhang, OFL), self-hosted at `static/fonts/` with its license, ~22KB woff2, no third-party requests. Mono sizes are whole pixels on purpose: it's a pixel-grid font and fractional sizes blur it. Pane width is `--pane-width: clamp(520px, 33.3vw, 760px)` — roughly a third of the viewport so ~3 panes fit side by side, clamped to keep the measure readable. To go bigger or smaller, change `--text` and the clamp bounds together. Mobile overrides `--text` to 16.5px in the media query.
 
 ## Mobile
 

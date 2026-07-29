@@ -10,11 +10,18 @@
   --green-light: #dcead8;
   --spine: #e9ece6;
   --modeline: #eef0ea;
-  --text: 20px;
+  --text: 18px;
   --pane-width: clamp(520px, 33.3vw, 760px);
   --spine-width: 42px;
-  --serif: "Charter", "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
-  --mono: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "Departure Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@font-face {
+  font-family: "Departure Mono";
+  src: url("static/fonts/DepartureMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
 }
 
 * { box-sizing: border-box; }
@@ -26,7 +33,7 @@ html, body {
   height: 100%;
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--serif);
+  font-family: var(--sans);
   -webkit-text-size-adjust: 100%;
 }
 
@@ -103,7 +110,7 @@ body { display: flex; flex-direction: column; }
   background: var(--modeline);
   border-top: 1px solid var(--rule);
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: 11px;
   color: var(--ink-soft);
   white-space: nowrap;
   overflow: hidden;
@@ -305,7 +312,7 @@ body { display: flex; flex-direction: column; }
   background: var(--ink);
   color: var(--pane);
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: 11px;
   white-space: nowrap;
   border-radius: 3px;
   pointer-events: none;
@@ -320,7 +327,7 @@ body { display: flex; flex-direction: column; }
   top: 78px;
   transform: translateX(-50%);
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 10px;
   letter-spacing: 0.06em;
   color: var(--ink-soft);
 }
@@ -346,7 +353,7 @@ body { display: flex; flex-direction: column; }
   background: var(--ink);
   color: var(--pane);
   font-family: var(--mono);
-  font-size: 12.5px;
+  font-size: 12px;
   border-radius: 3px;
   z-index: 10;
 }
