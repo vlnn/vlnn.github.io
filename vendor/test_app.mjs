@@ -176,17 +176,22 @@ const arcIndex = {
   },
 };
 const arcLayout = [
-  { slug: "a", x: 0 },
-  { slug: "b", x: 0.5 },
-  { slug: "c", x: 1 },
+  { slug: "a", x: 0, lane: 0 },
+  { slug: "b", x: 0.5, lane: 2 },
+  { slug: "c", x: 1, lane: 0 },
 ];
 
 assert.deepEqual(
   arcPairs(arcIndex, arcLayout),
-  [{ from: "a", to: "b", fromX: 0, toX: 0.5 }],
+  [{ from: "a", to: "b", fromX: 0, toX: 0.5, fromLane: 0, toLane: 2 }],
   "arcPairs should dedupe mutual links into one chronological arc, dropping self-links and slugs missing from the layout"
 );
 assert.deepEqual(arcPairs({ notes: {} }, []), [], "arcPairs should be empty for an empty graph");
+
+import { arcEndY } from "../app.js";
+assert.equal(arcEndY(0), 72.5, "arcEndY should sit on the base lane's dot center");
+assert.equal(arcEndY(1), 61.5, "arcEndY should climb one lane step per lane");
+assert.equal(arcEndY(2), 50.5, "arcEndY should reach the top lane's dot center");
 
 assert.ok(arcHeight(0.1) < arcHeight(0.5), "arcHeight should grow with the horizontal span");
 assert.equal(arcHeight(1), arcHeight(0.9), "arcHeight should cap so wide arcs stay inside the bar");

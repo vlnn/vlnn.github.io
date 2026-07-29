@@ -93,17 +93,24 @@ export function timeArrowLayout(entries, minGap) {
 }
 
 export function arcPairs(index, layout) {
-  const xOf = new Map(layout.map((entry) => [entry.slug, entry.x]));
+  const dotOf = new Map(layout.map((entry) => [entry.slug, entry]));
   const seen = new Set();
   const pairs = [];
   layout.forEach(({ slug }) => {
     ((index.notes[slug] || {}).links || []).forEach((target) => {
-      if (target === slug || !xOf.has(target)) return;
-      const [from, to] = xOf.get(slug) <= xOf.get(target) ? [slug, target] : [target, slug];
+      if (target === slug || !dotOf.has(target)) return;
+      const [from, to] = dotOf.get(slug).x <= dotOf.get(target).x ? [slug, target] : [target, slug];
       const key = `${from}→${to}`;
       if (seen.has(key)) return;
       seen.add(key);
-      pairs.push({ from, to, fromX: xOf.get(from), toX: xOf.get(to) });
+      pairs.push({
+        from,
+        to,
+        fromX: dotOf.get(from).x,
+        toX: dotOf.get(to).x,
+        fromLane: dotOf.get(from).lane,
+        toLane: dotOf.get(to).lane,
+      });
     });
   });
   return pairs;
@@ -437,13 +444,20 @@ export function trackPosition(x) {
 }
 
 const ARC_VIEW_WIDTH = 1000;
-const ARC_BASELINE = 72;
+const DOT_BASELINE = 72.5;
+const LANE_STEP = 11;
+
+export function arcEndY(lane) {
+  return DOT_BASELINE - LANE_STEP * (lane || 0);
+}
 
 function arcPath(pair) {
   const x1 = pair.fromX * ARC_VIEW_WIDTH;
   const x2 = pair.toX * ARC_VIEW_WIDTH;
-  const peak = ARC_BASELINE - 2 * arcHeight(pair.toX - pair.fromX);
-  return `M ${x1} ${ARC_BASELINE} Q ${(x1 + x2) / 2} ${peak} ${x2} ${ARC_BASELINE}`;
+  const y1 = arcEndY(pair.fromLane);
+  const y2 = arcEndY(pair.toLane);
+  const peak = Math.min(y1, y2) - 2 * arcHeight(pair.toX - pair.fromX);
+  return `M ${x1} ${y1} Q ${(x1 + x2) / 2} ${peak} ${x2} ${y2}`;
 }
 
 function renderArcs(bar, layout) {
