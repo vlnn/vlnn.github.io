@@ -1,0 +1,28 @@
+name: Publish notes
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv run --project tools --group dev pytest tools -q
+      - run: uv run --project tools python tools/build_index.py notes index.json
+      - run: node vendor/test_app.mjs
+      - run: node vendor/test_feed.mjs
+      - run: node tools/build_feed.mjs
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - uses: actions/deploy-pages@v4
+        id: deployment

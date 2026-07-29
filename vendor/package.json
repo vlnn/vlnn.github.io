@@ -1,0 +1,5 @@
+{
+ "name": "vendor",
+ "type": "module",
+ "dependencies": {"esbuild": "^0.28.1", "rehype-stringify": "^10.0.1", "remark-gfm": "^4.0.1", "remark-parse": "^11.0.0", "remark-rehype": "^11.1.2", "unified": "^11.0.5", "uniorg-parse": "^3.2.2", "uniorg-rehype": "^2.2.0"}
+}

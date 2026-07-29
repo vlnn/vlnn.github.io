@@ -1,0 +1,11 @@
+#+title: About these notes
+#+date: <2026-07-29 12:00>
+#+filetags: meta
+
+Hi! I'm Volodymyr Anokhin ([[https://github.com/vlnn][@vlnn]]). These are my working notes, migrated from the old chronological blog into a linked garden. Click any link and it opens as a new pane to the right; the trail you follow lives in the URL, so you can share it. Curious about the machinery? See [[file:how-this-site-works.md][How this site works]].
+
+On tools and Emacs: [[file:solution-to-the-repl-snippets.org][THE Solution to the REPL snippets]] argues where operational code should actually live, and [[file:configuration-maintenance-vs-renovation.org][Configuration maintainance vs renovation]] is about tending configs before they rot. [[file:macos-hex-input-problem.org][Macos problem with HEX input]] documents an old wound at the bottom of the Unicode input stack.
+
+On languages and data: [[file:sql-as-data-analysis-volapuk.org][SQL as the Data Analysis' Volapük]], [[file:art-of-lisp-questions.org][Art of Lisp questions]], and [[file:historical-bits-and-pieces.org][Historical bits and pieces]] — the last one on what legacy really means.
+
+On life during the war: [[file:programming-in-wartime.org][Programming in wartime]] is the practical one; [[file:hello-wonderful-world.org][Привіт, чудовий світе (once again)]] is where this site restarted. Smaller notes: [[file:daylight-lamp-first-day.org][Daylight lamp: first day]], [[file:antiprogress-of-the-dropbox.org][Antiprogress of the Dropbox]].

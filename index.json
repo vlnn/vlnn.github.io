@@ -1,0 +1,185 @@
+{
+ "notes": {
+  "about-these-notes": {
+   "title": "About these notes",
+   "date": "2026-07-29",
+   "tags": [
+    "meta"
+   ],
+   "file": "about-these-notes.org",
+   "links": [
+    "how-this-site-works",
+    "solution-to-the-repl-snippets",
+    "configuration-maintenance-vs-renovation",
+    "macos-hex-input-problem",
+    "sql-as-data-analysis-volapuk",
+    "art-of-lisp-questions",
+    "historical-bits-and-pieces",
+    "programming-in-wartime",
+    "hello-wonderful-world",
+    "daylight-lamp-first-day",
+    "antiprogress-of-the-dropbox"
+   ],
+   "backlinks": [
+    "how-this-site-works"
+   ]
+  },
+  "antiprogress-of-the-dropbox": {
+   "title": "Antiprogress of the Dropbox",
+   "date": "2023-01-24",
+   "tags": [
+    "getting-older",
+    "dropbox",
+    "web"
+   ],
+   "file": "antiprogress-of-the-dropbox.org",
+   "links": [],
+   "backlinks": [
+    "about-these-notes"
+   ]
+  },
+  "art-of-lisp-questions": {
+   "title": "Art of Lisp questions",
+   "date": "2022-10-12",
+   "tags": [
+    "lisp",
+    "examples"
+   ],
+   "file": "art-of-lisp-questions.org",
+   "links": [],
+   "backlinks": [
+    "about-these-notes"
+   ]
+  },
+  "configuration-maintenance-vs-renovation": {
+   "title": "Configuration maintainance vs renovation",
+   "date": "2022-10-11",
+   "tags": [
+    "emacs",
+    "macbook",
+    "chores",
+    "howto"
+   ],
+   "file": "configuration-maintenance-vs-renovation.org",
+   "links": [],
+   "backlinks": [
+    "about-these-notes"
+   ]
+  },
+  "daylight-lamp-first-day": {
+   "title": "Daylight lamp: first day",
+   "date": "2022-10-12",
+   "tags": [
+    "light",
+    "lamp",
+    "health"
+   ],
+   "file": "daylight-lamp-first-day.org",
+   "links": [],
+   "backlinks": [
+    "about-these-notes"
+   ]
+  },
+  "hello-wonderful-world": {
+   "title": "Привіт, чудовий світе (once again)",
+   "date": "2022-10-08",
+   "tags": [
+    "admin",
+    "migration",
+    "war"
+   ],
+   "file": "hello-wonderful-world.org",
+   "links": [],
+   "backlinks": [
+    "about-these-notes"
+   ]
+  },
+  "historical-bits-and-pieces": {
+   "title": "Historical bits and pieces",
+   "date": "2022-10-12",
+   "tags": [
+    "apl",
+    "git",
+    "legacy"
+   ],
+   "file": "historical-bits-and-pieces.org",
+   "links": [],
+   "backlinks": [
+    "about-these-notes"
+   ]
+  },
+  "how-this-site-works": {
+   "title": "How this site works",
+   "date": "2026-07-29",
+   "tags": [
+    "meta",
+    "site"
+   ],
+   "file": "how-this-site-works.md",
+   "links": [
+    "about-these-notes"
+   ],
+   "backlinks": [
+    "about-these-notes"
+   ]
+  },
+  "macos-hex-input-problem": {
+   "title": "Macos problem with HEX input",
+   "date": "2023-01-24",
+   "tags": [
+    "macos",
+    "keyboard",
+    "ua"
+   ],
+   "file": "macos-hex-input-problem.org",
+   "links": [],
+   "backlinks": [
+    "about-these-notes"
+   ]
+  },
+  "programming-in-wartime": {
+   "title": "Programming in wartime",
+   "date": "2024-05-16",
+   "tags": [
+    "schedule",
+    "war",
+    "programming",
+    "setup"
+   ],
+   "file": "programming-in-wartime.org",
+   "links": [],
+   "backlinks": [
+    "about-these-notes"
+   ]
+  },
+  "solution-to-the-repl-snippets": {
+   "title": "THE Solution to the REPL snippets (using Emacs ofc)",
+   "date": "2024-05-20",
+   "tags": [
+    "discussion",
+    "repl",
+    "clojure",
+    "emacs"
+   ],
+   "file": "solution-to-the-repl-snippets.org",
+   "links": [],
+   "backlinks": [
+    "about-these-notes"
+   ]
+  },
+  "sql-as-data-analysis-volapuk": {
+   "title": "SQL as the Data Analysis' Volapük",
+   "date": "2022-09-19",
+   "tags": [
+    "data",
+    "sql",
+    "language"
+   ],
+   "file": "sql-as-data-analysis-volapuk.org",
+   "links": [],
+   "backlinks": [
+    "about-these-notes"
+   ]
+  }
+ }
+}

@@ -1,458 +1,207 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-<channel>
-<title><![CDATA[Generalistic writings from @vlnn]]></title>
-<description><![CDATA[Generalistic writings from @vlnn]]></description>
-<link>https://vlnn.dev/</link>
-<lastBuildDate>Tue, 21 May 2024 14:50:05 +0300</lastBuildDate>
-<item>
-  <title><![CDATA[THE Solution to the REPL snippets (using Emacs ofc)]]></title>
-  <description><![CDATA[
-<p>
-Miro Bezjak wrote an interesting post called <a href="https://mbezjak.github.io/posts/what-to-do-with-evaluated-repl-expressions/">What to Do With Evaluated REPL Expressions?</a>. The problem he describes is actually a bit different from the one I thought of when saw the title: it&rsquo;s not about re-using evaluation results in the REPL (which is not really possible without re-evaluation or using weird numbering acces &#x2013; as far as I know). No, it&rsquo;s really about the expressions that should not go into the the released code, but the one the developer uses during the development &#x2013; small chunks of the code with ops-tasks, small checks, calls to the external systems etc. Miro suggests to create the out-of-classpath user directory for every project developer, and create a common place for all those code snippets called everything.clj or something like that. This file should be committed to the repo (thus shared and easily referenced between the developers), but not become the part of &ldquo;official code&rdquo; (hopefully not even being compiled while release process).
-</p>
-
-<p>
-I like the approach but I dislike several little problems that come with it. First of all, &ldquo;operational&rdquo; snippets are often bound to the exact configuration &#x2013; hostnames, port numbers etc. Even secrets! Thus, you shouldn&rsquo;t share it as is: they should either become some developer environment script, or go away with the repl history. Don&rsquo;t encourage other users look into the pie if you&rsquo;re not sure it is the same pie you&rsquo;re both having.
-</p>
-
-<p>
-But my main concern is that the problem is being resolved on wrong level. There are special programs that are perfect for using and managing snippets called text editors. Every text editor (and hopefully any IDE) provide search, copy and paste capability. Emacs even has a built-in buffer that can be used specifically for that reason called scratch buffer: something written there for the moment, edited, ran, saved somewhere else&#x2026; and then scratched out as new tasks are coming. You may even configure project-related scratch buffer that will not erase its text after restart of Emacs. So for the development itself you may safely use scratch buffer (or anything having same function in <span class="underline">your</span> editor of choice). But what if you want to reuse it? Create either a devenv script or yasnippet file. What if you want to share it with colleagues? Use gist (or even better internal wiki). In that way when the code will change the behaviour (due to your or your colleauges&rsquo; work on the code or infrastructure) the snippet will not be incorrectly bound to the updated code. The script is outdated? Well, update it on separate PR, or let someone else do it. Wiki is outdated? Fix it on the spot. The idea is that the production code should not be contaminated with the operational code &#x2013; or it should be a well-designed <span class="underline">part of the code</span>.
-</p>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-discussion.html">discussion</a> <a href="https://vlnn.dev/tag-repl.html">repl</a> <a href="https://vlnn.dev/tag-clojure.html">clojure</a> <a href="https://vlnn.dev/tag-emacs.html">emacs</a> </div>]]></description>
-  <category><![CDATA[discussion]]></category>
-  <category><![CDATA[repl]]></category>
-  <category><![CDATA[clojure]]></category>
-  <category><![CDATA[emacs]]></category>
-  <link>https://vlnn.dev/2024-05-20-solution-to-the-repl-snippets-(using-emacs-ofc).html</link>
-  <guid>https://vlnn.dev/2024-05-20-solution-to-the-repl-snippets-(using-emacs-ofc).html</guid>
-  <pubDate>Mon, 20 May 2024 23:10:00 +0300</pubDate>
-</item>
-<item>
-  <title><![CDATA[Programming in wartime]]></title>
-  <description><![CDATA[
-<p>
-I&rsquo;m Ukrainian, and Ukraine is fighting for its very existence right now. I&rsquo;m a civilian (i.e. not conscripted yet) living in Kyiv. It&rsquo;s relatively quiet here now, except maybe one or two raid attacks alerts per day.
-</p>
-
-<p>
-This post is a mix of insights of how it is to work full day in wartime &#x2013; in no particular order or structure. Of course this is very limited point of view, as I&rsquo;m describing my own experience and my own surroundings. Being in Kharkiv, for instance, I would experienced quite a different conditions (Kharkiv is under constant shellings and bombing for a good year now).
-</p>
-
-<div id="outline-container-org4737cde" class="outline-2">
-<h2 id="org4737cde">Hardware</h2>
-<div class="outline-text-2" id="text-org4737cde">
-<p>
-My current hardware setup was planned during my onboarding at Apptopia (great company, BTW!) in the beginning of 2022. I&rsquo;ve decided to try MacOS for the first time in my life (was a Linux user for ~15 years), and have bought myself a M1 Macbook Pro. This was a great decision, mostly not due to the MacOS bells and whistles, but rather due to great battery life and capable processing power, that both led me through the time of blackouts in the late 2022. I was able to more or less use the whole stack locally, building and testing monorepo in around 30 minutes (including all integration tests that were based on services like Cassandra, Apache Druid and Spark ran in Docker Compose infrastructure).
-</p>
-
-<p>
-I&rsquo;m also using quite big external monitor (34&ldquo; Samsung Curved C34H890) that is connected to the M2 Mac Studio. This was my understanding of how ergonomic workplace should look like for me: standing desk, Kinesis Advantage with custom firmware (see <a href="https://github.com/vlnn/kinesis-advantage-2">https://github.com/vlnn/kinesis-advantage-2</a>), the Apple Trackpad mounted on the keyboard etc. All this fine and dandy except one thing: this setup doesn&rsquo;t have a battery and is shut down during the power outage. After russian shellings to the pretty much all the Ukrainian power plants infrastructure we&rsquo;ve experienced blackouts as long as for 12-18 hours per day. This have disrupted my work abilities even lower, making me sometime to work in chunks of 2 hours (of which the overhead of constant household chores like getting the power station ready, dishes clean and teapot hot and ready took pretty much a good half). So 1 hour of work with electricity on, then you go into unknown timeslot of darkness and bad internet (my ISP relied on usual power lines too much. Now I have 4 independent ISP lines, one of which is cellular (i.e. works until mobile network is up &#x2013; but unreliable and slow) and one is optical (was sluggish at first, requiring the hardware reboots, but quite OK in a year after the installation &#x2013; I&rsquo;m actually posting this text during blackout and have no problems with the internet at all)).
-</p>
-
-<p>
-As I had some time and resources, the orders were made for some power supplies (or rather power accumulators) that made our life much easier. I have now two EcoFlows, the bigger one is connected to the fridge and is more of a reserve of electricity for even worse conditions, and the smaller one is powering the wifi APs and ISP&rsquo;s routers. As I said, desktop and monitor are fully shut down during the power outages, and for now I&rsquo;m OK with that: I&rsquo;m just using my macbook.
-</p>
-
-<p>
-But there&rsquo;s a slight problem &#x2013; instead of using the ergonomic way of work at my precious stand desk, with hilariously comfortable keyboard and big display, I&rsquo;ve taught myself to work at macbook sitting at the sofa even when the electricity is allright. Actually I found that I&rsquo;m more productive that way! Not sure how it works, I guess it&rsquo;s more of a bad habit becoming a second nature.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org4915074" class="outline-2">
-<h2 id="org4915074">Software</h2>
-<div class="outline-text-2" id="text-org4915074">
-<p>
-Main energy saving solutions I&rsquo;m using now are Al Dente (program that controls the level of the battery to be always at the healthy level &#x2013; even though I&rsquo;m not sure it&rsquo;s really that useful) and OrbStack instead of usual Docker Desktop. I&rsquo;ve experienced <b>huge</b> energy saving after moving from OSS Docker Desktop to evil closed OrbStack. But let me tell you, this migration saved me a ton of time. OrbStack is really Docker made right, only proprietory. But we have to make our decisions.
-</p>
-
-<p>
-Syncing two computers both using MacOs is pretty easy (just use iCloud!) but unreliable (you never can tell if things are really same on both sides). E.g. syncing the directory with org files brings me conflicts every time I&rsquo;m using org-agenda. I&rsquo;m sure there is a way to make it work, but for now I&rsquo;m just using org-mode for the documentation, and calendar (BusyCal) for work planning.
-</p>
-
-<p>
-Main power users on my system (according to Activity Monitor) are Emacs and Safari. Safari seems to be much easier on Memory and CPU consumption than Chrome or Arc, and also syncs good enough between phone and two Macs. So Safari it is.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org855cb4e" class="outline-2">
-<h2 id="org855cb4e">General life tips</h2>
-<div class="outline-text-2" id="text-org855cb4e">
-<ol class="org-ol">
-<li>Have all your shit charged when you have a possibility. That means all your phones, all your powerbanks, all your notebooks, tablets, kindles etc. Just get some kind of USB hub, and let it be busy every minute the power is on. You never know which 2% of battery could be converted into critical information or just a heart warming call from a friend. You need both.</li>
-<li>Prepare a stock of ramen-like stuff, anything that can be prepared quickly and easily. Let it be some high-priced tourist food or just a noodles from the nearest shop, have some extra. There are 1-minute instant soups, 2-minutes porridge, things ike that. Buy yourself a big box of candy or any sugar-high sweets, put it away and eat it when things are sour.</li>
-<li>Have a ready supply of hot drinking water: use thermos or anything like that, so you have have some tea, you can fill the heating bottle etc.</li>
-<li>Try to have your fridge working. I know people who just fill the freezer up so the freezed food itself was working as a cold accumulator, but I wonder how safe and sound the solution is. I&rsquo;m using power station.</li>
-<li>Minimize the doomscrolling. It doesn&rsquo;t help at all, but it&rsquo;s very good in making yourself miserable. I mean it&rsquo;s really hard to live without information, but don&rsquo;t swim across the different opinions that don&rsquo;t really matters in the time, when your every day can be your last day. You better have some extra brain resources to live through.</li>
-<li>Don&rsquo;t expect to work full time. In reality I was able to work effectively around the half of my usual work time &#x2013; and this is my optimistic estimates.</li>
-<li>Overcommunicate. Document everything and send to your colleagues. Push every commit. Write in slack. Talk in zoom. You need the society and society kinda needs you (not really). But it&rsquo;s better to show that you&rsquo;re alive and kicking than disappear for a week and then return with some crazy good PR that is not really needed anymore.</li>
-<li>Buy yourself a proper headlamp &#x2013; they are crazy good now, with quite a long battery life. Buy your wife a headlamp. Buy a headlamp for your dog (I&rsquo;m not joking).</li>
-<li>Don&rsquo;t use elevators at all times. It&rsquo;s easy for me, it&rsquo;s not that easy for everybody &#x2013; but you don&rsquo;t want to stuck in the elevator during the air raid.</li>
-<li>Put all the important papers (passports, money etc) in a water-proof package, put that package in a backpack, have this backpack right near the door at all times.</li>
-</ol>
-</div>
-</div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-schedule.html">schedule</a> <a href="https://vlnn.dev/tag-war.html">war</a> <a href="https://vlnn.dev/tag-programming.html">programming</a> <a href="https://vlnn.dev/tag-setup.html">setup</a> </div>]]></description>
-  <category><![CDATA[schedule]]></category>
-  <category><![CDATA[war]]></category>
-  <category><![CDATA[programming]]></category>
-  <category><![CDATA[setup]]></category>
-  <link>https://vlnn.dev/2024-05-16-programming-in-wartime.html</link>
-  <guid>https://vlnn.dev/2024-05-16-programming-in-wartime.html</guid>
-  <pubDate>Thu, 16 May 2024 08:26:00 +0300</pubDate>
-</item>
-<item>
-  <title><![CDATA[Macos problem with HEX input]]></title>
-  <description><![CDATA[
-<p>
-If you&rsquo;re typing using non-english symbols like ς or ґ you might have problems with entering those into modern computers &#x2013; there are different encoding systems, as well as different keyboard layouts, and it&rsquo;s not that unusual to have problems with one that you can live with. Then you build yourself QMK or ZMK keyboard. They are programmable &#x2013; you can make them type anything. ANYTHING! Right? RIGHT?
-</p>
-
-<p>
-No, that&rsquo;s not true. You can&rsquo;t go fully independent of OS language layouts, that are converting scancodes into the keycodes and then into the characters themselves. You press [Q] in the UA mode, it gets to the OS as [Q], layout mapping makes it [Й], and you see it like that in the text you&rsquo;re typing. Among others, this should resolve problems with shortcuts like [CTRL+S] that may become unusable in cyrillic layout (as there&rsquo;s no such thing as [S] in Ukrainian, so you just can&rsquo;t save!) or get to some very different place on the keyboard if you use COLEMAK or something even weirder ([ASDF] in QWERTY maps to [ARDT] in Colemak).
-</p>
-
-<p>
-But why not make keyboard processor work even more? Why not provide the unicode code of the character instead of the scan code? Windows, Linux and Macos have their methods of the so-called [Unicode input](<a href="https://en.wikipedia.org/wiki/Unicode_input">https://en.wikipedia.org/wiki/Unicode_input</a>). Problem solved? Not really!
-</p>
-
-<p>
-Macos has long lasting [bug](<a href="https://discussions.apple.com/thread/253636848">https://discussions.apple.com/thread/253636848</a>) that prevents you from entering <b>some</b> codes using Unicode input. E.g. you may input [á] (code 0x00E1), but never could [à] (code 0x00E0). Similarly using the hex codes you can&rsquo;t enter greek pi (code 0x03C0). You can&rsquo;t enter cyrillic [р] (it <b>is</b> different from English [p]) &#x2013; seemingly just because their hex code ends with zero! (codes 0x0440).
-</p>
-
-<p>
-It seems to me that in my 40s anywhere I dig deep enough I get to something very different from the diamonds: I get more and more old rancid standards and piles of ancient bugs without wings.
-</p>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-macos,keyboard,ua.html">macos,keyboard,ua</a> </div>
-]]></description>
-  <category><![CDATA[macos,keyboard,ua]]></category>
-  <link>https://vlnn.dev/2023-01-24-macos-problem-with-hex-input.html</link>
-  <guid>https://vlnn.dev/2023-01-24-macos-problem-with-hex-input.html</guid>
-  <pubDate>Tue, 24 Jan 2023 23:32:00 +0200</pubDate>
-</item>
-<item>
-  <title><![CDATA[#+title: Antiprogress of the Dropbox]]></title>
-  <description><![CDATA[
-<p>
-Not that long time ago (or was it long time? 10 years ago or so?) Dropbox was the new kind of the services &#x2013; very simple, very cheap, very direct kind of service. You want to share the photo or your hipster todo.txt, you put it in a special folder and that&rsquo;s it: it will be delivered automatically to everybody whom you informed the link, or to every PC where Dropbox is running under your creds. That&rsquo;s it! Super easy, super cool!
-</p>
-
-<p>
-I just used current version of Dropbox app for Android, and it is just terrifyingly awful. For starters, it has tutorial wizards that break my needs; I want to press a button, but it is covered with a text cloud of a tutorial. Next, I want to download some video files to my android device: there are buttons &ldquo;Sync&rdquo;, &ldquo;Make available offline&rdquo; and &ldquo;Save to Device&rdquo; &#x2013; and also &ldquo;Duplicate&rdquo;. Next, it asks to access my photos and my camera. And moreover, it shares the names of people who have access to the folder to anybody who has it already.
-</p>
-
-<p>
-I can&rsquo;t even&#x2026;
-</p>
-
-<p>
-I understand Syncthing could be infuriatingly complex, but at least it does one thing, and does it good.
-</p>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-getting-older,dropbox,web.html">getting-older,dropbox,web</a> </div>
-]]></description>
-  <category><![CDATA[getting-older,dropbox,web]]></category>
-  <link>https://vlnn.dev/2023-01-24-antiprogress-of-the-dropbox.html</link>
-  <guid>https://vlnn.dev/2023-01-24-antiprogress-of-the-dropbox.html</guid>
-  <pubDate>Tue, 24 Jan 2023 14:44:00 +0200</pubDate>
-</item>
-<item>
-  <title><![CDATA[Historical bits and pieces]]></title>
-  <description><![CDATA[
-<p>
-Some time ago I was a part of a team who introduced modern software development processes (text-based sources, CI, CD, cloud here and there) across the company with humongous and very cleverly written monolith. Yup, internally sources were not stored as text files. Yup, the format was created in-house. Yup, you had to use internal toolings only to work with this code. Yup, it was a great revelation for me to understand how different real work is from the world of js-hipsters deploying things over heroku.
-</p>
-
-<p>
-Interestingly enough, the core of the my team was consisted of people who actually wrote the most clever parts. I was a part of this project for couple years trying my best and watching superheroes around me trying their best to finish this project. At some point I left the company and all I have now is this screenshot of one-week project of providing developers possibility to load customized tools into the work environment.
-</p>
-
-
-<figure id="orga3bda79">
-<img src="./static/things-i-did.jpeg" alt="things-i-did.jpeg">
-
-</figure>
-
-<p>
-Two unsettling ideas arise in my brain after I share the picture above:
-</p>
-<ol class="org-ol">
-<li>Software industry is expanding so fast that half of your colleagues perhaps have less than 5 years of experience (stole the idea from someone, but it&rsquo;s as unsettling as my one).</li>
-<li>Some senior clever guys and girls right now are trying to help &rsquo;newcomers&rsquo; to work with legacy code bases they themeselves developed over the years. This task may be much harder than actually developing the legacy code base.</li>
-</ol>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-apl.html">apl</a> <a href="https://vlnn.dev/tag-git.html">git</a> <a href="https://vlnn.dev/tag-legacy.html">legacy</a> </div>
-]]></description>
-  <category><![CDATA[apl]]></category>
-  <category><![CDATA[git]]></category>
-  <category><![CDATA[legacy]]></category>
-  <link>https://vlnn.dev/2022-10-12-historical-bits-and-pieces.html</link>
-  <guid>https://vlnn.dev/2022-10-12-historical-bits-and-pieces.html</guid>
-  <pubDate>Wed, 12 Oct 2022 21:43:00 +0300</pubDate>
-</item>
-<item>
-  <title><![CDATA[Daylight lamp: first day]]></title>
-  <description><![CDATA[
-<p>
-I&rsquo;ve bought a daylight lamp and not sure about it.
-</p>
-
-<p>
-The idea beside this product is that if human being has less daylight than usual due to bad weather or wrong lifestyle, they may use artificial light source with the spectrum of emission that is similar to natural sunlight. Moreover, it may be constructed in such a way, that no harmful UV radiation is created. And, of course, but companies decided that it&rsquo;s time to make a big buck selling cheap lamps. Let&rsquo;s see how it goes.
-</p>
-
-<p>
-I&rsquo;m using Beurer TL 100 lamp. This is not a proper review or paid promotion. This is my first day impressions.
-</p>
-
-<div id="outline-container-org2d9b260" class="outline-2">
-<h2 id="org2d9b260">First look</h2>
-<div class="outline-text-2" id="text-org2d9b260">
-
-<figure id="org17fbea0">
-<img src="static/daylight-lamp.gif" alt="daylight-lamp.gif">
-
-</figure>
-
-<p>
-Big, round, milky white lamp needs constant connection to the power outlet. Using buttons on the unit you may switch it on/off and control brightness to some extent.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org04ce9aa" class="outline-2">
-<h2 id="org04ce9aa">Another sun</h2>
-<div class="outline-text-2" id="text-org04ce9aa">
-<p>
-Imagine you close the curtains and then go out of room. When you return to the room first you think that someone has opened the curtains and it&rsquo;s a sunny outside. Everything is illuminated with nice (and surprizingly cold &#x2013; meaning more to the blue side of spectrum) light. This is how the lamp is working. The picture doesn&rsquo;t present it too good, but it was pretty sunny even without the lamp switched on, but with the light from the lamp everything else looks like deep shadow. Also it&rsquo;s nice to have two sources of light that comes from different directions (there&rsquo;s even a specific pattern called &ldquo;Light on Two Sides of Every Room&rdquo; in a book &ldquo;A Pattern Language&rdquo; by Christopher Alexander).
-</p>
-</div>
-</div>
-
-<div id="outline-container-org5eabd5b" class="outline-2">
-<h2 id="org5eabd5b">Good</h2>
-<div class="outline-text-2" id="text-org5eabd5b">
-<p>
-Lots of things are better when illuminated. I like how everything looks under the daylight lamp. This made me a bit happier, of course, but not sure if it&rsquo;s antistress effect of shopping or lamp really works in this context.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org7e4db69" class="outline-2">
-<h2 id="org7e4db69">Bad</h2>
-<div class="outline-text-2" id="text-org7e4db69">
-<p>
-My eyes seems to be a bit sore due to constant bright thingy in unusual place. I&rsquo;ve switched the lamp after 2-3 hours of test on it&rsquo;s lowest level.
-</p>
-</div>
-</div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-light.html">light</a> <a href="https://vlnn.dev/tag-lamp.html">lamp</a> <a href="https://vlnn.dev/tag-health.html">health</a> </div>
-]]></description>
-  <category><![CDATA[light]]></category>
-  <category><![CDATA[lamp]]></category>
-  <category><![CDATA[health]]></category>
-  <link>https://vlnn.dev/2022-10-12-daylight-lamp:-first-day.html</link>
-  <guid>https://vlnn.dev/2022-10-12-daylight-lamp:-first-day.html</guid>
-  <pubDate>Wed, 12 Oct 2022 15:07:00 +0300</pubDate>
-</item>
-<item>
-  <title><![CDATA[#+title: Art of Lisp questions]]></title>
-  <description><![CDATA[
-
-<div id="outline-container-org1830ddb" class="outline-2">
-<h2 id="org1830ddb">What&rsquo;s that</h2>
-<div class="outline-text-2" id="text-org1830ddb">
-<p>
-I&rsquo;m reading a book, I&rsquo;m taking notes. Here will be notes for the book &ldquo;Art of Lisp Programing&rdquo;
-</p>
-</div>
-</div>
-
-<div id="outline-container-org5050e0c" class="outline-2">
-<h2 id="org5050e0c">What is Art of Lisp Programming</h2>
-<div class="outline-text-2" id="text-org5050e0c">
-<p>
-A 1987 book by Robin Jones and Ian Stewart, seems to be quite a primitive introduction to the LISP. Still, it&rsquo;s written pretty well, illustrated with pictures from Alice in Wonderland and is, well, interesting! Also authors are from ZX Spectrum clique, that is +100500 to their nerdiness.
-</p>
-</div>
-</div>
-<div id="outline-container-orgcb059fd" class="outline-2">
-<h2 id="orgcb059fd">Try simple things</h2>
-<div class="outline-text-2" id="text-orgcb059fd">
-</div>
-<div id="outline-container-orgc155b11" class="outline-3">
-<h3 id="orgc155b11">car/cdr are named so due to historical reasons, i.e. assembly mnemonics of long gone IBM 709. Let&rsquo;s use <b>head</b> and <b>tail</b> instead.</h3>
-<div class="outline-text-3" id="text-orgc155b11">
-<div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #014980;">(</span><span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">head</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
- <span style="color: #a626a4;">(</span>car x<span style="color: #a626a4;">)</span><span style="color: #014980;">)</span>
-<span style="color: #014980;">(</span><span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">tail</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr x<span style="color: #a626a4;">)</span><span style="color: #014980;">)</span>
-<span style="color: #014980;">(</span>- <span style="color: #a626a4;">(</span>head '<span style="color: #556b2f;">(</span><span style="color: #8a3b3c; font-weight: bold;">4</span> <span style="color: #8a3b3c; font-weight: bold;">3</span> <span style="color: #8a3b3c; font-weight: bold;">2</span> <span style="color: #8a3b3c; font-weight: bold;">1</span><span style="color: #556b2f;">)</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">(</span>head <span style="color: #556b2f;">(</span>tail '<span style="color: #b751b6;">(</span><span style="color: #8a3b3c; font-weight: bold;">4</span> <span style="color: #8a3b3c; font-weight: bold;">3</span> <span style="color: #8a3b3c; font-weight: bold;">2</span> <span style="color: #8a3b3c; font-weight: bold;">1</span><span style="color: #b751b6;">)</span><span style="color: #556b2f;">)</span><span style="color: #a626a4;">)</span><span style="color: #014980;">)</span>  <span style="color: #556b2f;">;; </span><span style="color: #556b2f;">1 is expected as (- 4 3)</span>
-</pre>
-</div>
-
-<div class="org-src-container">
-<pre class="src src-results">1
-</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-lisp.html">lisp</a> <a href="https://vlnn.dev/tag-examples.html">examples</a> </div>
-]]></description>
-  <category><![CDATA[lisp]]></category>
-  <category><![CDATA[examples]]></category>
-  <link>https://vlnn.dev/2022-10-12-art-of-lisp-questions.html</link>
-  <guid>https://vlnn.dev/2022-10-12-art-of-lisp-questions.html</guid>
-  <pubDate>Wed, 12 Oct 2022 11:05:00 +0300</pubDate>
-</item>
-<item>
-  <title><![CDATA[Configuration maintainance vs renovation]]></title>
-  <description><![CDATA[
-<p>
-It&rsquo;s astonishing how much time it takes to support things that are already working. E.g. every upgrade of <a href="https://github.com/doomemacs/doomemacs/">Doom Emacs</a> (which I <b>love</b> to use but hate to tinker with) is about several things at once:
-</p>
-<ol class="org-ol">
-<li>Upgrade itself e.g. <code>doom upgrade</code> and fixing stuff if something goes wrong. It usually does need a bit of research to find out how to fix it. Would be nice to have <code>doom rollback</code> working, but it&rsquo;s impossible as of now.</li>
-<li>Manually check if upgrade broke something: I use several different &ldquo;stacks&rdquo; in my setup, e.g. a bit of org, clojure, common lisp, C# from time to time, dictionaries, org agenda.
-This is one of most time consuming and unpredictible part of the upgrade; it&rsquo;s not automated and I&rsquo;m not sure if it&rsquo;s ever will be; you never sure everything is tested; you have to try it against your real work.</li>
-<li>I have to formalize all the small &ldquo;current fixes&rdquo; of my configuration as commits or backups, which is too often becomes a batch of changes called &ldquo;system as of 2022&rdquo;. Good luck with understanding why exactly you put this strange line somewhere in the custom.el!</li>
-</ol>
-
-<p>
-I like computers. I like programming computers. I don&rsquo;t like computers programming me. But real reason for this problem is wrong level of abstraction. It&rsquo;s something similar to docker images: you find a brittle shitty solution and put it under the clone machine so every time it breaks you just clone same brittle shitty solution. This is fun and techy, but this does not resolve the root of the problem: you had a shitty solution!
-</p>
-
-<p>
-But what can we do about this burden of the maintainance? Could we pay someone else to do it (we do with gmail so we don&rsquo;t administer mail servers ourselves)? Could we make better automation for keeping the system in revertable state (we do it with making system images or dockers)? Could we just throw away the need that made us use the configurable software we have?
-</p>
-
-<p>
-Sorry, I guess this is all wrong approaches, or rather they are all right approaches that are partly applicable. We will outsource lots of things to services, we will have better automation for backups, we will reduce the needs (like soldering your own PC) and get new ones (like, uhmmm, getting subscriptions for time without internet access). But this is not a solution. These are palliatives.
-</p>
-
-<p>
-Renovation is my metaphor for creating life with similar, but better things around. You have your house, it has leaking tubes and small dirty windows: fix tubes, change floors, clean or change windows, call it a day. But <b>use</b> those tubes. <b>Look</b> through the windows. Noone is renovating their house just because they like to tinker around: there&rsquo;s always a more or less clear goal, when you will say &ldquo;We&rsquo;re done!&rdquo; or at least &ldquo;We&rsquo;re out of money!&rdquo;. I guess the metaphor is working &#x2013; you&rsquo;re either cleaning your floors every day from what shit that is leaking or you fix the tubes. Software tubes are leaking all the time, mind you: rss feeds become outdated, old programs that you&rsquo;re not even using keep charging you for the licenses, new computer can&rsquo;t open old formats etc. Don&rsquo;t use docker for this: own the problem, make it formal, write it down, add it to the todo list. And &#x2013; perhaps! &#x2013; there will be a precious time when you fix it and say: this is my emacs configuration which I hone since times immemorial and it still does things for me!
-</p>
-
-<div id="outline-container-org9b7998b" class="outline-2">
-<h2 id="org9b7998b">TL;DR</h2>
-<div class="outline-text-2" id="text-org9b7998b">
-<ol class="org-ol">
-<li>Acknowledge and understand your problem (e.g. acknowledge that you&rsquo;ve spent whole day yesterday juggling REST requests and it took long time to find correct format of request and answer)</li>
-<li>Investigate existing tooling that resolves this kinds of problems.
-<ol class="org-ol">
-<li>Try to find existing solutions, preferably old ones but currently supported.</li>
-<li>Write yours only if you&rsquo;re sure you have failed with previous suggestion.</li>
-</ol></li>
-<li>Configure this tooling and use it for some time (at least couple days), experimenting and reconfiguring things as it goes.</li>
-<li><code>IF</code> problem seems different now <code>GOTO 1</code>.</li>
-</ol>
-</div>
-</div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-emacs.html">emacs</a> <a href="https://vlnn.dev/tag-macbook.html">macbook</a> <a href="https://vlnn.dev/tag-chores.html">chores</a> <a href="https://vlnn.dev/tag-howto.html">howto</a> </div>
-]]></description>
-  <category><![CDATA[emacs]]></category>
-  <category><![CDATA[macbook]]></category>
-  <category><![CDATA[chores]]></category>
-  <category><![CDATA[howto]]></category>
-  <link>https://vlnn.dev/2022-10-11-maintainance-of-configurations-before-it-comes-to-renovation.html</link>
-  <guid>https://vlnn.dev/2022-10-11-maintainance-of-configurations-before-it-comes-to-renovation.html</guid>
-  <pubDate>Tue, 11 Oct 2022 14:33:00 +0300</pubDate>
-</item>
-<item>
-  <title><![CDATA[Привіт, чудовий світе (once again)]]></title>
-  <description><![CDATA[
-<p>
-This is to declare that the stuff has been moved from <a href="https://vlnn.github.io">vlnn.github.io</a> to <a href="https://vlnn.dev/">vlnn.dev</a>.
-</p>
-
-<div id="outline-container-org60ac5eb" class="outline-2">
-<h2 id="org60ac5eb">WHO:</h2>
-<div class="outline-text-2" id="text-org60ac5eb">
-<p>
-My name is Volodymyr Anokhin and this is my blog. You may know me as VLNN (mostly at <a href="https://github.com/vlnn">vlnn@github.com)</a>. I&rsquo;m Ukrainian and that&rsquo;s why instead of &ldquo;Hello, wonderful world&rdquo; you may see some Cyrillics in the title of this record.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org4dcc324" class="outline-2">
-<h2 id="org4dcc324">WHAT:</h2>
-<div class="outline-text-2" id="text-org4dcc324">
-<p>
-This is another try to set up minimalistic mostly technical blog. I plan to write things about my current projects which are mostly software-related at the moment. I was working as a Radio Engineer, as an Engineering Manager, and now I am a software developer. Somehow I always have chosen less-popular programming languages, and so I was writing production code in J, FORTH and APL. Now I moved a bit to more conventional side of Clojure.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org77e899d" class="outline-2">
-<h2 id="org77e899d">WHY:</h2>
-<div class="outline-text-2" id="text-org77e899d">
-<p>
-It&rsquo;s not my first try to set up a place to share some technical or not-that-technical stuff across the internet. But somehow all the &ldquo;social&rdquo; platforms tend to become a social burden, and &ldquo;technical&rdquo; platforms tend to become more social with time. So I want to create a small piece of the network here, with smaller auditory but much bigger calmness. I&rsquo;m not even sure that I will enable comments here!
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgd36bc9d" class="outline-2">
-<h2 id="orgd36bc9d">WHEN:</h2>
-<div class="outline-text-2" id="text-orgd36bc9d">
-<p>
-It&rsquo;s a wartime, joint forces of russia and belorussia are attacking and occupying parts of Ukraine right now. Perhaps not the best time to start a blog! But it&rsquo;s creation is not related to less chances of russia to kill or torture me. This is directly related to my plans to make everything I have to do during the war: support Ukrainian army, spend money for Ukrainian goods, and also represent Ukraine in every possible way. We are here. Some of us are still alive. We&rsquo;re kicking.
-</p>
-
-<p>
-And I&rsquo;ll never forgive russians for what they did.
-</p>
-</div>
-</div>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-admin.html">admin</a> <a href="https://vlnn.dev/tag-migration.html">migration</a> <a href="https://vlnn.dev/tag-war.html">war</a> </div>
-]]></description>
-  <category><![CDATA[admin]]></category>
-  <category><![CDATA[migration]]></category>
-  <category><![CDATA[war]]></category>
-  <link>https://vlnn.dev/2022-10-08-%D0%BF%D1%80%D0%B8%D0%B2%D1%96%D1%82,-%D1%87%D1%83%D0%B4%D0%BE%D0%B2%D0%B8%D0%B9-%D1%81%D0%B2%D1%96%D1%82%D0%B5.html</link>
-  <guid>https://vlnn.dev/2022-10-08-%D0%BF%D1%80%D0%B8%D0%B2%D1%96%D1%82,-%D1%87%D1%83%D0%B4%D0%BE%D0%B2%D0%B8%D0%B9-%D1%81%D0%B2%D1%96%D1%82%D0%B5.html</guid>
-  <pubDate>Sat, 08 Oct 2022 23:04:00 +0300</pubDate>
-</item>
-<item>
-  <title><![CDATA[SQL as the Data Analysis' Volapük]]></title>
-  <description><![CDATA[
-<p>
-Lately I&rsquo;ve started to work with <a href="https://druid.apache.org/">Apache Druid</a> that is &ldquo;real-time database to power modern analytics applications&rdquo;. This is great piece of software, being in it&rsquo;s late version 0.23.0, providing blazing-fast queries to your data. Surely enough, you always pay for the speed: sometimes with old good money (e.g. buy more resources from the powerhouses), sometimes with time needed to prepare the data for being queries (e.g. indexing), sometimes with absence of generality (e.g. make your highly intricate specific DB and go struggle when business needs something unsupported), sometimes just with your brainpower needed to understand and implement new stuff. At the moment, I think Druid is being paid mainly with two latter currencies.
-</p>
-
-<p>
-So, having a bit of experience in Data warehouse project (5 years ago? eternity!), I was really interested how exactly the speed is being gained. If you&rsquo;re interested, please take a look at <a href="https://druid.apache.org/faq">this FAQ page</a> (spoiler: inverted indexes and intricate metadata model). This post is not about it. This post is about SQL that is currently being used as defacto standard for thinking about data &#x2013; even when &ldquo;real&rdquo; data is not stored in RDBMS.
-</p>
-
-<p>
-As most of the industry-grade programming languages, SQL has lots of qualities from different areas: it&rsquo;s mainly declarative, but has procedural mechanisms. It&rsquo;s made for queries but creates databases and tables. It&rsquo;s based on relational algebra, but  It&rsquo;s structured but sometimes it&rsquo;s hard to find the structure behind 30 screens of the statement. At last, it has been designed for managers and now DB-team is usually sitting very far away from the commercial department. This is how evolution works, nothing unusual here.
-</p>
-
-<p>
-But, being widely used, SQL get into the fields, where I was surprised to see it &#x2013; for instance in the NoSQL world. Check out how similar is Cassandra&rsquo;s CQL, even though Cassandra is famous NoSQL DB! Excel files <a href="https://docs.microsoft.com/en-us/power-automate/desktop-flows/how-to/sql-queries-excel">could be used as SQL data bases</a>! Even very non-usual languages like Q are calling the some data-manipulating functions <a href="https://code.kx.com/q4m3/9_Queries_q-sql/">q-sql</a>, using different syntax, but at least partially sharing same mental model of the data manipulation.
-</p>
-
-<p>
-This leads me to the point, at which I should make a bold statement: I don&rsquo;t think SQL is a good programming language. I mean, it&rsquo;s good, but it&rsquo;s not <b>that good</b>, it&rsquo;s not the default language when you write or think about the data. Its main feature is universality, sure; but being wide-spread across the industry, it effectively wipes out all the other possible ways of thinking around the data. It&rsquo;s liek bad english of the internetz: you want to say <b>I love you so much</b>, but sending 🔥🔥🔥 instead; you want to know who wrote the hit and writing
-</p>
-<div class="org-src-container">
-<pre class="src src-sql"><span style="font-weight: bold;">SELECT</span> song_id <span style="font-weight: bold;">FROM</span> charts <span style="font-weight: bold;">FETCH</span> <span style="font-weight: bold;">FIRST</span> <span style="color: #8a3b3c; font-weight: bold;">1</span> <span style="font-weight: bold;">ROWS</span> <span style="font-weight: bold;">ONLY</span>
-</pre>
-</div>
-<p>
-instead, panicking how long will become the join to the composers table. It&rsquo;s really similar to Volapük in many contexts: it&rsquo;s as artificial, it&rsquo;s designed to be widely used, it&rsquo;s good but not necessary best, and it may be scorched out with some new technology (Esperanto in Volapük&rsquo;s case). Not sure if I will see the dawn of SQL, but it could be a wonderful view!
-</p>
-<div class="taglist"><a href="https://vlnn.dev/tags.html">Tags</a>: <a href="https://vlnn.dev/tag-data.html">data</a> <a href="https://vlnn.dev/tag-sql.html">sql</a> <a href="https://vlnn.dev/tag-language.html">language</a> </div>
-]]></description>
-  <category><![CDATA[data]]></category>
-  <category><![CDATA[sql]]></category>
-  <category><![CDATA[language]]></category>
-  <link>https://vlnn.dev/2022-09-19-sql-as-the-data-analysis'-volap%C3%BCk.html</link>
-  <guid>https://vlnn.dev/2022-09-19-sql-as-the-data-analysis'-volap%C3%BCk.html</guid>
-  <pubDate>Mon, 19 Sep 2022 14:52:00 +0300</pubDate>
-</item>
-</channel>
+ <channel>
+  <title>Notes — @vlnn</title>
+  <link>https://vlnn.dev/</link>
+  <atom:link href="https://vlnn.dev/rss.xml" rel="self" type="application/rss+xml"/>
+  <description>Working notes of Volodymyr Anokhin</description>
+  <language>en</language>
+  <item>
+   <title>About these notes</title>
+   <link>https://vlnn.dev/?stack=about-these-notes</link>
+   <guid>https://vlnn.dev/?stack=about-these-notes</guid>
+   <pubDate>Wed, 29 Jul 2026 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;Hi! I'm Volodymyr Anokhin (&lt;a href=&quot;https://github.com/vlnn&quot;&gt;@vlnn&lt;/a&gt;). These are my working notes, migrated from the old chronological blog into a linked garden. Click any link and it opens as a new pane to the right; the trail you follow lives in the URL, so you can share it. Curious about the machinery? See &lt;a href=&quot;file:how-this-site-works.md&quot;&gt;How this site works&lt;/a&gt;.
+&lt;/p&gt;&lt;p&gt;On tools and Emacs: &lt;a href=&quot;file:solution-to-the-repl-snippets.org&quot;&gt;THE Solution to the REPL snippets&lt;/a&gt; argues where operational code should actually live, and &lt;a href=&quot;file:configuration-maintenance-vs-renovation.org&quot;&gt;Configuration maintainance vs renovation&lt;/a&gt; is about tending configs before they rot. &lt;a href=&quot;file:macos-hex-input-problem.org&quot;&gt;Macos problem with HEX input&lt;/a&gt; documents an old wound at the bottom of the Unicode input stack.
+&lt;/p&gt;&lt;p&gt;On languages and data: &lt;a href=&quot;file:sql-as-data-analysis-volapuk.org&quot;&gt;SQL as the Data Analysis' Volapük&lt;/a&gt;, &lt;a href=&quot;file:art-of-lisp-questions.org&quot;&gt;Art of Lisp questions&lt;/a&gt;, and &lt;a href=&quot;file:historical-bits-and-pieces.org&quot;&gt;Historical bits and pieces&lt;/a&gt; — the last one on what legacy really means.
+&lt;/p&gt;&lt;p&gt;On life during the war: &lt;a href=&quot;file:programming-in-wartime.org&quot;&gt;Programming in wartime&lt;/a&gt; is the practical one; &lt;a href=&quot;file:hello-wonderful-world.org&quot;&gt;Привіт, чудовий світе (once again)&lt;/a&gt; is where this site restarted. Smaller notes: &lt;a href=&quot;file:daylight-lamp-first-day.org&quot;&gt;Daylight lamp: first day&lt;/a&gt;, &lt;a href=&quot;file:antiprogress-of-the-dropbox.org&quot;&gt;Antiprogress of the Dropbox&lt;/a&gt;.
+&lt;/p&gt;</description>
+  </item>
+  <item>
+   <title>How this site works</title>
+   <link>https://vlnn.dev/?stack=how-this-site-works</link>
+   <guid>https://vlnn.dev/?stack=how-this-site-works</guid>
+   <pubDate>Wed, 29 Jul 2026 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;This site is a pile of plain text files pretending to be an app. Notes live as raw &lt;code&gt;.org&lt;/code&gt; &lt;strong&gt;and&lt;/strong&gt; &lt;code&gt;.md&lt;/code&gt; files; your browser fetches the file and renders it with &lt;a href=&quot;https://github.com/rasendubi/uniorg&quot;&gt;uniorg&lt;/a&gt; or remark. The only thing computed ahead of time is &lt;code&gt;index.json&lt;/code&gt; — titles and the link graph, because backlinks are a global property no single file can know about itself.&lt;/p&gt;
+&lt;p&gt;The stacked panes copy &lt;a href=&quot;https://notes.andymatuschak.org/About_these_notes&quot;&gt;Andy Matuschak's notes&lt;/a&gt;: each link you follow opens a pane to the right, and the whole trail is encoded in the URL, so any view is a shareable permalink.&lt;/p&gt;
+&lt;p&gt;Notes link to each other by bare relative filenames, and formats mix freely — this markdown note links back to the org-mode &lt;a href=&quot;about-these-notes.org&quot;&gt;entry note&lt;/a&gt;, and org notes can link to &lt;code&gt;.md&lt;/code&gt; the same way:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;format&lt;/th&gt;
+&lt;th&gt;metadata&lt;/th&gt;
+&lt;th&gt;link syntax&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;org&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;#+title:&lt;/code&gt; etc.&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;[[file:slug.org][text]]&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;md&lt;/td&gt;
+&lt;td&gt;YAML frontmatter&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;[text](slug.md)&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul class=&quot;contains-task-list&quot;&gt;
+&lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; checked disabled&gt; org rendering&lt;/li&gt;
+&lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; checked disabled&gt; markdown rendering (GFM: tables, task lists, strikethrough)&lt;/li&gt;
+&lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; checked disabled&gt; backlinks across formats&lt;/li&gt;
+&lt;/ul&gt;</description>
+  </item>
+  <item>
+   <title>THE Solution to the REPL snippets (using Emacs ofc)</title>
+   <link>https://vlnn.dev/?stack=solution-to-the-repl-snippets</link>
+   <guid>https://vlnn.dev/?stack=solution-to-the-repl-snippets</guid>
+   <pubDate>Mon, 20 May 2024 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;Miro Bezjak wrote an interesting post called &lt;a href=&quot;https://mbezjak.github.io/posts/what-to-do-with-evaluated-repl-expressions/&quot;&gt;What to Do With Evaluated REPL Expressions?&lt;/a&gt;. The problem he describes is actually a bit different from the one I thought of when saw the title: it's not about re-using evaluation results in the REPL (which is not really possible without re-evaluation or using weird numbering acces -- as far as I know). No, it's really about the expressions that should not go into the the released code, but the one the developer uses during the development -- small chunks of the code with ops-tasks, small checks, calls to the external systems etc. Miro suggests to create the out-of-classpath user directory for every project developer, and create a common place for all those code snippets called everything.clj or something like that. This file should be committed to the repo (thus shared and easily referenced between the developers), but not become the part of &quot;official code&quot; (hopefully not even being compiled while release process).
+&lt;/p&gt;&lt;p&gt;I like the approach but I dislike several little problems that come with it. First of all, &quot;operational&quot; snippets are often bound to the exact configuration -- hostnames, port numbers etc. Even secrets! Thus, you shouldn't share it as is: they should either become some developer environment script, or go away with the repl history. Don't encourage other users look into the pie if you're not sure it is the same pie you're both having.
+&lt;/p&gt;&lt;p&gt;But my main concern is that the problem is being resolved on wrong level. There are special programs that are perfect for using and managing snippets called text editors. Every text editor (and hopefully any IDE) provide search, copy and paste capability. Emacs even has a built-in buffer that can be used specifically for that reason called scratch buffer: something written there for the moment, edited, ran, saved somewhere else... and then scratched out as new tasks are coming. You may even configure project-related scratch buffer that will not erase its text after restart of Emacs. So for the development itself you may safely use scratch buffer (or anything having same function in &lt;span class=&quot;underline&quot; style=&quot;text-decoration: underline;&quot;&gt;your&lt;/span&gt; editor of choice). But what if you want to reuse it? Create either a devenv script or yasnippet file. What if you want to share it with colleagues? Use gist (or even better internal wiki). In that way when the code will change the behaviour (due to your or your colleauges' work on the code or infrastructure) the snippet will not be incorrectly bound to the updated code. The script is outdated? Well, update it on separate PR, or let someone else do it. Wiki is outdated? Fix it on the spot. The idea is that the production code should not be contaminated with the operational code -- or it should be a well-designed &lt;span class=&quot;underline&quot; style=&quot;text-decoration: underline;&quot;&gt;part of the code&lt;/span&gt;.
+&lt;/p&gt;</description>
+  </item>
+  <item>
+   <title>Programming in wartime</title>
+   <link>https://vlnn.dev/?stack=programming-in-wartime</link>
+   <guid>https://vlnn.dev/?stack=programming-in-wartime</guid>
+   <pubDate>Thu, 16 May 2024 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;I'm Ukrainian, and Ukraine is fighting for its very existence right now. I'm a civilian (i.e. not conscripted yet) living in Kyiv. It's relatively quiet here now, except maybe one or two raid attacks alerts per day.
+&lt;/p&gt;&lt;p&gt;This post is a mix of insights of how it is to work full day in wartime -- in no particular order or structure. Of course this is very limited point of view, as I'm describing my own experience and my own surroundings. Being in Kharkiv, for instance, I would experienced quite a different conditions (Kharkiv is under constant shellings and bombing for a good year now).
+&lt;/p&gt;&lt;h1&gt;Hardware&lt;/h1&gt;&lt;p&gt;My current hardware setup was planned during my onboarding at Apptopia (great company, BTW!) in the beginning of 2022. I've decided to try MacOS for the first time in my life (was a Linux user for ~15 years), and have bought myself a M1 Macbook Pro. This was a great decision, mostly not due to the MacOS bells and whistles, but rather due to great battery life and capable processing power, that both led me through the time of blackouts in the late 2022. I was able to more or less use the whole stack locally, building and testing monorepo in around 30 minutes (including all integration tests that were based on services like Cassandra, Apache Druid and Spark ran in Docker Compose infrastructure).
+&lt;/p&gt;&lt;p&gt;I'm also using quite big external monitor (34&quot; Samsung Curved C34H890) that is connected to the M2 Mac Studio. This was my understanding of how ergonomic workplace should look like for me: standing desk, Kinesis Advantage with custom firmware (see &lt;a href=&quot;https://github.com/vlnn/kinesis-advantage-2&quot;&gt;https://github.com/vlnn/kinesis-advantage-2&lt;/a&gt;), the Apple Trackpad mounted on the keyboard etc. All this fine and dandy except one thing: this setup doesn't have a battery and is shut down during the power outage. After russian shellings to the pretty much all the Ukrainian power plants infrastructure we've experienced blackouts as long as for 12-18 hours per day. This have disrupted my work abilities even lower, making me sometime to work in chunks of 2 hours (of which the overhead of constant household chores like getting the power station ready, dishes clean and teapot hot and ready took pretty much a good half). So 1 hour of work with electricity on, then you go into unknown timeslot of darkness and bad internet (my ISP relied on usual power lines too much. Now I have 4 independent ISP lines, one of which is cellular (i.e. works until mobile network is up -- but unreliable and slow) and one is optical (was sluggish at first, requiring the hardware reboots, but quite OK in a year after the installation -- I'm actually posting this text during blackout and have no problems with the internet at all)).
+&lt;/p&gt;&lt;p&gt;As I had some time and resources, the orders were made for some power supplies (or rather power accumulators) that made our life much easier. I have now two EcoFlows, the bigger one is connected to the fridge and is more of a reserve of electricity for even worse conditions, and the smaller one is powering the wifi APs and ISP's routers. As I said, desktop and monitor are fully shut down during the power outages, and for now I'm OK with that: I'm just using my macbook.
+&lt;/p&gt;&lt;p&gt;But there's a slight problem -- instead of using the ergonomic way of work at my precious stand desk, with hilariously comfortable keyboard and big display, I've taught myself to work at macbook sitting at the sofa even when the electricity is allright. Actually I found that I'm more productive that way! Not sure how it works, I guess it's more of a bad habit becoming a second nature.
+&lt;/p&gt;&lt;h1&gt;Software&lt;/h1&gt;&lt;p&gt;Main energy saving solutions I'm using now are Al Dente (program that controls the level of the battery to be always at the healthy level -- even though I'm not sure it's really that useful) and OrbStack instead of usual Docker Desktop. I've experienced &lt;strong&gt;huge&lt;/strong&gt; energy saving after moving from OSS Docker Desktop to evil closed OrbStack. But let me tell you, this migration saved me a ton of time. OrbStack is really Docker made right, only proprietory. But we have to make our decisions.
+&lt;/p&gt;&lt;p&gt;Syncing two computers both using MacOs is pretty easy (just use iCloud!) but unreliable (you never can tell if things are really same on both sides). E.g. syncing the directory with org files brings me conflicts every time I'm using org-agenda. I'm sure there is a way to make it work, but for now I'm just using org-mode for the documentation, and calendar (BusyCal) for work planning.
+&lt;/p&gt;&lt;p&gt;Main power users on my system (according to Activity Monitor) are Emacs and Safari. Safari seems to be much easier on Memory and CPU consumption than Chrome or Arc, and also syncs good enough between phone and two Macs. So Safari it is.
+&lt;/p&gt;&lt;h1&gt;General life tips&lt;/h1&gt;&lt;ol&gt;&lt;li&gt;Have all your shit charged when you have a possibility. That means all your phones, all your powerbanks, all your notebooks, tablets, kindles etc. Just get some kind of USB hub, and let it be busy every minute the power is on. You never know which 2% of battery could be converted into critical information or just a heart warming call from a friend. You need both.
+&lt;/li&gt;&lt;li&gt;Prepare a stock of ramen-like stuff, anything that can be prepared quickly and easily. Let it be some high-priced tourist food or just a noodles from the nearest shop, have some extra. There are 1-minute instant soups, 2-minutes porridge, things ike that. Buy yourself a big box of candy or any sugar-high sweets, put it away and eat it when things are sour.
+&lt;/li&gt;&lt;li&gt;Have a ready supply of hot drinking water: use thermos or anything like that, so you have have some tea, you can fill the heating bottle etc.
+&lt;/li&gt;&lt;li&gt;Try to have your fridge working. I know people who just fill the freezer up so the freezed food itself was working as a cold accumulator, but I wonder how safe and sound the solution is. I'm using power station.
+&lt;/li&gt;&lt;li&gt;Minimize the doomscrolling. It doesn't help at all, but it's very good in making yourself miserable. I mean it's really hard to live without information, but don't swim across the different opinions that don't really matters in the time, when your every day can be your last day. You better have some extra brain resources to live through.
+&lt;/li&gt;&lt;li&gt;Don't expect to work full time. In reality I was able to work effectively around the half of my usual work time -- and this is my optimistic estimates.
+&lt;/li&gt;&lt;li&gt;Overcommunicate. Document everything and send to your colleagues. Push every commit. Write in slack. Talk in zoom. You need the society and society kinda needs you (not really). But it's better to show that you're alive and kicking than disappear for a week and then return with some crazy good PR that is not really needed anymore.
+&lt;/li&gt;&lt;li&gt;Buy yourself a proper headlamp -- they are crazy good now, with quite a long battery life. Buy your wife a headlamp. Buy a headlamp for your dog (I'm not joking).
+&lt;/li&gt;&lt;li&gt;Don't use elevators at all times. It's easy for me, it's not that easy for everybody -- but you don't want to stuck in the elevator during the air raid.
+&lt;/li&gt;&lt;li&gt;Put all the important papers (passports, money etc) in a water-proof package, put that package in a backpack, have this backpack right near the door at all times.
+&lt;/li&gt;&lt;/ol&gt;</description>
+  </item>
+  <item>
+   <title>Antiprogress of the Dropbox</title>
+   <link>https://vlnn.dev/?stack=antiprogress-of-the-dropbox</link>
+   <guid>https://vlnn.dev/?stack=antiprogress-of-the-dropbox</guid>
+   <pubDate>Tue, 24 Jan 2023 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;Not that long time ago (or was it long time? 10 years ago or so?) Dropbox was the new kind of the services -- very simple, very cheap, very direct kind of service. You want to share the photo or your hipster todo.txt, you put it in a special folder and that's it: it will be delivered automatically to everybody whom you informed the link, or to every PC where Dropbox is running under your creds. That's it! Super easy, super cool!
+&lt;/p&gt;&lt;p&gt;I just used current version of Dropbox app for Android, and it is just terrifyingly awful. For starters, it has tutorial wizards that break my needs; I want to press a button, but it is covered with a text cloud of a tutorial. Next, I want to download some video files to my android device: there are buttons &quot;Sync&quot;, &quot;Make available offline&quot; and &quot;Save to Device&quot; -- and also &quot;Duplicate&quot;. Next, it asks to access my photos and my camera. And moreover, it shares the names of people who have access to the folder to anybody who has it already.
+&lt;/p&gt;&lt;p&gt;I can't even...
+&lt;/p&gt;&lt;p&gt;I understand Syncthing could be infuriatingly complex, but at least it does one thing, and does it good.
+&lt;/p&gt;</description>
+  </item>
+  <item>
+   <title>Macos problem with HEX input</title>
+   <link>https://vlnn.dev/?stack=macos-hex-input-problem</link>
+   <guid>https://vlnn.dev/?stack=macos-hex-input-problem</guid>
+   <pubDate>Tue, 24 Jan 2023 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;If you're typing using non-english symbols like ς or ґ you might have problems with entering those into modern computers -- there are different encoding systems, as well as different keyboard layouts, and it's not that unusual to have problems with one that you can live with. Then you build yourself QMK or ZMK keyboard. They are programmable -- you can make them type anything. ANYTHING! Right? RIGHT?
+&lt;/p&gt;&lt;p&gt;No, that's not true. You can't go fully independent of OS language layouts, that are converting scancodes into the keycodes and then into the characters themselves. You press [Q] in the UA mode, it gets to the OS as [Q], layout mapping makes it [Й], and you see it like that in the text you're typing. Among others, this should resolve problems with shortcuts like [CTRL+S] that may become unusable in cyrillic layout (as there's no such thing as [S] in Ukrainian, so you just can't save!) or get to some very different place on the keyboard if you use COLEMAK or something even weirder ([ASDF] in QWERTY maps to [ARDT] in Colemak).
+&lt;/p&gt;&lt;p&gt;But why not make keyboard processor work even more? Why not provide the unicode code of the character instead of the scan code? Windows, Linux and Macos have their methods of the so-called [Unicode input](&lt;a href=&quot;https://en.wikipedia.org/wiki/Unicode_input&quot;&gt;https://en.wikipedia.org/wiki/Unicode_input&lt;/a&gt;). Problem solved? Not really!
+&lt;/p&gt;&lt;p&gt;Macos has long lasting [bug](&lt;a href=&quot;https://discussions.apple.com/thread/253636848&quot;&gt;https://discussions.apple.com/thread/253636848&lt;/a&gt;) that prevents you from entering &lt;strong&gt;some&lt;/strong&gt; codes using Unicode input. E.g. you may input [á] (code 0x00E1), but never could [à] (code 0x00E0). Similarly using the hex codes you can't enter greek pi (code 0x03C0). You can't enter cyrillic [р] (it &lt;strong&gt;is&lt;/strong&gt; different from English [p]) -- seemingly just because their hex code ends with zero! (codes 0x0440).
+&lt;/p&gt;&lt;p&gt;It seems to me that in my 40s anywhere I dig deep enough I get to something very different from the diamonds: I get more and more old rancid standards and piles of ancient bugs without wings.
+&lt;/p&gt;</description>
+  </item>
+  <item>
+   <title>Art of Lisp questions</title>
+   <link>https://vlnn.dev/?stack=art-of-lisp-questions</link>
+   <guid>https://vlnn.dev/?stack=art-of-lisp-questions</guid>
+   <pubDate>Wed, 12 Oct 2022 00:00:00 GMT</pubDate>
+   <description>&lt;h2&gt;What's that&lt;/h2&gt;&lt;p&gt;I'm reading a book, I'm taking notes. Here will be notes for the book &quot;Art of Lisp Programing&quot;
+&lt;/p&gt;&lt;h2&gt;What is Art of Lisp Programming&lt;/h2&gt;&lt;p&gt;A 1987 book by Robin Jones and Ian Stewart, seems to be quite a primitive introduction to the LISP. Still, it's written pretty well, illustrated with pictures from Alice in Wonderland and is, well, interesting! Also authors are from ZX Spectrum clique, that is +100500 to their nerdiness.
+&lt;/p&gt;&lt;h2&gt;Try simple things&lt;/h2&gt;&lt;h3&gt;car/cdr are named so due to historical reasons, i.e. assembly mnemonics of long gone IBM 709. Let's use &lt;strong&gt;head&lt;/strong&gt; and &lt;strong&gt;tail&lt;/strong&gt; instead.&lt;/h3&gt;&lt;pre class=&quot;src-block&quot;&gt;&lt;code class=&quot;language-lisp&quot;&gt;(defun head (x)
+ (car x))
+(defun tail (x)
+  (cdr x))
+(- (head '(4 3 2 1)) (head (tail '(4 3 2 1))))  ;; 1 is expected as (- 4 3)
+&lt;/code&gt;&lt;/pre&gt;&lt;pre class=&quot;src-block&quot;&gt;&lt;code class=&quot;language-results&quot;&gt;1
+&lt;/code&gt;&lt;/pre&gt;</description>
+  </item>
+  <item>
+   <title>Daylight lamp: first day</title>
+   <link>https://vlnn.dev/?stack=daylight-lamp-first-day</link>
+   <guid>https://vlnn.dev/?stack=daylight-lamp-first-day</guid>
+   <pubDate>Wed, 12 Oct 2022 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;I've bought a daylight lamp and not sure about it.
+&lt;/p&gt;&lt;p&gt;The idea beside this product is that if human being has less daylight than usual due to bad weather or wrong lifestyle, they may use artificial light source with the spectrum of emission that is similar to natural sunlight. Moreover, it may be constructed in such a way, that no harmful UV radiation is created. And, of course, but companies decided that it's time to make a big buck selling cheap lamps. Let's see how it goes.
+&lt;/p&gt;&lt;p&gt;I'm using Beurer TL 100 lamp. This is not a proper review or paid promotion. This is my first day impressions.
+&lt;/p&gt;&lt;h2&gt;First look&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;file:static/daylight-lamp.gif&quot;&gt;
+&lt;/p&gt;&lt;p&gt;Big, round, milky white lamp needs constant connection to the power outlet. Using buttons on the unit you may switch it on/off and control brightness to some extent.
+&lt;/p&gt;&lt;h2&gt;Another sun&lt;/h2&gt;&lt;p&gt;Imagine you close the curtains and then go out of room. When you return to the room first you think that someone has opened the curtains and it's a sunny outside. Everything is illuminated with nice (and surprizingly cold -- meaning more to the blue side of spectrum) light. This is how the lamp is working. The picture doesn't present it too good, but it was pretty sunny even without the lamp switched on, but with the light from the lamp everything else looks like deep shadow. Also it's nice to have two sources of light that comes from different directions (there's even a specific pattern called &quot;Light on Two Sides of Every Room&quot; in a book &quot;A Pattern Language&quot; by Christopher Alexander).
+&lt;/p&gt;&lt;h2&gt;Good&lt;/h2&gt;&lt;p&gt;Lots of things are better when illuminated. I like how everything looks under the daylight lamp. This made me a bit happier, of course, but not sure if it's antistress effect of shopping or lamp really works in this context.
+&lt;/p&gt;&lt;h2&gt;Bad&lt;/h2&gt;&lt;p&gt;My eyes seems to be a bit sore due to constant bright thingy in unusual place. I've switched the lamp after 2-3 hours of test on it's lowest level.
+&lt;/p&gt;</description>
+  </item>
+  <item>
+   <title>Historical bits and pieces</title>
+   <link>https://vlnn.dev/?stack=historical-bits-and-pieces</link>
+   <guid>https://vlnn.dev/?stack=historical-bits-and-pieces</guid>
+   <pubDate>Wed, 12 Oct 2022 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;Some time ago I was a part of a team who introduced modern software development processes (text-based sources, CI, CD, cloud here and there) across the company with humongous and very cleverly written monolith. Yup, internally sources were not stored as text files. Yup, the format was created in-house. Yup, you had to use internal toolings only to work with this code. Yup, it was a great revelation for me to understand how different real work is from the world of js-hipsters deploying things over heroku.
+&lt;/p&gt;&lt;p&gt;Interestingly enough, the core of the my team was consisted of people who actually wrote the most clever parts. I was a part of this project for couple years trying my best and watching superheroes around me trying their best to finish this project. At some point I left the company and all I have now is this screenshot of one-week project of providing developers possibility to load customized tools into the work environment.
+&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;file:static/things-i-did.jpeg&quot;&gt;
+&lt;/p&gt;&lt;p&gt;Two unsettling ideas arise in my brain after I share the picture above:
+&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Software industry is expanding so fast that half of your colleagues perhaps have less than 5 years of experience (stole the idea from someone, but it's as unsettling as my one).
+&lt;/li&gt;&lt;li&gt;Some senior clever guys and girls right now are trying to help 'newcomers' to work with legacy code bases they themeselves developed over the years. This task may be much harder than actually developing the legacy code base.
+&lt;/li&gt;&lt;/ol&gt;</description>
+  </item>
+  <item>
+   <title>Configuration maintainance vs renovation</title>
+   <link>https://vlnn.dev/?stack=configuration-maintenance-vs-renovation</link>
+   <guid>https://vlnn.dev/?stack=configuration-maintenance-vs-renovation</guid>
+   <pubDate>Tue, 11 Oct 2022 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;It's astonishing how much time it takes to support things that are already working. E.g. every upgrade of &lt;a href=&quot;https://github.com/doomemacs/doomemacs/&quot;&gt;Doom Emacs&lt;/a&gt; (which I &lt;strong&gt;love&lt;/strong&gt; to use but hate to tinker with) is about several things at once:
+&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Upgrade itself e.g. &lt;code class=&quot;inline-verbatim&quot;&gt;doom upgrade&lt;/code&gt; and fixing stuff if something goes wrong. It usually does need a bit of research to find out how to fix it. Would be nice to have &lt;code class=&quot;inline-verbatim&quot;&gt;doom rollback&lt;/code&gt; working, but it's impossible as of now.
+&lt;/li&gt;&lt;li&gt;Manually check if upgrade broke something: I use several different &quot;stacks&quot; in my setup, e.g. a bit of org, clojure, common lisp, C# from time to time, dictionaries, org agenda.
+   This is one of most time consuming and unpredictible part of the upgrade; it's not automated and I'm not sure if it's ever will be; you never sure everything is tested; you have to try it against your real work.
+&lt;/li&gt;&lt;li&gt;I have to formalize all the small &quot;current fixes&quot; of my configuration as commits or backups, which is too often becomes a batch of changes called &quot;system as of 2022&quot;. Good luck with understanding why exactly you put this strange line somewhere in the custom.el!
+&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;I like computers. I like programming computers. I don't like computers programming me. But real reason for this problem is wrong level of abstraction. It's something similar to docker images: you find a brittle shitty solution and put it under the clone machine so every time it breaks you just clone same brittle shitty solution. This is fun and techy, but this does not resolve the root of the problem: you had a shitty solution!
+&lt;/p&gt;&lt;p&gt;But what can we do about this burden of the maintainance? Could we pay someone else to do it (we do with gmail so we don't administer mail servers ourselves)? Could we make better automation for keeping the system in revertable state (we do it with making system images or dockers)? Could we just throw away the need that made us use the configurable software we have?
+&lt;/p&gt;&lt;p&gt;Sorry, I guess this is all wrong approaches, or rather they are all right approaches that are partly applicable. We will outsource lots of things to services, we will have better automation for backups, we will reduce the needs (like soldering your own PC) and get new ones (like, uhmmm, getting subscriptions for time without internet access). But this is not a solution. These are palliatives.
+&lt;/p&gt;&lt;p&gt;Renovation is my metaphor for creating life with similar, but better things around. You have your house, it has leaking tubes and small dirty windows: fix tubes, change floors, clean or change windows, call it a day. But &lt;strong&gt;use&lt;/strong&gt; those tubes. &lt;strong&gt;Look&lt;/strong&gt; through the windows. Noone is renovating their house just because they like to tinker around: there's always a more or less clear goal, when you will say &quot;We're done!&quot; or at least &quot;We're out of money!&quot;. I guess the metaphor is working -- you're either cleaning your floors every day from what shit that is leaking or you fix the tubes. Software tubes are leaking all the time, mind you: rss feeds become outdated, old programs that you're not even using keep charging you for the licenses, new computer can't open old formats etc. Don't use docker for this: own the problem, make it formal, write it down, add it to the todo list. And -- perhaps! -- there will be a precious time when you fix it and say: this is my emacs configuration which I hone since times immemorial and it still does things for me!
+&lt;/p&gt;&lt;h2&gt;TL;DR&lt;/h2&gt;&lt;ol&gt;&lt;li&gt;Acknowledge and understand your problem (e.g. acknowledge that you've spent whole day yesterday juggling REST requests and it took long time to find correct format of request and answer)
+&lt;/li&gt;&lt;li&gt;Investigate existing tooling that resolves this kinds of problems.
+&lt;ol&gt;&lt;li&gt;Try to find existing solutions, preferably old ones but currently supported.
+&lt;/li&gt;&lt;li&gt;Write yours only if you're sure you have failed with previous suggestion.
+&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;Configure this tooling and use it for some time (at least couple days), experimenting and reconfiguring things as it goes.
+&lt;/li&gt;&lt;li&gt;&lt;code class=&quot;inline-verbatim&quot;&gt;IF&lt;/code&gt; problem seems different now &lt;code class=&quot;inline-verbatim&quot;&gt;GOTO 1&lt;/code&gt;.
+&lt;/li&gt;&lt;/ol&gt;</description>
+  </item>
+  <item>
+   <title>Привіт, чудовий світе (once again)</title>
+   <link>https://vlnn.dev/?stack=hello-wonderful-world</link>
+   <guid>https://vlnn.dev/?stack=hello-wonderful-world</guid>
+   <pubDate>Sat, 08 Oct 2022 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;This is to declare that the stuff has been moved from &lt;a href=&quot;https://vlnn.github.io&quot;&gt;vlnn.github.io&lt;/a&gt; to &lt;a href=&quot;https://vlnn.dev/&quot;&gt;vlnn.dev&lt;/a&gt;.
+&lt;/p&gt;&lt;h1&gt;WHO:&lt;/h1&gt;&lt;p&gt;My name is Volodymyr Anokhin and this is my blog. You may know me as VLNN (mostly at &lt;a href=&quot;https://github.com/vlnn&quot;&gt;vlnn@github.com)&lt;/a&gt;. I'm Ukrainian and that's why instead of &quot;Hello, wonderful world&quot; you may see some Cyrillics in the title of this record.
+&lt;/p&gt;&lt;h1&gt;WHAT:&lt;/h1&gt;&lt;p&gt;This is another try to set up minimalistic mostly technical blog. I plan to write things about my current projects which are mostly software-related at the moment. I was working as a Radio Engineer, as an Engineering Manager, and now I am a software developer. Somehow I always have chosen less-popular programming languages, and so I was writing production code in J, FORTH and APL. Now I moved a bit to more conventional side of Clojure.
+&lt;/p&gt;&lt;h1&gt;WHY:&lt;/h1&gt;&lt;p&gt;It's not my first try to set up a place to share some technical or not-that-technical stuff across the internet. But somehow all the &quot;social&quot; platforms tend to become a social burden, and &quot;technical&quot; platforms tend to become more social with time. So I want to create a small piece of the network here, with smaller auditory but much bigger calmness. I'm not even sure that I will enable comments here!
+&lt;/p&gt;&lt;h1&gt;WHEN:&lt;/h1&gt;&lt;p&gt;It's a wartime, joint forces of russia and belorussia are attacking and occupying parts of Ukraine right now. Perhaps not the best time to start a blog! But it's creation is not related to less chances of russia to kill or torture me. This is directly related to my plans to make everything I have to do during the war: support Ukrainian army, spend money for Ukrainian goods, and also represent Ukraine in every possible way. We are here. Some of us are still alive. We're kicking.
+&lt;/p&gt;&lt;p&gt;And I'll never forgive russians for what they did.
+&lt;/p&gt;</description>
+  </item>
+  <item>
+   <title>SQL as the Data Analysis' Volapük</title>
+   <link>https://vlnn.dev/?stack=sql-as-data-analysis-volapuk</link>
+   <guid>https://vlnn.dev/?stack=sql-as-data-analysis-volapuk</guid>
+   <pubDate>Mon, 19 Sep 2022 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;Lately I've started to work with &lt;a href=&quot;https://druid.apache.org/&quot;&gt;Apache Druid&lt;/a&gt; that is &quot;real-time database to power modern analytics applications&quot;. This is great piece of software, being in it's late version 0.23.0, providing blazing-fast queries to your data. Surely enough, you always pay for the speed: sometimes with old good money (e.g. buy more resources from the powerhouses), sometimes with time needed to prepare the data for being queries (e.g. indexing), sometimes with absence of generality (e.g. make your highly intricate specific DB and go struggle when business needs something unsupported), sometimes just with your brainpower needed to understand and implement new stuff. At the moment, I think Druid is being paid mainly with two latter currencies.
+&lt;/p&gt;&lt;p&gt;So, having a bit of experience in Data warehouse project (5 years ago? eternity!), I was really interested how exactly the speed is being gained. If you're interested, please take a look at &lt;a href=&quot;https://druid.apache.org/faq&quot;&gt;this FAQ page&lt;/a&gt; (spoiler: inverted indexes and intricate metadata model). This post is not about it. This post is about SQL that is currently being used as defacto standard for thinking about data -- even when &quot;real&quot; data is not stored in RDBMS.
+&lt;/p&gt;&lt;p&gt;As most of the industry-grade programming languages, SQL has lots of qualities from different areas: it's mainly declarative, but has procedural mechanisms. It's made for queries but creates databases and tables. It's based on relational algebra, but  It's structured but sometimes it's hard to find the structure behind 30 screens of the statement. At last, it has been designed for managers and now DB-team is usually sitting very far away from the commercial department. This is how evolution works, nothing unusual here.
+&lt;/p&gt;&lt;p&gt;But, being widely used, SQL get into the fields, where I was surprised to see it -- for instance in the NoSQL world. Check out how similar is Cassandra's CQL, even though Cassandra is famous NoSQL DB! Excel files &lt;a href=&quot;https://docs.microsoft.com/en-us/power-automate/desktop-flows/how-to/sql-queries-excel&quot;&gt;could be used as SQL data bases&lt;/a&gt;! Even very non-usual languages like Q are calling the some data-manipulating functions &lt;a href=&quot;https://code.kx.com/q4m3/9_Queries_q-sql/&quot;&gt;q-sql&lt;/a&gt;, using different syntax, but at least partially sharing same mental model of the data manipulation.
+&lt;/p&gt;&lt;p&gt;This leads me to the point, at which I should make a bold statement: I don't think SQL is a good programming language. I mean, it's good, but it's not &lt;strong&gt;that good&lt;/strong&gt;, it's not the default language when you write or think about the data. Its main feature is universality, sure; but being wide-spread across the industry, it effectively wipes out all the other possible ways of thinking around the data. It's liek bad english of the internetz: you want to say &lt;strong&gt;I love you so much&lt;/strong&gt;, but sending 🔥🔥🔥 instead; you want to know who wrote the hit and writing
+&lt;/p&gt;&lt;pre class=&quot;src-block&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;SELECT song_id FROM charts FETCH FIRST 1 ROWS ONLY
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;instead, panicking how long will become the join to the composers table. It's really similar to Volapük in many contexts: it's as artificial, it's designed to be widely used, it's good but not necessary best, and it may be scorched out with some new technology (Esperanto in Volapük's case). Not sure if I will see the dawn of SQL, but it could be a wonderful view!
+&lt;/p&gt;</description>
+  </item>
+ </channel>
 </rss>
