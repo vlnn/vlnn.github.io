@@ -6,11 +6,13 @@ const SPINE_STEP = 42;
 const noteCache = new Map();
 let index = { notes: {} };
 
+const SLUG_SHAPE = /^[a-z0-9-]+$/;
+
 export function parseStack(search) {
   const params = new URLSearchParams(search);
   const compact = (params.get("stack") || "").split(",").filter(Boolean);
   const legacy = params.getAll("stackedNotes");
-  const slugs = compact.length ? compact : legacy;
+  const slugs = (compact.length ? compact : legacy).filter((slug) => SLUG_SHAPE.test(slug));
   return slugs.length ? slugs : [ENTRY];
 }
 
@@ -258,7 +260,7 @@ function tagList(tags, openTag) {
 function renderModeline(slug, paneIndex, closeFromPane, closable, openTag) {
   const meta = metaOf(slug);
   const footer = el("footer", "pane-footer");
-  footer.innerHTML = `<span class="slug">${slug}</span> ${meta.date} `;
+  footer.append(el("span", "slug", slug), ` ${meta.date} `);
   if (meta.tags.length) footer.append("(", tagList(meta.tags, openTag), ")");
   footer.append(closeButton(paneIndex, closeFromPane, closable));
   return footer;

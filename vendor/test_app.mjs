@@ -202,3 +202,12 @@ const trackCases = [
 ];
 for (const [run, expected, message] of trackCases) assert.deepEqual(run(), expected, message);
 console.log("track position tests passed");
+
+const slugSafetyCases = [
+  [() => parseStack("?stack=good,%3Cimg%20src%3Dx%3E"), ["good"], "parseStack should drop slugs containing characters outside a-z 0-9 dash"],
+  [() => parseStack("?stack=..%2F..%2Fsecret"), ["about-these-notes"], "parseStack should fall back to the entry note when every slug is invalid"],
+  [() => parseStack("?stackedNotes=ok&stackedNotes=Not%20OK"), ["ok"], "parseStack should validate the legacy form the same way"],
+  [() => parseStack("?stack=a1-b2,timeline"), ["a1-b2", "timeline"], "parseStack should keep well-formed slugs and synthetic panes untouched"],
+];
+for (const [run, expected, message] of slugSafetyCases) assert.deepEqual(run(), expected, message);
+console.log("slug safety tests passed");
