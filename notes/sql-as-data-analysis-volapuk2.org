@@ -3,7 +3,7 @@
 #+description:
 #+filetags: data sql language todo
 
-4 years ago I wrote a [[file:/sql-as-data-analysis-volapuk.org][small note on SQL]], and oh boy things have changed (alas, russia's war in Ukraine hasn't changed that much!):
+4 years ago I wrote a [[file:sql-as-data-analysis-volapuk.org][small note on SQL]], and oh boy things have changed (alas, russia's war in Ukraine hasn't changed that much!):
 
 1. Apache Druid moves from SQL to [[https://druid.apache.org/docs/latest/querying/][its own custom JSON-based native query language]] (so my starting idea didn't hold for too long).
 2. Magnificent [[https://duckdb.org][DuckDB]] appeared, removing both most of the other locally-installed DBs, and also providing lots of analytical possibilities to python or even PostgreSQL.
