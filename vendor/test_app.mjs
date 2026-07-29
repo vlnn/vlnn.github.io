@@ -211,3 +211,73 @@ const slugSafetyCases = [
 ];
 for (const [run, expected, message] of slugSafetyCases) assert.deepEqual(run(), expected, message);
 console.log("slug safety tests passed");
+
+import { tokenize, searchNotes, snippetFor } from "../app.js";
+
+const corpus = [
+  { slug: "repl", title: "REPL driven flow", tags: ["clojure"], body: "The repl is where clojure lives. Iterate in the repl." },
+  { slug: "sql", title: "SQL as volapuk", tags: ["data"], body: "sql is a strange language for analysis" },
+  { slug: "lamp", title: "Daylight lamp", tags: [], body: "a lamp against the winter dark" },
+];
+
+const searchCases = [
+  [() => tokenize("  Hello   REPL "), ["hello", "repl"], "tokenize should lowercase and split on whitespace"],
+  [() => tokenize(""), [], "tokenize should return nothing for an empty query"],
+  [() => searchNotes("", corpus), [], "searchNotes should return nothing for an empty query"],
+  [() => searchNotes("nonexistent-word", corpus).length, 0, "searchNotes should return nothing when no note matches"],
+  [() => searchNotes("clojure", corpus).map((hit) => hit.slug), ["repl"], "searchNotes should match tokens found only in tags or body"],
+  [() => searchNotes("lamp winter", corpus).map((hit) => hit.slug), ["lamp"], "searchNotes should require every token to match the same note"],
+  [() => searchNotes("sql repl", corpus).length, 0, "searchNotes should drop notes matching only some tokens"],
+];
+for (const [run, expected, message] of searchCases) assert.deepEqual(run(), expected, message);
+
+assert.equal(
+  searchNotes("repl", corpus)[0].slug, "repl",
+  "searchNotes should rank a title match above a body-only match"
+);
+assert.ok(
+  searchNotes("sql", corpus).map((hit) => hit.slug).includes("sql"),
+  "searchNotes should still include body/title matches alongside ranking"
+);
+
+assert.equal(
+  snippetFor("aaa needle bbb", ["needle"], 2),
+  "…a needle b…",
+  "snippetFor should cut a window around the first matching token with ellipses"
+);
+assert.equal(
+  snippetFor("needle at the start", ["needle"], 5),
+  "needle at t…",
+  "snippetFor should not prepend an ellipsis when the match opens the text"
+);
+assert.equal(
+  snippetFor("no match here", ["absent"], 10),
+  "no match here",
+  "snippetFor should fall back to the head of the text when nothing matches"
+);
+console.log("search tests passed");
+
+import { tagCounts, tagScale } from "../app.js";
+
+const cloudIndex = { notes: {
+  a: { tags: ["clojure", "meta"] },
+  b: { tags: ["clojure"] },
+  c: { tags: [] },
+  d: { tags: ["war"] },
+} };
+
+assert.deepEqual(
+  tagCounts(cloudIndex),
+  [["clojure", 2], ["meta", 1], ["war", 1]],
+  "tagCounts should count notes per tag, most used first, ties alphabetical"
+);
+assert.deepEqual(tagCounts({ notes: {} }), [], "tagCounts should be empty for an empty index");
+
+assert.equal(tagScale(0, 5), 13, "tagScale should give the minimum size to an unused tag");
+assert.equal(tagScale(5, 5), 30, "tagScale should give the maximum size to the most used tag");
+assert.ok(
+  tagScale(1, 4) < tagScale(2, 4) && tagScale(2, 4) < tagScale(4, 4),
+  "tagScale should grow monotonically with count"
+);
+assert.equal(tagScale(3, 0), 13, "tagScale should stay at minimum when the index has no tags");
+console.log("tag cloud tests passed");

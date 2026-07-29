@@ -149,7 +149,66 @@ export function slugsForTag(index, tag) {
     .map(([slug]) => slug);
 }
 
-const SYNTHETIC = new Set(["timeline"]);
+export function tokenize(query) {
+  return query.toLowerCase().split(/\s+/).filter(Boolean);
+}
+
+function haystackOf(note) {
+  return {
+    title: note.title.toLowerCase(),
+    tags: (note.tags || []).join(" ").toLowerCase(),
+    body: note.body.toLowerCase(),
+  };
+}
+
+function tokenScore(token, haystack) {
+  if (haystack.title.includes(token)) return 10;
+  if (haystack.tags.includes(token)) return 5;
+  if (haystack.body.includes(token)) return 1;
+  return 0;
+}
+
+function noteScore(tokens, note) {
+  const haystack = haystackOf(note);
+  const scores = tokens.map((token) => tokenScore(token, haystack));
+  return scores.every(Boolean) ? scores.reduce((sum, score) => sum + score, 0) : 0;
+}
+
+export function searchNotes(query, corpus) {
+  const tokens = tokenize(query);
+  if (!tokens.length) return [];
+  return corpus
+    .map((note) => ({ ...note, score: noteScore(tokens, note) }))
+    .filter((hit) => hit.score > 0)
+    .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
+}
+
+export function snippetFor(body, tokens, radius) {
+  const lower = body.toLowerCase();
+  const [at, length] =
+    tokens.map((token) => [lower.indexOf(token), token.length]).find(([i]) => i >= 0) || [0, radius];
+  const start = Math.max(at - radius, 0);
+  const end = Math.min(at + length + radius, body.length);
+  return `${start > 0 ? "…" : ""}${body.slice(start, end)}${end < body.length ? "…" : ""}`;
+}
+
+export function tagCounts(index) {
+  const counts = new Map();
+  Object.values(index.notes).forEach((note) =>
+    (note.tags || []).forEach((tag) => counts.set(tag, (counts.get(tag) || 0) + 1))
+  );
+  return [...counts.entries()].sort(([tagA, a], [tagB, b]) => b - a || tagA.localeCompare(tagB));
+}
+
+const TAG_FONT_MIN = 13;
+const TAG_FONT_MAX = 30;
+
+export function tagScale(count, maxCount) {
+  if (!maxCount) return TAG_FONT_MIN;
+  return Math.round(TAG_FONT_MIN + (TAG_FONT_MAX - TAG_FONT_MIN) * Math.sqrt(count / maxCount));
+}
+
+const SYNTHETIC = new Set(["timeline", "tags"]);
 
 export function trailAsOrg(stack, notes) {
   return stack
@@ -177,9 +236,12 @@ async function fetchNote(slug) {
 }
 
 const TIMELINE = "timeline";
+const TAGS = "tags";
+const SYNTHETIC_TITLES = { [TIMELINE]: "Timeline", [TAGS]: "Tags" };
 
 function metaOf(slug) {
-  if (slug === TIMELINE) return { title: "Timeline", date: "", tags: [], backlinks: [], file: "" };
+  const synthetic = SYNTHETIC_TITLES[slug];
+  if (synthetic) return { title: synthetic, date: "", tags: [], backlinks: [], file: "" };
   return index.notes[slug] || { title: slug, date: "", tags: [], backlinks: [] };
 }
 
@@ -290,17 +352,39 @@ function renderPane(slug, paneIndex, noteText, openFromPane, closeFromPane, clos
   return pane;
 }
 
-function renderTimelinePane(paneIndex, openFromPane, closeFromPane, closable, openTag) {
+function syntheticPaneShell(title, paneIndex) {
   const pane = el("article", "pane");
   pane.style.left = `${paneIndex * SPINE_STEP}px`;
   pane.style.zIndex = paneIndex;
-
-  const spine = el("div", "pane-spine", "Timeline");
+  const spine = el("div", "pane-spine", title);
   spine.tabIndex = 0;
   spine.addEventListener("click", () => pane.scrollIntoView({ inline: "start" }));
-
   const body = el("div", "pane-body");
-  body.append(el("h1", "note-title", "Timeline"));
+  body.append(el("h1", "note-title", title));
+  pane.append(spine, body);
+  return { pane, body };
+}
+
+function renderTagsPane(paneIndex, closeFromPane, closable, openTag) {
+  const { pane, body } = syntheticPaneShell("Tags", paneIndex);
+  const content = el("div", "note-content tag-cloud");
+  const counts = tagCounts(index);
+  const maxCount = counts.length ? counts[0][1] : 0;
+  counts.forEach(([tag, count]) => {
+    const link = tagLink(tag, openTag);
+    link.style.fontSize = `${tagScale(count, maxCount)}px`;
+    link.dataset.count = count;
+    link.title = `${count} note${count === 1 ? "" : "s"}`;
+    content.append(link, " ");
+  });
+  if (!counts.length) content.append(el("p", "none", "No tags yet."));
+  body.append(content);
+  pane.append(renderModeline(TAGS, paneIndex, closeFromPane, closable, openTag));
+  return pane;
+}
+
+function renderTimelinePane(paneIndex, openFromPane, closeFromPane, closable, openTag) {
+  const { pane, body } = syntheticPaneShell("Timeline", paneIndex);
   const content = el("div", "note-content timeline");
   let year = "";
   timelineEntries(index).forEach((entry) => {
@@ -321,7 +405,7 @@ function renderTimelinePane(paneIndex, openFromPane, closeFromPane, closable, op
     content.append(row);
   });
   body.append(content);
-  pane.append(spine, body, renderModeline(TIMELINE, paneIndex, closeFromPane, closable, openTag));
+  pane.append(renderModeline(TIMELINE, paneIndex, closeFromPane, closable, openTag));
   return pane;
 }
 
@@ -446,6 +530,7 @@ async function renderStack(stack, openFromPane, openTrail, closeFromPane, openTa
     visiblePanes(stack, narrowScreen.matches).map(async ([slug, paneIndex]) => {
       const closable = stack.length > 1;
       if (slug === TIMELINE) return renderTimelinePane(paneIndex, openFromPane, closeFromPane, closable, openTag);
+      if (slug === TAGS) return renderTagsPane(paneIndex, closeFromPane, closable, openTag);
       try {
         return renderPane(slug, paneIndex, await fetchNote(slug), openFromPane, closeFromPane, closable, openTag);
       } catch {
@@ -457,6 +542,99 @@ async function renderStack(stack, openFromPane, openTrail, closeFromPane, openTa
   renderTimeArrow(stack, openFromPane);
   document.title = `${metaOf(stack[stack.length - 1]).title} — @vlnn`;
   revealLastPane(panes);
+}
+
+const SEARCH_LIMIT = 8;
+const SNIPPET_RADIUS = 60;
+
+let corpus = null;
+
+async function loadCorpus() {
+  if (!corpus) {
+    corpus = await Promise.all(
+      Object.keys(index.notes).map(async (slug) => ({
+        slug,
+        title: metaOf(slug).title,
+        tags: metaOf(slug).tags,
+        body: await fetchNote(slug).catch(() => ""),
+      }))
+    );
+  }
+  return corpus;
+}
+
+function debounce(fn, ms) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), ms);
+  };
+}
+
+function searchHitRow(hit, tokens, openSlug) {
+  const row = el("a", "search-hit");
+  row.href = stackUrl([hit.slug]);
+  row.append(el("span", "search-hit-title", hit.title));
+  row.append(el("span", "search-hit-snippet", snippetFor(hit.body, tokens, SNIPPET_RADIUS)));
+  row.addEventListener("click", (event) => {
+    event.preventDefault();
+    openSlug(hit.slug);
+  });
+  return row;
+}
+
+function renderSearchHits(box, hits, tokens, openSlug) {
+  box.replaceChildren();
+  box.hidden = !hits.length;
+  hits.slice(0, SEARCH_LIMIT).forEach((hit) => box.append(searchHitRow(hit, tokens, openSlug)));
+}
+
+function moveActiveHit(box, delta) {
+  const rows = [...box.children];
+  if (!rows.length) return;
+  const current = rows.findIndex((row) => row.classList.contains("active"));
+  const next = (current + delta + rows.length) % rows.length;
+  rows.forEach((row, i) => row.classList.toggle("active", i === next));
+}
+
+function searchKeydown(input, box) {
+  return (event) => {
+    if (event.key === "Escape") {
+      box.hidden = true;
+      input.blur();
+    }
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      moveActiveHit(box, event.key === "ArrowDown" ? 1 : -1);
+    }
+    if (event.key === "Enter") {
+      const active = box.querySelector(".active") || box.firstElementChild;
+      if (active) active.click();
+    }
+    event.stopPropagation();
+  };
+}
+
+function wireSearch(openAtEnd) {
+  const input = document.getElementById("search");
+  const box = document.getElementById("search-results");
+  const openSlug = (slug) => {
+    input.value = "";
+    box.hidden = true;
+    input.blur();
+    openAtEnd(slug);
+  };
+  const rerunSearch = async () => {
+    const hits = searchNotes(input.value, await loadCorpus());
+    renderSearchHits(box, hits, tokenize(input.value), openSlug);
+  };
+  input.addEventListener("focus", () => loadCorpus());
+  input.addEventListener("input", debounce(rerunSearch, 120));
+  input.addEventListener("keydown", searchKeydown(input, box));
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".site-search")) box.hidden = true;
+  });
+  return input;
 }
 
 function toast(message) {
@@ -498,10 +676,17 @@ function start() {
       navigate(parseStack(new URL(anchor.href).search));
     });
   });
+  const openAtEnd = (slug) => openFromPane(parseStack(location.search).length - 1, slug);
+  const searchInput = wireSearch(openAtEnd);
   window.addEventListener("popstate", rerender);
   narrowScreen.addEventListener("change", rerender);
   window.addEventListener("keydown", (event) => {
     if (event.metaKey || event.ctrlKey || event.altKey) return;
+    if (event.target.closest("input, textarea")) return;
+    if (event.key === "/") {
+      event.preventDefault();
+      searchInput.focus();
+    }
     if (event.key === "y") copyTrail();
     if (event.key === "q") closeFromPane(parseStack(location.search).length - 1);
   });
