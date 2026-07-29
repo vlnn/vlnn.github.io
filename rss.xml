@@ -53,6 +53,19 @@
 &lt;/ul&gt;</description>
   </item>
   <item>
+   <title>Sql As Data Analysis Volapük Part 2</title>
+   <link>https://vlnn.dev/?stack=sql-as-data-analysis-volapuk2</link>
+   <guid>https://vlnn.dev/?stack=sql-as-data-analysis-volapuk2</guid>
+   <pubDate>Wed, 29 Jul 2026 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;4 years ago I wrote a &lt;a href=&quot;file:sql-as-data-analysis-volapuk.org&quot;&gt;small note on SQL&lt;/a&gt;, and oh boy things have changed (alas, russia's war in Ukraine hasn't changed that much!):
+&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Apache Druid moves from SQL to &lt;a href=&quot;https://druid.apache.org/docs/latest/querying/&quot;&gt;its own custom JSON-based native query language&lt;/a&gt; (so my starting idea didn't hold for too long).
+&lt;/li&gt;&lt;li&gt;Magnificent &lt;a href=&quot;https://duckdb.org&quot;&gt;DuckDB&lt;/a&gt; appeared, removing both most of the other locally-installed DBs, and also providing lots of analytical possibilities to python or even PostgreSQL.
+&lt;/li&gt;&lt;li&gt;Speaking of the beast, PostgreSQL with its extensions for everything got quite a traction.
+&lt;/li&gt;&lt;li&gt;I have lots of books on SQL (mostly quickly scanned through, not read deep enough as they all have to be read): The Art of PostgreSQL by Dimitri Fontaine, DuckDB in Action from Manning, even SQL Queries for Mere Mortals by John L. Viescas. Each of those waits for the note in future.
+&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Alas, I'm not working with Apache Druid anymore, at least for now. But it seems that it's still long until we see the dawn of SQL (also LLMs are writing it beautifully and people are kinda accostumed to not reading it properly).
+&lt;/p&gt;</description>
+  </item>
+  <item>
    <title>THE Solution to the REPL snippets (using Emacs ofc)</title>
    <link>https://vlnn.dev/?stack=solution-to-the-repl-snippets</link>
    <guid>https://vlnn.dev/?stack=solution-to-the-repl-snippets</guid>
@@ -199,7 +212,7 @@
 &lt;/p&gt;&lt;p&gt;As most of the industry-grade programming languages, SQL has lots of qualities from different areas: it's mainly declarative, but has procedural mechanisms. It's made for queries but creates databases and tables. It's based on relational algebra, but  It's structured but sometimes it's hard to find the structure behind 30 screens of the statement. At last, it has been designed for managers and now DB-team is usually sitting very far away from the commercial department. This is how evolution works, nothing unusual here.
 &lt;/p&gt;&lt;p&gt;But, being widely used, SQL get into the fields, where I was surprised to see it -- for instance in the NoSQL world. Check out how similar is Cassandra's CQL, even though Cassandra is famous NoSQL DB! Excel files &lt;a href=&quot;https://docs.microsoft.com/en-us/power-automate/desktop-flows/how-to/sql-queries-excel&quot;&gt;could be used as SQL data bases&lt;/a&gt;! Even very non-usual languages like Q are calling the some data-manipulating functions &lt;a href=&quot;https://code.kx.com/q4m3/9_Queries_q-sql/&quot;&gt;q-sql&lt;/a&gt;, using different syntax, but at least partially sharing same mental model of the data manipulation.
 &lt;/p&gt;&lt;p&gt;This leads me to the point, at which I should make a bold statement: I don't think SQL is a good programming language. I mean, it's good, but it's not &lt;strong&gt;that good&lt;/strong&gt;, it's not the default language when you write or think about the data. Its main feature is universality, sure; but being wide-spread across the industry, it effectively wipes out all the other possible ways of thinking around the data. It's liek bad english of the internetz: you want to say &lt;strong&gt;I love you so much&lt;/strong&gt;, but sending 🔥🔥🔥 instead; you want to know who wrote the hit and writing
-&lt;/p&gt;&lt;pre class=&quot;src-block&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;SELECT song_id FROM charts FETCH FIRST 1 ROWS ONLY
+&lt;/p&gt;&lt;pre class=&quot;src-block&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;SELECT song_id FROM charts FETCH FIRST 1 ROWS ONLY ;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;instead, panicking how long will become the join to the composers table. It's really similar to Volapük in many contexts: it's as artificial, it's designed to be widely used, it's good but not necessary best, and it may be scorched out with some new technology (Esperanto in Volapük's case). Not sure if I will see the dawn of SQL, but it could be a wonderful view!
 &lt;/p&gt;</description>
   </item>

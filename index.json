@@ -178,8 +178,24 @@
    "file": "sql-as-data-analysis-volapuk.org",
    "links": [],
    "backlinks": [
-    "about-these-notes"
+    "about-these-notes",
+    "sql-as-data-analysis-volapuk2"
    ]
+  },
+  "sql-as-data-analysis-volapuk2": {
+   "title": "Sql As Data Analysis Volapük Part 2",
+   "date": "2026-07-29",
+   "tags": [
+    "data",
+    "sql",
+    "language",
+    "todo"
+   ],
+   "file": "sql-as-data-analysis-volapuk2.org",
+   "links": [
+    "sql-as-data-analysis-volapuk"
+   ],
+   "backlinks": []
   }
  }
 }
