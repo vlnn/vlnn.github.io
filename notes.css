@@ -256,8 +256,8 @@ body { display: flex; flex-direction: column; }
 
 .arrow-arcs {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  inset: 0 26px 0 6px;
+  width: auto;
   height: 100%;
   pointer-events: none;
 }

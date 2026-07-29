@@ -192,3 +192,13 @@ assert.ok(arcHeight(0.1) < arcHeight(0.5), "arcHeight should grow with the horiz
 assert.equal(arcHeight(1), arcHeight(0.9), "arcHeight should cap so wide arcs stay inside the bar");
 assert.ok(arcHeight(0.01) > 0, "arcHeight should keep even the shortest arc visible");
 console.log("arc diagram tests passed");
+
+import { trackPosition } from "../app.js";
+
+const trackCases = [
+  [() => trackPosition(0), "calc(6px + 0 * (100% - 32px))", "trackPosition should start the track just inside the axis line"],
+  [() => trackPosition(1), "calc(6px + 1 * (100% - 32px))", "trackPosition should end the track before the arrowhead"],
+  [() => trackPosition(0.5), "calc(6px + 0.5 * (100% - 32px))", "trackPosition should map intermediate x linearly into the padded track"],
+];
+for (const [run, expected, message] of trackCases) assert.deepEqual(run(), expected, message);
+console.log("track position tests passed");

@@ -330,7 +330,7 @@ function degreeOf(slug) {
 
 function timeArrowDot(entry, stack, openFromPane, maxDegree) {
   const dot = el("button", "arrow-dot", "");
-  dot.style.left = `${entry.x * 100}%`;
+  dot.style.left = trackPosition(entry.x);
   const size = dotScale(degreeOf(entry.slug), maxDegree);
   dot.style.width = `${size}px`;
   dot.style.height = `${size}px`;
@@ -341,6 +341,13 @@ function timeArrowDot(entry, stack, openFromPane, maxDegree) {
   if (stack.includes(entry.slug)) dot.classList.add("in-stack");
   dot.addEventListener("click", () => openFromPane(stack.length - 1, entry.slug));
   return dot;
+}
+
+const TRACK_PAD_LEFT = 6;
+const TRACK_PAD_RIGHT = 26;
+
+export function trackPosition(x) {
+  return `calc(${TRACK_PAD_LEFT}px + ${x} * (100% - ${TRACK_PAD_LEFT + TRACK_PAD_RIGHT}px))`;
 }
 
 const ARC_VIEW_WIDTH = 1000;
@@ -388,7 +395,7 @@ function renderTimeArrow(stack, openFromPane) {
   const svg = renderArcs(bar, layout);
   yearTicks(entries).forEach((tick) => {
     const label = el("span", "arrow-year", tick.year);
-    label.style.left = `${tick.x * 100}%`;
+    label.style.left = trackPosition(tick.x);
     bar.append(label);
   });
   const maxDegree = Math.max(...entries.map((entry) => degreeOf(entry.slug)));
