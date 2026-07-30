@@ -3,6 +3,9 @@ import json
 import pytest
 
 from build_index import (
+    extract_md_prompts,
+    extract_org_prompts,
+    parse_prompt_pairs,
     extract_md_note_links,
     parse_md_metadata,
     build_index,
@@ -116,6 +119,7 @@ def test_build_index_end_to_end(tmp_path):
         "tags": ["x", "y"],
         "file": "a.org",
         "links": ["b"],
+        "prompts": [],
         "backlinks": [],
     }, "build_index should produce complete metadata per note"
     json.dumps(index)
@@ -200,4 +204,84 @@ def test_build_index_drops_links_to_unknown_notes(tmp_path):
 
     assert index["notes"]["a"]["links"] == ["b"], (
         "build_index should drop links pointing at notes that don't exist"
+    )
+
+
+@pytest.mark.parametrize(
+    "body, expected",
+    [
+        ("Q: What?\nA: That.", [{"q": "What?", "a": "That."}]),
+        (
+            "Q: First?\nA: One.\nQ: Second?\nA: Two.",
+            [{"q": "First?", "a": "One."}, {"q": "Second?", "a": "Two."}],
+        ),
+        (
+            "Q: Multi\nline question?\nA: Multi\nline answer.",
+            [{"q": "Multi\nline question?", "a": "Multi\nline answer."}],
+        ),
+        ("Q: Orphan question?", []),
+        ("A: Orphan answer.", []),
+        ("Q: Kept?\nA: Yes.\nQ: Dropped orphan?", [{"q": "Kept?", "a": "Yes."}]),
+        ("", []),
+    ],
+)
+def test_parse_prompt_pairs(body, expected):
+    assert parse_prompt_pairs(body) == expected, (
+        "parse_prompt_pairs should pair each Q with its A and drop orphans of either kind"
+    )
+
+
+@pytest.mark.parametrize(
+    "text, expected",
+    [
+        (
+            "#+title: x\n\n#+begin_test\nQ: What?\nA: That.\n#+end_test\n",
+            [{"q": "What?", "a": "That."}],
+        ),
+        (
+            "#+BEGIN_TEST\nQ: Upper?\nA: Also works.\n#+END_TEST",
+            [{"q": "Upper?", "a": "Also works."}],
+        ),
+        (
+            "#+begin_test\nQ: One?\nA: 1.\n#+end_test\ntext between\n#+begin_test\nQ: Two?\nA: 2.\n#+end_test",
+            [{"q": "One?", "a": "1."}, {"q": "Two?", "a": "2."}],
+        ),
+        ("#+begin_src python\nQ = 1\n#+end_src", []),
+        ("Plain note, no blocks.", []),
+    ],
+)
+def test_extract_org_prompts(text, expected):
+    assert extract_org_prompts(text) == expected, (
+        "extract_org_prompts should collect Q/A pairs from every #+begin_test block, case-insensitively"
+    )
+
+
+@pytest.mark.parametrize(
+    "text, expected",
+    [
+        ("```test\nQ: What?\nA: That.\n```", [{"q": "What?", "a": "That."}]),
+        ("```python\nQ = 1\n```", []),
+        (
+            "```test\nQ: One?\nA: 1.\n```\nprose\n```test\nQ: Two?\nA: 2.\n```",
+            [{"q": "One?", "a": "1."}, {"q": "Two?", "a": "2."}],
+        ),
+    ],
+)
+def test_extract_md_prompts(text, expected):
+    assert extract_md_prompts(text) == expected, (
+        "extract_md_prompts should collect Q/A pairs only from fenced blocks tagged test"
+    )
+
+
+def test_build_index_includes_prompts(tmp_path):
+    (tmp_path / "quizzy.org").write_text(
+        "#+title: Quizzy\n\n#+begin_test\nQ: What?\nA: That.\n#+end_test\n"
+    )
+    (tmp_path / "plain.org").write_text("#+title: Plain\n")
+    index = build_index(tmp_path)
+    assert index["notes"]["quizzy"]["prompts"] == [{"q": "What?", "a": "That."}], (
+        "build_index should carry extracted prompts into the note entry"
+    )
+    assert index["notes"]["plain"]["prompts"] == [], (
+        "build_index should give promptless notes an empty prompts list"
     )

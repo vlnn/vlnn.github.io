@@ -7,12 +7,21 @@ const noteCache = new Map();
 let index = { notes: {} };
 
 const SLUG_SHAPE = /^[a-z0-9-]+$/;
+const TEST_PREFIX = "test:";
+
+function innerSlug(slug) {
+  return slug.startsWith(TEST_PREFIX) ? slug.slice(TEST_PREFIX.length) : slug;
+}
+
+function validSlug(slug) {
+  return SLUG_SHAPE.test(innerSlug(slug));
+}
 
 export function parseStack(search) {
   const params = new URLSearchParams(search);
   const compact = (params.get("stack") || "").split(",").filter(Boolean);
   const legacy = params.getAll("stackedNotes");
-  const slugs = (compact.length ? compact : legacy).filter((slug) => SLUG_SHAPE.test(slug));
+  const slugs = (compact.length ? compact : legacy).filter(validSlug);
   return slugs.length ? slugs : [ENTRY];
 }
 
@@ -28,6 +37,10 @@ export function stackAfter(stack, paneIndex, slug) {
 export function closePane(stack, paneIndex) {
   if (stack.length <= 1 || paneIndex >= stack.length) return stack;
   return stack.filter((_, i) => i !== paneIndex);
+}
+
+export function appendPane(stack, slug) {
+  return stack.includes(slug) ? stack : [...stack, slug];
 }
 
 export function visiblePanes(stack, narrow) {
@@ -215,7 +228,42 @@ export function tagScale(count, maxCount) {
   return Math.round(TAG_FONT_MIN + (TAG_FONT_MAX - TAG_FONT_MIN) * Math.sqrt(count / maxCount));
 }
 
-const SYNTHETIC = new Set(["timeline", "tags"]);
+const SYNTHETIC = new Set(["timeline", "tags", "test"]);
+
+export function testSlugOf(slug) {
+  return slug.startsWith(TEST_PREFIX) ? slug.slice(TEST_PREFIX.length) : null;
+}
+
+function isSynthetic(slug) {
+  return SYNTHETIC.has(slug) || testSlugOf(slug) !== null;
+}
+
+function promptsWithSource(notes, slug) {
+  return ((notes[slug] || {}).prompts || []).map((prompt) => ({ ...prompt, slug }));
+}
+
+export function quizPrompts(index, stack) {
+  const open = [...new Set(stack.filter((slug) => !isSynthetic(slug)))];
+  const fromOpen = open.flatMap((slug) => promptsWithSource(index.notes, slug));
+  if (fromOpen.length) return fromOpen;
+  return Object.keys(index.notes).flatMap((slug) => promptsWithSource(index.notes, slug));
+}
+
+export function quizStart() {
+  return { position: 0, revealed: false, recalled: 0 };
+}
+
+export function quizReveal(state) {
+  return { ...state, revealed: true };
+}
+
+export function quizGrade(state, recalled) {
+  return { position: state.position + 1, revealed: false, recalled: state.recalled + (recalled ? 1 : 0) };
+}
+
+export function quizDone(state, total) {
+  return state.position >= total;
+}
 
 export function trailAsOrg(stack, notes) {
   return stack
@@ -244,12 +292,19 @@ async function fetchNote(slug) {
 
 const TIMELINE = "timeline";
 const TAGS = "tags";
-const SYNTHETIC_TITLES = { [TIMELINE]: "Timeline", [TAGS]: "Tags" };
+const TEST = "test";
+const SYNTHETIC_TITLES = { [TIMELINE]: "Timeline", [TAGS]: "Tags", [TEST]: "Test" };
 
 function metaOf(slug) {
   const synthetic = SYNTHETIC_TITLES[slug];
   if (synthetic) return { title: synthetic, date: "", tags: [], backlinks: [], file: "" };
+  const testFor = testSlugOf(slug);
+  if (testFor) return { title: `Test: ${metaOf(testFor).title}`, date: "", tags: [], backlinks: [], file: "" };
   return index.notes[slug] || { title: slug, date: "", tags: [], backlinks: [] };
+}
+
+function promptsOf(slug) {
+  return (index.notes[slug] || {}).prompts || [];
 }
 
 function el(tag, className, text) {
@@ -257,6 +312,20 @@ function el(tag, className, text) {
   if (className) node.className = className;
   if (text) node.textContent = text;
   return node;
+}
+
+function renderTestLink(slug, openFromPane, paneIndex) {
+  const count = promptsOf(slug).length;
+  if (!count) return "";
+  const section = el("section", "test-link");
+  const link = el("a", "note-link", "test yourself");
+  link.href = stackUrl([slug, TEST_PREFIX + slug]);
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    openFromPane(paneIndex, TEST_PREFIX + slug);
+  });
+  section.append(`${count} prompt${count === 1 ? "" : "s"} — `, link);
+  return section;
 }
 
 function renderBacklinks(slug, openFromPane, paneIndex) {
@@ -352,8 +421,10 @@ function renderPane(slug, paneIndex, noteText, openFromPane, closeFromPane, clos
 
   const content = el("div", "note-content");
   content.innerHTML = noteToHtml(fileOf(slug), noteText);
+  content.querySelectorAll(".block-test").forEach((block) => block.remove());
+  content.querySelectorAll("code.language-test").forEach((code) => (code.closest("pre") || code).remove());
   adoptContentLinks(content, openFromPane, paneIndex);
-  body.append(content, renderBacklinks(slug, openFromPane, paneIndex));
+  body.append(content, renderTestLink(slug, openFromPane, paneIndex), renderBacklinks(slug, openFromPane, paneIndex));
 
   pane.append(spine, body, renderModeline(slug, paneIndex, closeFromPane, closable, openTag));
   return pane;
@@ -413,6 +484,72 @@ function renderTimelinePane(paneIndex, openFromPane, closeFromPane, closable, op
   });
   body.append(content);
   pane.append(renderModeline(TIMELINE, paneIndex, closeFromPane, closable, openTag));
+  return pane;
+}
+
+function quizButton(label, onClick) {
+  const button = el("button", "quiz-button", label);
+  button.addEventListener("click", onClick);
+  return button;
+}
+
+function noteLinkTo(slug, paneIndex, openFromPane) {
+  const link = el("a", "note-link", metaOf(slug).title || slug);
+  link.href = stackUrl([slug]);
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    openFromPane(paneIndex, slug);
+  });
+  return link;
+}
+
+function renderQuizStep(content, prompts, state, rerender, showSource, openFromPane, paneIndex) {
+  content.replaceChildren();
+  if (quizDone(state, prompts.length)) {
+    content.append(el("p", "quiz-score", `recalled ${state.recalled}/${prompts.length}`));
+    content.append(quizButton("start over", () => rerender(quizStart())));
+    return;
+  }
+  const prompt = prompts[state.position];
+  content.append(el("p", "quiz-progress", `${state.position + 1}/${prompts.length}`));
+  content.append(el("p", "quiz-question", prompt.q));
+  if (showSource) {
+    const from = el("p", "quiz-from");
+    from.append("from ", noteLinkTo(prompt.slug, paneIndex, openFromPane));
+    content.append(from);
+  }
+  if (!state.revealed) {
+    content.append(quizButton("show answer", () => rerender(quizReveal(state))));
+    return;
+  }
+  content.append(el("p", "quiz-answer", prompt.a));
+  content.append(
+    quizButton("recalled", () => rerender(quizGrade(state, true))),
+    quizButton("forgot", () => rerender(quizGrade(state, false)))
+  );
+}
+
+function quizCaption(noteSlug, stack, paneIndex, openFromPane) {
+  const caption = el("p", "quiz-source");
+  if (noteSlug) {
+    caption.append("prompts from ", noteLinkTo(noteSlug, paneIndex, openFromPane));
+    return caption;
+  }
+  const openHavePrompts = stack.some((slug) => !isSynthetic(slug) && promptsOf(slug).length);
+  caption.append(openHavePrompts ? "prompts from the open notes" : "prompts from across the garden");
+  return caption;
+}
+
+function renderTestPane(slug, stack, paneIndex, openFromPane, closeFromPane, closable, openTag) {
+  const noteSlug = testSlugOf(slug);
+  const { pane, body } = syntheticPaneShell(metaOf(slug).title, paneIndex);
+  const prompts = noteSlug ? promptsWithSource(index.notes, noteSlug) : quizPrompts(index, stack);
+  const content = el("div", "note-content quiz");
+  const rerender = (state) => renderQuizStep(content, prompts, state, rerender, !noteSlug, openFromPane, paneIndex);
+  if (prompts.length) rerender(quizStart());
+  else content.append(el("p", "none", "No prompts anywhere yet."));
+  body.append(quizCaption(noteSlug, stack, paneIndex, openFromPane), content);
+  pane.append(renderModeline(slug, paneIndex, closeFromPane, closable, openTag));
   return pane;
 }
 
@@ -545,6 +682,7 @@ async function renderStack(stack, openFromPane, openTrail, closeFromPane, openTa
       const closable = stack.length > 1;
       if (slug === TIMELINE) return renderTimelinePane(paneIndex, openFromPane, closeFromPane, closable, openTag);
       if (slug === TAGS) return renderTagsPane(paneIndex, closeFromPane, closable, openTag);
+      if (slug === TEST || testSlugOf(slug)) return renderTestPane(slug, stack, paneIndex, openFromPane, closeFromPane, closable, openTag);
       try {
         return renderPane(slug, paneIndex, await fetchNote(slug), openFromPane, closeFromPane, closable, openTag);
       } catch {
@@ -687,6 +825,7 @@ function start() {
   document.querySelectorAll("a[href^='?stack']").forEach((anchor) => {
     anchor.addEventListener("click", (event) => {
       event.preventDefault();
+      if (anchor.dataset.append) return navigate(appendPane(parseStack(location.search), anchor.dataset.append));
       navigate(parseStack(new URL(anchor.href).search));
     });
   });

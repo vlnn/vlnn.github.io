@@ -286,3 +286,73 @@ assert.ok(
 );
 assert.equal(tagScale(3, 0), 13, "tagScale should stay at minimum when the index has no tags");
 console.log("tag cloud tests passed");
+
+import { testSlugOf, quizStart, quizReveal, quizGrade, quizDone } from "../app.js";
+
+assert.equal(testSlugOf("test:my-note"), "my-note", "testSlugOf should unwrap the note slug from a test: pane slug");
+assert.equal(testSlugOf("my-note"), null, "testSlugOf should return null for ordinary note slugs");
+assert.equal(testSlugOf("timeline"), null, "testSlugOf should return null for other synthetic slugs");
+
+assert.deepEqual(quizStart(), { position: 0, revealed: false, recalled: 0 }, "quizStart should begin at the first prompt, unrevealed");
+assert.deepEqual(quizReveal(quizStart()), { position: 0, revealed: true, recalled: 0 }, "quizReveal should expose the answer without advancing");
+assert.deepEqual(
+  quizGrade(quizReveal(quizStart()), true),
+  { position: 1, revealed: false, recalled: 1 },
+  "quizGrade should advance and count a recalled answer"
+);
+assert.deepEqual(
+  quizGrade(quizReveal(quizStart()), false),
+  { position: 1, revealed: false, recalled: 0 },
+  "quizGrade should advance without counting a forgotten answer"
+);
+assert.equal(quizDone(quizStart(), 2), false, "quizDone should be false while prompts remain");
+assert.equal(quizDone({ position: 2, revealed: false, recalled: 1 }, 2), true, "quizDone should be true past the last prompt");
+
+assert.equal(
+  trailAsOrg(["a", "test:a"], { a: { file: "a.org", title: "A" } }),
+  "- [[file:a.org][A]]",
+  "trailAsOrg should exclude test panes from the copied trail"
+);
+console.log("test-pane tests passed");
+
+assert.deepEqual(parseStack("?stack=a,test:a"), ["a", "test:a"], "parseStack should keep test panes through a URL round-trip");
+assert.deepEqual(parseStack("?stack=test"), ["test"], "parseStack should accept the bare site-wide test slug");
+assert.deepEqual(parseStack("?stack=test:../evil"), ["about-these-notes"], "parseStack should still reject unsafe slugs inside a test pane");
+assert.deepEqual(closePane(["a", "test:a"], 1), ["a"], "closePane should close a test pane like any other");
+
+import { quizPrompts } from "../app.js";
+
+const quizIndex = {
+  notes: {
+    a: { prompts: [{ q: "qa", a: "aa" }] },
+    b: { prompts: [] },
+    c: { prompts: [{ q: "qc", a: "ac" }] },
+  },
+};
+
+assert.deepEqual(
+  quizPrompts(quizIndex, ["a", "b", "test"]),
+  [{ q: "qa", a: "aa", slug: "a" }],
+  "quizPrompts should gather prompts from open notes, tagged with their source"
+);
+assert.deepEqual(
+  quizPrompts(quizIndex, ["test"]),
+  [{ q: "qa", a: "aa", slug: "a" }, { q: "qc", a: "ac", slug: "c" }],
+  "quizPrompts should fall back to every note site-wide when no notes are open"
+);
+assert.deepEqual(
+  quizPrompts(quizIndex, ["b", "test"]),
+  [{ q: "qa", a: "aa", slug: "a" }, { q: "qc", a: "ac", slug: "c" }],
+  "quizPrompts should fall back site-wide when open notes have no prompts"
+);
+assert.deepEqual(
+  quizPrompts(quizIndex, ["a", "a", "timeline", "test"]),
+  [{ q: "qa", a: "aa", slug: "a" }],
+  "quizPrompts should ignore synthetic panes and not double-count repeated notes"
+);
+console.log("quiz aggregation tests passed");
+
+import { appendPane } from "../app.js";
+assert.deepEqual(appendPane(["a", "b"], "test"), ["a", "b", "test"], "appendPane should add a pane to the end of the stack");
+assert.deepEqual(appendPane(["a", "test"], "test"), ["a", "test"], "appendPane should not duplicate an already-open pane");
+console.log("append pane tests passed");

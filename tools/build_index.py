@@ -10,6 +10,8 @@ ORG_LINK_RE = re.compile(r"\[\[file:([^]/]+)\.(?:org|md)\]")
 FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
 MD_HEADING_RE = re.compile(r"^#\s+(.*)$", re.MULTILINE)
 MD_LINK_RE = re.compile(r"(?<!!)\[[^]]*\]\(([^)/:]+)\.(?:org|md)\)")
+ORG_TEST_RE = re.compile(r"^#\+begin_test\s*\n(.*?)^#\+end_test", re.IGNORECASE | re.DOTALL | re.MULTILINE)
+MD_TEST_RE = re.compile(r"^```test\s*\n(.*?)^```", re.DOTALL | re.MULTILINE)
 
 
 def split_words(raw):
@@ -84,9 +86,36 @@ def slug_of(filename):
     return Path(filename).stem
 
 
+def parse_prompt_pairs(body):
+    prompts = []
+    field = None
+    for line in body.splitlines():
+        if line.startswith("Q:"):
+            prompts.append({"q": line[2:].strip(), "a": None})
+            field = "q"
+        elif line.startswith("A:") and prompts:
+            prompts[-1]["a"] = line[2:].strip()
+            field = "a"
+        elif field and prompts:
+            prompts[-1][field] += "\n" + line.strip()
+    return [prompt for prompt in prompts if prompt["a"] is not None]
+
+
+def extract_prompts(block_re, text):
+    return [prompt for block in block_re.findall(text) for prompt in parse_prompt_pairs(block)]
+
+
+def extract_org_prompts(text):
+    return extract_prompts(ORG_TEST_RE, text)
+
+
+def extract_md_prompts(text):
+    return extract_prompts(MD_TEST_RE, text)
+
+
 PARSERS = {
-    ".org": (parse_org_metadata, extract_note_links),
-    ".md": (parse_md_metadata, extract_md_note_links),
+    ".org": (parse_org_metadata, extract_note_links, extract_org_prompts),
+    ".md": (parse_md_metadata, extract_md_note_links, extract_md_prompts),
 }
 
 
@@ -100,9 +129,9 @@ def note_files(notes_dir):
 
 
 def parse_note(path):
-    parse, extract = PARSERS[path.suffix]
+    parse, extract_links, extract_prompts = PARSERS[path.suffix]
     text = path.read_text()
-    return {**parse(text), "file": path.name, "links": extract(text)}
+    return {**parse(text), "file": path.name, "links": extract_links(text), "prompts": extract_prompts(text)}
 
 
 def build_index(notes_dir):

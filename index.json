@@ -9,17 +9,14 @@
    "file": "about-these-notes.org",
    "links": [
     "how-this-site-works",
-    "solution-to-the-repl-snippets",
     "configuration-maintenance-vs-renovation",
     "macos-hex-input-problem",
     "sql-as-data-analysis-volapuk",
     "art-of-lisp-questions",
     "historical-bits-and-pieces",
-    "programming-in-wartime",
-    "hello-wonderful-world",
-    "daylight-lamp-first-day",
-    "antiprogress-of-the-dropbox"
+    "programming-in-wartime"
    ],
+   "prompts": [],
    "backlinks": [
     "how-this-site-works"
    ]
@@ -34,9 +31,8 @@
    ],
    "file": "antiprogress-of-the-dropbox.org",
    "links": [],
-   "backlinks": [
-    "about-these-notes"
-   ]
+   "prompts": [],
+   "backlinks": []
   },
   "art-of-lisp-questions": {
    "title": "Art of Lisp questions",
@@ -47,6 +43,7 @@
    ],
    "file": "art-of-lisp-questions.org",
    "links": [],
+   "prompts": [],
    "backlinks": [
     "about-these-notes"
    ]
@@ -62,6 +59,7 @@
    ],
    "file": "configuration-maintenance-vs-renovation.org",
    "links": [],
+   "prompts": [],
    "backlinks": [
     "about-these-notes"
    ]
@@ -76,8 +74,25 @@
    ],
    "file": "daylight-lamp-first-day.org",
    "links": [],
+   "prompts": [],
    "backlinks": [
-    "about-these-notes"
+    "light-sources-during-the-war"
+   ]
+  },
+  "gatekeeping-at-lobste-rs": {
+   "title": "Gatekeeping At Lobste.rs",
+   "date": "2026-07-30",
+   "tags": [
+    "rant",
+    "social",
+    "ad",
+    "slop"
+   ],
+   "file": "gatekeeping-at-lobste-rs.org",
+   "links": [],
+   "prompts": [],
+   "backlinks": [
+    "oldschool-is-closed"
    ]
   },
   "hello-wonderful-world": {
@@ -90,9 +105,8 @@
    ],
    "file": "hello-wonderful-world.org",
    "links": [],
-   "backlinks": [
-    "about-these-notes"
-   ]
+   "prompts": [],
+   "backlinks": []
   },
   "historical-bits-and-pieces": {
    "title": "Historical bits and pieces",
@@ -104,6 +118,7 @@
    ],
    "file": "historical-bits-and-pieces.org",
    "links": [],
+   "prompts": [],
    "backlinks": [
     "about-these-notes"
    ]
@@ -119,9 +134,26 @@
    "links": [
     "about-these-notes"
    ],
+   "prompts": [],
    "backlinks": [
     "about-these-notes"
    ]
+  },
+  "light-sources-during-the-war": {
+   "title": "Light Sources During The War",
+   "date": "2026-07-29",
+   "tags": [
+    "light",
+    "lamp",
+    "health",
+    "war"
+   ],
+   "file": "light-sources-during-the-war.org",
+   "links": [
+    "daylight-lamp-first-day"
+   ],
+   "prompts": [],
+   "backlinks": []
   },
   "macos-hex-input-problem": {
    "title": "Macos problem with HEX input",
@@ -133,9 +165,23 @@
    ],
    "file": "macos-hex-input-problem.org",
    "links": [],
+   "prompts": [],
    "backlinks": [
     "about-these-notes"
    ]
+  },
+  "oldschool-is-closed": {
+   "title": "Oldschool Is Closed or Q/KDB are fun, strange and crazy",
+   "date": "2026-07-30",
+   "tags": [
+    "apl"
+   ],
+   "file": "oldschool-is-closed.org",
+   "links": [
+    "gatekeeping-at-lobste-rs"
+   ],
+   "prompts": [],
+   "backlinks": []
   },
   "programming-in-wartime": {
    "title": "Programming in wartime",
@@ -148,9 +194,21 @@
    ],
    "file": "programming-in-wartime.org",
    "links": [],
+   "prompts": [],
    "backlinks": [
     "about-these-notes"
    ]
+  },
+  "programming-style": {
+   "title": "Elements/Parts of the Programming Style in K",
+   "date": "2026-07-30",
+   "tags": [
+    "programming"
+   ],
+   "file": "programming-style.org",
+   "links": [],
+   "prompts": [],
+   "backlinks": []
   },
   "solution-to-the-repl-snippets": {
    "title": "THE Solution to the REPL snippets (using Emacs ofc)",
@@ -163,9 +221,8 @@
    ],
    "file": "solution-to-the-repl-snippets.org",
    "links": [],
-   "backlinks": [
-    "about-these-notes"
-   ]
+   "prompts": [],
+   "backlinks": []
   },
   "sql-as-data-analysis-volapuk": {
    "title": "SQL as the Data Analysis' Volapük",
@@ -177,6 +234,7 @@
    ],
    "file": "sql-as-data-analysis-volapuk.org",
    "links": [],
+   "prompts": [],
    "backlinks": [
     "about-these-notes",
     "sql-as-data-analysis-volapuk2"
@@ -195,6 +253,7 @@
    "links": [
     "sql-as-data-analysis-volapuk"
    ],
+   "prompts": [],
    "backlinks": []
   }
  }

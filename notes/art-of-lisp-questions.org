@@ -22,3 +22,10 @@ A 1987 book by Robin Jones and Ian Stewart, seems to be quite a primitive introd
 #+begin_src results
 1
 #+end_src
+
+
+
+#+begin_test
+Q: Is =head= replacing =car= or =cdr=?
+A: =car=
+#+end_test
