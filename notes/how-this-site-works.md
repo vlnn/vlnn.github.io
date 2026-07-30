@@ -14,7 +14,3 @@ Notes link to each other by bare relative filenames, and formats mix freely — 
 |--------|----------|-------------|
 | org | `#+title:` etc. | `[[file:slug.org][text]]` |
 | md | YAML frontmatter | `[text](slug.md)` |
-
-- [x] org rendering
-- [x] markdown rendering (GFM: tables, task lists, strikethrough)
-- [x] backlinks across formats

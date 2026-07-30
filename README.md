@@ -1,20 +1,6 @@
-# vlnn.dev notes — stacked org notes
+# vlnn.dev notes
 
-Andy-Matuschak-style stacked panes for plain org and markdown files, served as static files. The deployed site *is* the source tree: notes ship as raw `.org`/`.md`, parsed in the browser by bundled [uniorg](https://github.com/rasendubi/uniorg) and remark (GFM enabled). The only generated artifact is `index.json` (titles + link graph for backlinks and pane headers).
-
-```
-index.html            shell
-app.js                pane stacking, link interception, history
-notes.css             styles
-vendor/org.js         uniorg bundled for the browser (prebuilt, committed)
-vendor/entry.mjs      bundle source (rebuild: make bundle)
-notes/*.org           the notes — this is where you write
-static/               images
-index.json            generated: slug → {title, date, tags, links, backlinks}
-tools/build_index.py  index generator (pytest-tested)
-tools/build_feed.mjs  rss generator (node-tested, reuses vendor/org.js)
-rss.xml               generated: full-content RSS 2.0 feed
-```
+Andy-Matuschak-style stacked panes blog engine based on plain org and markdown files, served as static files. The deployed site *is* the source tree: notes ship as raw `.org`/`.md`, parsed in the browser by bundled [uniorg](https://github.com/rasendubi/uniorg) and remark (GFM enabled). The only generated artifact is `index.json` (titles + link graph for backlinks and pane headers).
 
 ## Run locally
 
@@ -45,21 +31,15 @@ See [[file:other-note.org][the other note]] and [[file:md-note.md][that one]].
 See [the other note](other-note.org) and [that one](md-note.md).
 ```
 
-Links pointing at notes that don't exist are dropped from the index, so documentation examples and drafts don't pollute the graph. In rendered notes the two link kinds read differently: internal note-links are ochre with a dotted underline (a pane will slide in beside you), external links are blue with a solid underline and a small ↗ (you're leaving the site).
-
 Clicking such a link opens the target as a new pane; the trail is encoded compactly in `?stack=slug,slug,...` so any view is shareable (the older `?stackedNotes=a&stackedNotes=b` form still parses, so old links and feed permalinks keep working).
 
 Each pane's modeline carries a `×` that closes exactly that pane — last, middle, or first — leaving the rest of the stack intact; the control is disabled on the only remaining pane. `q` closes the last pane from the keyboard (Emacs kill-buffer vibes).
 
-Tags are links. Clicking a tag — in a modeline, under a note title, or in the timeline pane — replaces the current stack with *all* notes carrying that tag, oldest first (undated ones last), so a tag reads left-to-right as a chronological thread. It's still an ordinary `?stack=...` URL, so tag views are shareable like any other trail.
-
-Author shortcut: press `y` to copy the current trail to the clipboard as an org list of `[[file:...]]` links — paste it into a new note to crystallize a research trail into the garden. Deliberately keyboard-only, invisible to readers. Backlinks are computed by `build_index.py` — rerun `make index.json` (or just `make serve`) after editing.
-
 ## Timeline and RSS
 
-On desktop a time arrow runs along the bottom: every dated note is a dot on a density-aware axis (60% linear time, 40% rank order — clusters decompress, empty years stay visibly empty, chronology stays monotone). Dot size encodes connectedness (links + backlinks, √-scaled 9–17px), dots in the current stack are highlighted blue, hover shows date and title, click opens the note as a new pane. Same-day notes stack onto up to three lanes. Above the axis, thin arcs connect linked notes (mutual links collapse into one arc); hovering a dot lights up its arcs in green and dims the rest. Hidden on mobile.
+On desktop a time arrow runs along the bottom: every dated note is a dot on a density-aware axis (60% linear time, 40% rank order — clusters decompress, empty years stay visibly empty, chronology stays monotone). Dots in the current stack are highlighted blue, hover shows date and title, click opens the note as a new pane. Same-day notes stack onto up to three lanes. Hidden on mobile.
 
-The timeline pane is a synthetic note (open `?stackedNotes=timeline` or the header link) rendered client-side from `index.json` — chronological, grouped by year, zero extra build artifacts. The RSS feed at `rss.xml` is generated in CI on every deploy (`make rss.xml` locally if you have node) and contains full note HTML rendered by the *same* bundled parser the browser uses, so feed readers see exactly what the site shows. Permalinks point into the stacked view.
+The timeline pane is a synthetic note (open `?stackedNotes=timeline` or the header link) rendered client-side from `index.json` — chronological, grouped by year, zero extra build artifacts. The RSS feed at `rss.xml` is generated in CI on every deploy.
 
 ## Type scale
 
@@ -82,13 +62,6 @@ git push -u origin main
 ```
 
 1. On GitHub: repo **Settings → Pages → Build and deployment → Source: GitHub Actions**. This must be set before the first workflow run succeeds — until then `deploy-pages` fails with a "Pages not enabled" error; just re-run the job after flipping it.
-2. Push (or re-run the failed workflow). The run does: pytest → build `index.json` → node tests → build `rss.xml` → upload the whole tree → deploy. The site lands on `https://vlnn.github.io/NOTES-REPO/`.
-3. Custom domain: **Settings → Pages → Custom domain** → e.g. `notes.vlnn.dev`, plus a DNS `CNAME` record `notes → vlnn.github.io`. GitHub writes a `CNAME` file; also commit one (a file named `CNAME` containing the bare domain) so deploys don't drop the domain. Tick "Enforce HTTPS" once the cert issues.
-
-To take over `vlnn.dev` itself, push this tree to the existing `vlnn/vlnn.github.io` repo instead (its `CNAME` already says `vlnn.dev`) and switch that repo's Pages source from "Deploy from a branch" to "GitHub Actions" — the old org-static-blog HTML files can coexist untouched during a transition, since this site only claims `index.html`, `app.js`, `notes.css`, `notes/`, `vendor/`, `index.json`, and `rss.xml` (note: `rss.xml` would shadow the old blog feed; keep the old one as `index.xml` if you still publish it).
+2. Push (or re-run the failed workflow). The run does: pytest → build `index.json` → node tests → build `rss.xml` → upload the whole tree → deploy. 
 
 All asset paths are relative, so the same tree works at the domain root, under `/NOTES-REPO/`, or any other prefix without configuration. Rollback is `git revert` + push — the deploy is a pure function of the tree.
-
-## Migrated content
-
-All ten posts from the org-static-blog era live here under readable slugs; `about-these-notes.org` is the entry point linking into everything, so backlinks have somewhere to start from.
