@@ -503,6 +503,13 @@ function noteLinkTo(slug, paneIndex, openFromPane) {
   return link;
 }
 
+function renderedPromptText(className, prompt, field, openFromPane, paneIndex) {
+  const box = el("div", className);
+  box.innerHTML = noteToHtml(fileOf(prompt.slug), prompt[field]);
+  adoptContentLinks(box, openFromPane, paneIndex);
+  return box;
+}
+
 function renderQuizStep(content, prompts, state, rerender, showSource, openFromPane, paneIndex) {
   content.replaceChildren();
   if (quizDone(state, prompts.length)) {
@@ -512,7 +519,7 @@ function renderQuizStep(content, prompts, state, rerender, showSource, openFromP
   }
   const prompt = prompts[state.position];
   content.append(el("p", "quiz-progress", `${state.position + 1}/${prompts.length}`));
-  content.append(el("p", "quiz-question", prompt.q));
+  content.append(renderedPromptText("quiz-question", prompt, "q", openFromPane, paneIndex));
   if (showSource) {
     const from = el("p", "quiz-from");
     from.append("from ", noteLinkTo(prompt.slug, paneIndex, openFromPane));
@@ -522,11 +529,13 @@ function renderQuizStep(content, prompts, state, rerender, showSource, openFromP
     content.append(quizButton("show answer", () => rerender(quizReveal(state))));
     return;
   }
-  content.append(el("p", "quiz-answer", prompt.a));
-  content.append(
+  content.append(renderedPromptText("quiz-answer", prompt, "a", openFromPane, paneIndex));
+  const grades = el("div", "quiz-grades");
+  grades.append(
     quizButton("recalled", () => rerender(quizGrade(state, true))),
     quizButton("forgot", () => rerender(quizGrade(state, false)))
   );
+  content.append(grades);
 }
 
 function quizCaption(noteSlug, stack, paneIndex, openFromPane) {

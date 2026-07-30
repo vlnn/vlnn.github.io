@@ -501,14 +501,17 @@ a:focus-visible, .pane-spine:focus-visible {
   margin: 0;
 }
 
-.quiz-question { font-size: calc(var(--text) + 2px); font-weight: 600; margin: 0; white-space: pre-line; }
+.quiz-question { font-size: calc(var(--text) + 2px); font-weight: 600; margin: 0; }
+
+.quiz-question p, .quiz-answer p { margin: 0 0 6px; }
+
+.quiz-question p:last-child, .quiz-answer p:last-child { margin-bottom: 0; }
 
 .quiz-answer {
   margin: 0;
   padding: 12px 14px;
   background: var(--green-light);
   border-left: 3px solid var(--green);
-  white-space: pre-line;
 }
 
 .quiz-score { font-family: var(--mono); font-size: 15px; color: var(--ink); margin: 0; }
@@ -532,3 +535,5 @@ a:focus-visible, .pane-spine:focus-visible {
   color: var(--ink-soft);
   margin: 0;
 }
+
+.quiz-grades { display: flex; gap: 10px; }

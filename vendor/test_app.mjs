@@ -356,3 +356,7 @@ import { appendPane } from "../app.js";
 assert.deepEqual(appendPane(["a", "b"], "test"), ["a", "b", "test"], "appendPane should add a pane to the end of the stack");
 assert.deepEqual(appendPane(["a", "test"], "test"), ["a", "test"], "appendPane should not duplicate an already-open pane");
 console.log("append pane tests passed");
+
+assert.ok(/<code[^>]*>head<\/code>/.test(noteToHtml("n.org", "Is =head= replacing =car=?")), "noteToHtml should render org verbatim markup in prompt fragments");
+assert.ok(/<code[^>]*>head<\/code>/.test(noteToHtml("n.md", "Is `head` replacing `car`?")), "noteToHtml should render md inline code in prompt fragments");
+console.log("prompt rendering tests passed");
