@@ -1,0 +1,15 @@
+#+title: Multiple Tests
+
+* This is to test the tests in this note.
+
+#+begin_test
+Q: How deep is the ocean?
+A: =very=
+#+end_test
+
+* Finished first test, starting another one.
+
+#+begin_test
+Q: His ... was red and fast.
+A: =car=
+#+end_test
