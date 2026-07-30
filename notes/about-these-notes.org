@@ -4,17 +4,18 @@
 
 Hi! I'm Volodymyr Anokhin ([[https://github.com/vlnn][@vlnn]]). These are my working notes, all in interlinked disarray. Click any internal link (the "ochre" ones) and it opens as a new pane to the right; the trail you follow lives in the URL, so you can share it. Curious about the machinery? See [[file:how-this-site-works.md][How this site works]].
 
+Note that for some notes you can test yourself clicking on [[https://vlnn.dev/?stack=test][test yourself]] link at the bottom of the note (if available). Moreover, I made a general test link at the top of the page -- it will test you either for all open notes, or for all notes in the system (e.g. if you want an overview of things you supposed to take out of this site).
 
 * Starting pages
 
-** On tools and Emacs:
-- [[file:configuration-maintenance-vs-renovation.org][Configuration maintainance vs renovation]] is about tending configs before they rot.
-- [[file:macos-hex-input-problem.org][Macos problem with HEX input]] documents an old wound at the bottom of the Unicode input stack.
+** War times
+- [[file:programming-in-wartime.org][Programming in wartime]]
 
 ** On languages and data
 - [[file:sql-as-data-analysis-volapuk.org][SQL as the Data Analysis' Volapük]],
 - [[file:art-of-lisp-questions.org][Art of Lisp questions]],
 - [[file:historical-bits-and-pieces.org][Historical bits and pieces]]
 
-** War times
-- [[file:programming-in-wartime.org][Programming in wartime]]
+** On tools and Emacs:
+- [[file:configuration-maintenance-vs-renovation.org][Configuration maintainance vs renovation]] is about tending configs before they rot.
+- [[file:macos-hex-input-problem.org][Macos problem with HEX input]] documents an old wound at the bottom of the Unicode input stack.
