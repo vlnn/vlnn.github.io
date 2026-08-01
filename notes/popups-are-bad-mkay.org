@@ -1,6 +1,7 @@
 #+title: Popups are bad, Mkay?
+#+date: <2026-08-01 Sat>
 
-Popups on websites are one of the most invasive and focus-eating things.
+Popups on websites are one of the most invasive and focus-eating things (to me)
 
 Those sites are usually creatively and beautifully made; the info is wonderful; the fonts are artful and easy-to-read. But by some reason every time I'm moving the mouse around these sites (among thousands of others) they start to explode in my face.
 
