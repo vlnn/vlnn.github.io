@@ -1,5 +1,5 @@
 #+title: Atom Added To Rss
-#+date: <2026-07-29 21:42>
+#+date: <2026-08-02 21:42>
 #+filetags: meta
 
 After reading [[https://chrismorgan.info/atom%3Erss]["Atom is better than RSS,
