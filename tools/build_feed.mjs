@@ -21,6 +21,14 @@ export function rfc822(date) {
   return `${day}, ${pad(utc.getUTCDate())} ${month} ${utc.getUTCFullYear()} 00:00:00 GMT`;
 }
 
+export function rfc3339(date) {
+  return `${date}T00:00:00Z`;
+}
+
+export function absolutizeFileUrls(site, html) {
+  return html?.replaceAll('"file:', `"${site}/`);
+}
+
 export function feedItems(site, index, rendered) {
   return Object.entries(index.notes)
     .filter(([, note]) => note.date)
@@ -30,7 +38,7 @@ export function feedItems(site, index, rendered) {
       title: note.title,
       date: note.date,
       link: `${site}/?stack=${slug}`,
-      html: rendered[slug],
+      html: absolutizeFileUrls(site, rendered[slug]),
     }));
 }
 
@@ -60,6 +68,36 @@ ${items}
 `;
 }
 
+function entryXml(item) {
+  return ` <entry>
+  <id>${escapeXml(item.link)}</id>
+  <title>${escapeXml(item.title)}</title>
+  <link rel="alternate" href="${escapeXml(item.link)}"/>
+  <updated>${rfc3339(item.date)}</updated>
+  <content type="html">${escapeXml(item.html)}</content>
+ </entry>`;
+}
+
+export function buildAtom(site, index, rendered) {
+  const items = feedItems(site, index, rendered);
+  const updated = items.length ? rfc3339(items[0].date) : rfc3339("1970-01-01");
+  const entries = items.map(entryXml).join("\n");
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ <id>${escapeXml(site)}/</id>
+ <title>Notes — @vlnn</title>
+ <subtitle>Working notes of Volodymyr Anokhin</subtitle>
+ <link rel="alternate" href="${escapeXml(site)}/"/>
+ <link rel="self" type="application/atom+xml" href="${escapeXml(site)}/atom.xml"/>
+ <updated>${updated}</updated>
+ <author>
+  <name>Volodymyr Anokhin</name>
+ </author>
+${entries}
+</feed>
+`;
+}
+
 function renderAll(notesDir, index) {
   const files = new Set(readdirSync(notesDir));
   return Object.fromEntries(
@@ -70,11 +108,12 @@ function renderAll(notesDir, index) {
 }
 
 function main() {
-  const [site = "https://vlnn.dev", notesDir = "notes", indexPath = "index.json", output = "rss.xml"] =
-    process.argv.slice(2);
+  const [site = "https://vlnn.dev", notesDir = "notes", indexPath = "index.json"] = process.argv.slice(2);
   const index = JSON.parse(readFileSync(indexPath, "utf8"));
-  writeFileSync(output, buildFeed(site, index, renderAll(notesDir, index)));
-  console.log(`${output}: ${feedItems(site, index, {}).length} items`);
+  const rendered = renderAll(notesDir, index);
+  writeFileSync("rss.xml", buildFeed(site, index, rendered));
+  writeFileSync("atom.xml", buildAtom(site, index, rendered));
+  console.log(`rss.xml + atom.xml: ${feedItems(site, index, {}).length} items`);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) main();

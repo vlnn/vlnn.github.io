@@ -4,7 +4,7 @@ serve: index.json
 index.json: notes/* tools/build_index.py
 	uv run --project tools python tools/build_index.py notes index.json
 
-rss.xml: index.json tools/build_feed.mjs
+rss.xml atom.xml: index.json tools/build_feed.mjs
 	node tools/build_feed.mjs
 
 test:

@@ -7,15 +7,75 @@
   <description>Working notes of Volodymyr Anokhin</description>
   <language>en</language>
   <item>
+   <title>Gatekeeping At Lobste.rs</title>
+   <link>https://vlnn.dev/?stack=gatekeeping-at-lobste-rs</link>
+   <guid>https://vlnn.dev/?stack=gatekeeping-at-lobste-rs</guid>
+   <pubDate>Thu, 30 Jul 2026 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;For several years &lt;a href=&quot;https://lobste.rs/&quot;&gt;https://lobste.rs/&lt;/a&gt; were my favourite source of professional truth: it's a link aggregator with some attitude, quite transparent in how they operate, and just good overall! There were several dramas, but not something that you don't expect from site that is built on user-provided content.
+&lt;/p&gt;&lt;p&gt;It all started with geo/VPN blocking (I guess they started with &lt;a href=&quot;https://lobste.rs/s/ukosa1/uk_users_lobsters_needs_your_help_with&quot;&gt;geoblock of UK&lt;/a&gt; due to some crazy Ofcom regulations, then blocking Brave browser users (due to &lt;a href=&quot;https://lobste.rs/s/iopw1d/what_s_up_with_lobste_rs_blocking_brave&quot;&gt;&quot;years-long pattern of repeated bad actions followed by dismissive statements with no countervailing behaviors&lt;/a&gt;&quot;). Well, while not being fun, I can relate.
+&lt;/p&gt;&lt;p&gt;But now they are removing the links to the sites that are created with AI:
+&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;https://vlnn.dev/static/lobsters.png&quot;&gt;
+&lt;/p&gt;&lt;p&gt;It's really hard to draw a line between &quot;&lt;code class=&quot;inline-verbatim&quot;&gt;Ad, slop&lt;/code&gt;&quot; and 99% of modern sites, this is disturbing as hell. But gatekeeping things due to &lt;code class=&quot;inline-code&quot;&gt;&quot;They didn’t even bother to change the default Claude theme.&quot;&lt;/code&gt; is even crazier to me.
+&lt;/p&gt;&lt;p&gt;To be honest, I think that gatekeeping can be rightful, but can't think of any other cases except the open war. Are we at war with AI already?
+&lt;/p&gt;</description>
+  </item>
+  <item>
+   <title>Oldschool Is Closed or Q/KDB are fun, strange and crazy</title>
+   <link>https://vlnn.dev/?stack=oldschool-is-closed</link>
+   <guid>https://vlnn.dev/?stack=oldschool-is-closed</guid>
+   <pubDate>Thu, 30 Jul 2026 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;&lt;a href=&quot;https://lv1.sh/&quot;&gt;https://lv1.sh/&lt;/a&gt; is another layer of crazyness that seems to be normal for k/q language for decades. Also beware, this link was &lt;a href=&quot;https://vlnn.dev/gatekeeping-at-lobste-rs.org&quot;&gt;removed on lobste.rs&lt;/a&gt;
+&lt;/p&gt;&lt;p&gt;&lt;code class=&quot;inline-verbatim&quot;&gt;K&lt;/code&gt; is an array-based language by Arthur Whitney, who worked together with Ken Iverson and Roger Hui (thus ifluencing and being influenced by creators of &lt;code class=&quot;inline-verbatim&quot;&gt;APL&lt;/code&gt; and &lt;code class=&quot;inline-verbatim&quot;&gt;J&lt;/code&gt; languages). Imagine ASCII-based &lt;code class=&quot;inline-verbatim&quot;&gt;APL&lt;/code&gt; (you have &lt;code class=&quot;inline-verbatim&quot;&gt;J&lt;/code&gt;) and then add dictionaries and projections (realtime-updated as far as I understood) and you get &lt;code class=&quot;inline-verbatim&quot;&gt;K&lt;/code&gt;. It's very laconic, so they added another language on top and called it &lt;code class=&quot;inline-verbatim&quot;&gt;Q&lt;/code&gt;. They called runtime for &lt;code class=&quot;inline-verbatim&quot;&gt;K&lt;/code&gt;,=Q= and &lt;code class=&quot;inline-verbatim&quot;&gt;kdb+&lt;/code&gt;.
+&lt;/p&gt;&lt;p&gt;Try K yourself here: &lt;a href=&quot;https://johnearnest.github.io/ok/index.html&quot;&gt;oK&lt;/a&gt; or &lt;a href=&quot;https://kparc.io/kc&quot;&gt;shakti k console&lt;/a&gt; (with oldschool reference at &lt;a href=&quot;https://ref.kparc.io/#scan&quot;&gt;ref k&lt;/a&gt;)
+&lt;/p&gt;&lt;p&gt;Now imagine set of incompatible &lt;code class=&quot;inline-verbatim&quot;&gt;K&lt;/code&gt; implementations, all of them with close-sourced and sold to fintech companies (the rumour is that AW started each version from scratch). Several attempts of making opensource implementation led to even fancier monsters, all of different functionality and level of non-support. Add some nerdiness to the cocktail and the fact that Arthur Whitney is publishing plans to create &lt;code class=&quot;inline-verbatim&quot;&gt;kOS&lt;/code&gt; that is operating system written in &lt;code class=&quot;inline-verbatim&quot;&gt;K&lt;/code&gt;. Imagine fans reading something like &lt;code class=&quot;inline-verbatim&quot;&gt;&quot;This summer, Pierre and I got kOS to boot directly into g (the graphical interface; formally called z) with ISR, keymap, modesetting, basic filesystem, etc weighing in around 100 lines of C. That was pretty exciting. Could probably be done with less with some deeper changes to Arthur's code, but it's still very useful to run k under Linux. Oleg made a silly little game in kOS.&quot;&lt;/code&gt; only to find out that it was in 2014.
+&lt;/p&gt;&lt;p&gt;Don't forget about the &lt;a href=&quot;https://www.jsoftware.com/ioj/iojATW.htm&quot;&gt;Incunabulum&lt;/a&gt;. Don't forget that &lt;a href=&quot;jsoftware.com&quot;&gt;jsoftware&lt;/a&gt; was not that different and provided closed-sourced binaries for around 15 years before becoming relatively sane. It was pretty OK for the industry; &lt;code class=&quot;inline-code&quot;&gt;we are different from them now, and they are not that crazy&lt;/code&gt;. Or maybe they are and we will become a bit later.
+&lt;/p&gt;&lt;div class=&quot;special-block block-test&quot;&gt;&lt;p&gt;Q: Is &lt;code class=&quot;inline-verbatim&quot;&gt;k&lt;/code&gt; having a standard?
+A: God no
+&lt;/p&gt;&lt;/div&gt;</description>
+  </item>
+  <item>
+   <title>Elements/Parts of the Programming Style in K</title>
+   <link>https://vlnn.dev/?stack=programming-style</link>
+   <guid>https://vlnn.dev/?stack=programming-style</guid>
+   <pubDate>Thu, 30 Jul 2026 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;Reading &lt;a href=&quot;https://nsl.com/papers/style.pdf&quot;&gt;&quot;K: Remarks on Style&quot;&lt;/a&gt; I've found great quote on great book I've never liked:
+&lt;/p&gt;&lt;p&gt;&quot;&quot;&quot;
+Kernighan and Plauger, in their classic work on the elements of programming style, organize issues of style under seven headings:
+&lt;/p&gt;&lt;ul&gt;&lt;li&gt;expression,
+&lt;/li&gt;&lt;li&gt;control structure,
+&lt;/li&gt;&lt;li&gt;program structure,
+&lt;/li&gt;&lt;li&gt;input/ output,
+&lt;/li&gt;&lt;li&gt;common blunders,
+&lt;/li&gt;&lt;li&gt;efficiency,
+&lt;/li&gt;&lt;li&gt;documentation.
+&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&quot;&quot;&quot;
+&lt;/p&gt;&lt;p&gt;This is 7 parts to which it's hard to add something. &lt;code class=&quot;inline-verbatim&quot;&gt;K&lt;/code&gt; did some changes though:
+&lt;/p&gt;&lt;h1&gt;K maxims&lt;/h1&gt;&lt;h2&gt;Style improves with knowledge of the language.&lt;/h2&gt;&lt;h2&gt;Program with, and not against, the grain of the language.&lt;/h2&gt;&lt;p&gt;(granted the language is sane and enforces proper things)
+&lt;/p&gt;&lt;h2&gt;Seek opportunities to throw away code.&lt;/h2&gt;&lt;p&gt;less code =&gt; less bugs
+&lt;/p&gt;&lt;h1&gt;Names&lt;/h1&gt;&lt;h2&gt;Names should be easy to type&lt;/h2&gt;&lt;p&gt;(I can see it's 1995 with typing being a problem)
+&lt;/p&gt;&lt;h2&gt;Conventions&lt;/h2&gt;&lt;h1&gt;Physical line of code contains exactly one K statement/encodes one thought.&lt;/h1&gt;&lt;p&gt;(We still have problem with it in 2026)
+&lt;/p&gt;&lt;h1&gt;Modularity&lt;/h1&gt;&lt;ul&gt;&lt;li&gt;Use subfunctions.
+&lt;/li&gt;&lt;li&gt;Making the coupling between modules visible.
+&lt;/li&gt;&lt;li&gt;Each module should do one thing well.
+&lt;/li&gt;&lt;li&gt;Make sure every module hides something.
+&lt;/li&gt;&lt;li&gt;Hide shared subfunctions in subdirectories.
+&lt;/li&gt;&lt;li&gt;Localize unshared subfunctions.
+&lt;/li&gt;&lt;/ul&gt;</description>
+  </item>
+  <item>
    <title>About these notes</title>
    <link>https://vlnn.dev/?stack=about-these-notes</link>
    <guid>https://vlnn.dev/?stack=about-these-notes</guid>
    <pubDate>Wed, 29 Jul 2026 00:00:00 GMT</pubDate>
-   <description>&lt;p&gt;Hi! I'm Volodymyr Anokhin (&lt;a href=&quot;https://github.com/vlnn&quot;&gt;@vlnn&lt;/a&gt;). These are my working notes, migrated from the old chronological blog into a linked garden. Click any link and it opens as a new pane to the right; the trail you follow lives in the URL, so you can share it. Curious about the machinery? See &lt;a href=&quot;file:how-this-site-works.md&quot;&gt;How this site works&lt;/a&gt;.
-&lt;/p&gt;&lt;p&gt;On tools and Emacs: &lt;a href=&quot;file:solution-to-the-repl-snippets.org&quot;&gt;THE Solution to the REPL snippets&lt;/a&gt; argues where operational code should actually live, and &lt;a href=&quot;file:configuration-maintenance-vs-renovation.org&quot;&gt;Configuration maintainance vs renovation&lt;/a&gt; is about tending configs before they rot. &lt;a href=&quot;file:macos-hex-input-problem.org&quot;&gt;Macos problem with HEX input&lt;/a&gt; documents an old wound at the bottom of the Unicode input stack.
-&lt;/p&gt;&lt;p&gt;On languages and data: &lt;a href=&quot;file:sql-as-data-analysis-volapuk.org&quot;&gt;SQL as the Data Analysis' Volapük&lt;/a&gt;, &lt;a href=&quot;file:art-of-lisp-questions.org&quot;&gt;Art of Lisp questions&lt;/a&gt;, and &lt;a href=&quot;file:historical-bits-and-pieces.org&quot;&gt;Historical bits and pieces&lt;/a&gt; — the last one on what legacy really means.
-&lt;/p&gt;&lt;p&gt;On life during the war: &lt;a href=&quot;file:programming-in-wartime.org&quot;&gt;Programming in wartime&lt;/a&gt; is the practical one; &lt;a href=&quot;file:hello-wonderful-world.org&quot;&gt;Привіт, чудовий світе (once again)&lt;/a&gt; is where this site restarted. Smaller notes: &lt;a href=&quot;file:daylight-lamp-first-day.org&quot;&gt;Daylight lamp: first day&lt;/a&gt;, &lt;a href=&quot;file:antiprogress-of-the-dropbox.org&quot;&gt;Antiprogress of the Dropbox&lt;/a&gt;.
-&lt;/p&gt;</description>
+   <description>&lt;p&gt;Hi! I'm Volodymyr Anokhin (&lt;a href=&quot;https://github.com/vlnn&quot;&gt;@vlnn&lt;/a&gt;). These are my working notes, all in interlinked disarray. Click any internal link (the &quot;ochre&quot; ones) and it opens as a new pane to the right; the trail you follow lives in the URL, so you can share it. Curious about the machinery? See &lt;a href=&quot;https://vlnn.dev/how-this-site-works.md&quot;&gt;How this site works&lt;/a&gt;.
+&lt;/p&gt;&lt;p&gt;Note that for some notes you can test yourself clicking on &lt;a href=&quot;https://vlnn.dev/?stack=test&quot;&gt;test yourself&lt;/a&gt; link at the bottom of the note (if available). Moreover, I made a general test link at the top of the page -- it will test you either for all open notes, or for all notes in the system (e.g. if you want an overview of things you supposed to take out of this site).
+&lt;/p&gt;&lt;h1&gt;Starting pages&lt;/h1&gt;&lt;h2&gt;War times&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://vlnn.dev/programming-in-wartime.org&quot;&gt;Programming in wartime&lt;/a&gt;
+&lt;/li&gt;&lt;/ul&gt;&lt;h2&gt;On languages and data&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://vlnn.dev/sql-as-data-analysis-volapuk.org&quot;&gt;SQL as the Data Analysis' Volapük&lt;/a&gt;,
+&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://vlnn.dev/art-of-lisp-questions.org&quot;&gt;Art of Lisp questions&lt;/a&gt;,
+&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://vlnn.dev/historical-bits-and-pieces.org&quot;&gt;Historical bits and pieces&lt;/a&gt;
+&lt;/li&gt;&lt;/ul&gt;&lt;h2&gt;On tools and Emacs:&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://vlnn.dev/configuration-maintenance-vs-renovation.org&quot;&gt;Configuration maintainance vs renovation&lt;/a&gt; is about tending configs before they rot.
+&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://vlnn.dev/macos-hex-input-problem.org&quot;&gt;Macos problem with HEX input&lt;/a&gt; documents an old wound at the bottom of the Unicode input stack.
+&lt;/li&gt;&lt;/ul&gt;</description>
   </item>
   <item>
    <title>How this site works</title>
@@ -45,19 +105,22 @@
 &lt;td&gt;&lt;code&gt;[text](slug.md)&lt;/code&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;ul class=&quot;contains-task-list&quot;&gt;
-&lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; checked disabled&gt; org rendering&lt;/li&gt;
-&lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; checked disabled&gt; markdown rendering (GFM: tables, task lists, strikethrough)&lt;/li&gt;
-&lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; checked disabled&gt; backlinks across formats&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;/table&gt;</description>
+  </item>
+  <item>
+   <title>Light Sources During The War</title>
+   <link>https://vlnn.dev/?stack=light-sources-during-the-war</link>
+   <guid>https://vlnn.dev/?stack=light-sources-during-the-war</guid>
+   <pubDate>Wed, 29 Jul 2026 00:00:00 GMT</pubDate>
+   <description>&lt;p&gt;I've discussed my experience with &lt;a href=&quot;https://vlnn.dev/daylight-lamp-first-day.org&quot;&gt;Beurer TL 100&lt;/a&gt;. Of course, things with the light sources got much worse very quickly when the war started -- 10 hours blackouts were norm for months -- and so new market emerged, cheap chinese LED lamps with batteries. Most of them are crazy bad in the context of light temperature and blinking, but they did their job perfectly, showing us the way in the time of darkness.
+&lt;/p&gt;</description>
   </item>
   <item>
    <title>Sql As Data Analysis Volapük Part 2</title>
    <link>https://vlnn.dev/?stack=sql-as-data-analysis-volapuk2</link>
    <guid>https://vlnn.dev/?stack=sql-as-data-analysis-volapuk2</guid>
    <pubDate>Wed, 29 Jul 2026 00:00:00 GMT</pubDate>
-   <description>&lt;p&gt;4 years ago I wrote a &lt;a href=&quot;file:sql-as-data-analysis-volapuk.org&quot;&gt;small note on SQL&lt;/a&gt;, and oh boy things have changed (alas, russia's war in Ukraine hasn't changed that much!):
+   <description>&lt;p&gt;4 years ago I wrote a &lt;a href=&quot;https://vlnn.dev/sql-as-data-analysis-volapuk.org&quot;&gt;small note on SQL&lt;/a&gt;, and oh boy things have changed (alas, russia's war in Ukraine hasn't changed that much!):
 &lt;/p&gt;&lt;ol&gt;&lt;li&gt;Apache Druid moves from SQL to &lt;a href=&quot;https://druid.apache.org/docs/latest/querying/&quot;&gt;its own custom JSON-based native query language&lt;/a&gt; (so my starting idea didn't hold for too long).
 &lt;/li&gt;&lt;li&gt;Magnificent &lt;a href=&quot;https://duckdb.org&quot;&gt;DuckDB&lt;/a&gt; appeared, removing both most of the other locally-installed DBs, and also providing lots of analytical possibilities to python or even PostgreSQL.
 &lt;/li&gt;&lt;li&gt;Speaking of the beast, PostgreSQL with its extensions for everything got quite a traction.
@@ -106,10 +169,10 @@
    <link>https://vlnn.dev/?stack=antiprogress-of-the-dropbox</link>
    <guid>https://vlnn.dev/?stack=antiprogress-of-the-dropbox</guid>
    <pubDate>Tue, 24 Jan 2023 00:00:00 GMT</pubDate>
-   <description>&lt;p&gt;Not that long time ago (or was it long time? 10 years ago or so?) Dropbox was the new kind of the services -- very simple, very cheap, very direct kind of service. You want to share the photo or your hipster todo.txt, you put it in a special folder and that's it: it will be delivered automatically to everybody whom you informed the link, or to every PC where Dropbox is running under your creds. That's it! Super easy, super cool!
-&lt;/p&gt;&lt;p&gt;I just used current version of Dropbox app for Android, and it is just terrifyingly awful. For starters, it has tutorial wizards that break my needs; I want to press a button, but it is covered with a text cloud of a tutorial. Next, I want to download some video files to my android device: there are buttons &quot;Sync&quot;, &quot;Make available offline&quot; and &quot;Save to Device&quot; -- and also &quot;Duplicate&quot;. Next, it asks to access my photos and my camera. And moreover, it shares the names of people who have access to the folder to anybody who has it already.
+   <description>&lt;p&gt;Not that long time ago (or was it long time? 10 years ago or so?) &lt;a href=&quot;https://www.dropbox.com&quot;&gt;Dropbox&lt;/a&gt; was the new kind of the services -- very simple, very cheap, very direct kind of service. You want to share the photo or your hipster &lt;code class=&quot;inline-verbatim&quot;&gt;todo.txt&lt;/code&gt;, you put it in a special folder and that's it: it will be delivered automatically to everybody whom you informed the link, or to every PC where Dropbox is running under your creds. That's it! Super easy, super cool!
+&lt;/p&gt;&lt;p&gt;I just used current version of Dropbox app for Android, and it is just terrifyingly awful. For starters, it has tutorial wizards that break my needs; I want to press a button, but it is covered with a text cloud of a tutorial. Next, I want to download some video files to my android device: there are buttons &lt;code class=&quot;inline-code&quot;&gt;&quot;Sync&quot;&lt;/code&gt;, &lt;code class=&quot;inline-code&quot;&gt;&quot;Make available offline&quot;&lt;/code&gt; and &lt;code class=&quot;inline-code&quot;&gt;&quot;Save to Device&quot;&lt;/code&gt; -- and also &lt;code class=&quot;inline-code&quot;&gt;&quot;Duplicate&quot;&lt;/code&gt;. Next, it asks to access my photos and my camera. And moreover, it shares the names of people who have access to the folder to anybody who has it already.
 &lt;/p&gt;&lt;p&gt;I can't even...
-&lt;/p&gt;&lt;p&gt;I understand Syncthing could be infuriatingly complex, but at least it does one thing, and does it good.
+&lt;/p&gt;&lt;p&gt;I understand &lt;a href=&quot;https://syncthing.net&quot;&gt;Syncthing&lt;/a&gt; could be infuriatingly complex, but at least it does one thing, and does it good.
 &lt;/p&gt;</description>
   </item>
   <item>
@@ -118,9 +181,9 @@
    <guid>https://vlnn.dev/?stack=macos-hex-input-problem</guid>
    <pubDate>Tue, 24 Jan 2023 00:00:00 GMT</pubDate>
    <description>&lt;p&gt;If you're typing using non-english symbols like ς or ґ you might have problems with entering those into modern computers -- there are different encoding systems, as well as different keyboard layouts, and it's not that unusual to have problems with one that you can live with. Then you build yourself QMK or ZMK keyboard. They are programmable -- you can make them type anything. ANYTHING! Right? RIGHT?
-&lt;/p&gt;&lt;p&gt;No, that's not true. You can't go fully independent of OS language layouts, that are converting scancodes into the keycodes and then into the characters themselves. You press [Q] in the UA mode, it gets to the OS as [Q], layout mapping makes it [Й], and you see it like that in the text you're typing. Among others, this should resolve problems with shortcuts like [CTRL+S] that may become unusable in cyrillic layout (as there's no such thing as [S] in Ukrainian, so you just can't save!) or get to some very different place on the keyboard if you use COLEMAK or something even weirder ([ASDF] in QWERTY maps to [ARDT] in Colemak).
-&lt;/p&gt;&lt;p&gt;But why not make keyboard processor work even more? Why not provide the unicode code of the character instead of the scan code? Windows, Linux and Macos have their methods of the so-called [Unicode input](&lt;a href=&quot;https://en.wikipedia.org/wiki/Unicode_input&quot;&gt;https://en.wikipedia.org/wiki/Unicode_input&lt;/a&gt;). Problem solved? Not really!
-&lt;/p&gt;&lt;p&gt;Macos has long lasting [bug](&lt;a href=&quot;https://discussions.apple.com/thread/253636848&quot;&gt;https://discussions.apple.com/thread/253636848&lt;/a&gt;) that prevents you from entering &lt;strong&gt;some&lt;/strong&gt; codes using Unicode input. E.g. you may input [á] (code 0x00E1), but never could [à] (code 0x00E0). Similarly using the hex codes you can't enter greek pi (code 0x03C0). You can't enter cyrillic [р] (it &lt;strong&gt;is&lt;/strong&gt; different from English [p]) -- seemingly just because their hex code ends with zero! (codes 0x0440).
+&lt;/p&gt;&lt;p&gt;No, that's not true. You can't go fully independent of OS language layouts, that are converting scancodes into the keycodes and then into the characters themselves. You press &lt;code class=&quot;inline-verbatim&quot;&gt;Q&lt;/code&gt; in the UA mode, it gets to the OS as &lt;code class=&quot;inline-verbatim&quot;&gt;Q&lt;/code&gt;, layout mapping makes it &lt;code class=&quot;inline-verbatim&quot;&gt;Й&lt;/code&gt;, and you see it like that in the text you're typing. Among others, this should resolve problems with shortcuts like &lt;code class=&quot;inline-verbatim&quot;&gt;CTRL+S&lt;/code&gt; that may become unusable in cyrillic layout (as there's no such thing as &lt;code class=&quot;inline-verbatim&quot;&gt;S&lt;/code&gt; in Ukrainian, so you just can't save!) or get to some very different place on the keyboard if you use COLEMAK or something even weirder (&lt;code class=&quot;inline-verbatim&quot;&gt;ASDF&lt;/code&gt; in QWERTY maps to &lt;code class=&quot;inline-verbatim&quot;&gt;ARDT&lt;/code&gt; in Colemak).
+&lt;/p&gt;&lt;p&gt;But why not make keyboard processor work even more? Why not provide the unicode code of the character instead of the scan code? Windows, Linux and Macos have their methods of the so-called &lt;a href=&quot;https://en.wikipedia.org/wiki/Unicode_input&quot;&gt;Unicode input&lt;/a&gt;. Problem solved? Not really!
+&lt;/p&gt;&lt;p&gt;Macos has long lasting &lt;a href=&quot;https://discussions.apple.com/thread/253636848&quot;&gt;bug&lt;/a&gt; that prevents you from entering &lt;strong&gt;some&lt;/strong&gt; codes using Unicode input. E.g. you may input &lt;code class=&quot;inline-verbatim&quot;&gt;á&lt;/code&gt; (code 0x00E1), but never could &lt;code class=&quot;inline-verbatim&quot;&gt;à&lt;/code&gt; (code 0x00E0). Similarly using the hex codes you can't enter greek pi (code 0x03C0). You can't enter cyrillic &lt;code class=&quot;inline-verbatim&quot;&gt;р&lt;/code&gt; (it &lt;strong&gt;is&lt;/strong&gt; different from English &lt;code class=&quot;inline-verbatim&quot;&gt;p&lt;/code&gt;) -- seemingly just because their hex code ends with zero! (codes 0x0440).
 &lt;/p&gt;&lt;p&gt;It seems to me that in my 40s anywhere I dig deep enough I get to something very different from the diamonds: I get more and more old rancid standards and piles of ancient bugs without wings.
 &lt;/p&gt;</description>
   </item>
@@ -131,13 +194,16 @@
    <pubDate>Wed, 12 Oct 2022 00:00:00 GMT</pubDate>
    <description>&lt;h2&gt;What's that&lt;/h2&gt;&lt;p&gt;I'm reading a book, I'm taking notes. Here will be notes for the book &quot;Art of Lisp Programing&quot;
 &lt;/p&gt;&lt;h2&gt;What is Art of Lisp Programming&lt;/h2&gt;&lt;p&gt;A 1987 book by Robin Jones and Ian Stewart, seems to be quite a primitive introduction to the LISP. Still, it's written pretty well, illustrated with pictures from Alice in Wonderland and is, well, interesting! Also authors are from ZX Spectrum clique, that is +100500 to their nerdiness.
-&lt;/p&gt;&lt;h2&gt;Try simple things&lt;/h2&gt;&lt;h3&gt;car/cdr are named so due to historical reasons, i.e. assembly mnemonics of long gone IBM 709. Let's use &lt;strong&gt;head&lt;/strong&gt; and &lt;strong&gt;tail&lt;/strong&gt; instead.&lt;/h3&gt;&lt;pre class=&quot;src-block&quot;&gt;&lt;code class=&quot;language-lisp&quot;&gt;(defun head (x)
+&lt;/p&gt;&lt;h2&gt;Try simple things&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;car/cdr are named so due to historical reasons, i.e. assembly mnemonics of long gone IBM 709. Let's use &lt;strong&gt;head&lt;/strong&gt; and &lt;strong&gt;tail&lt;/strong&gt; instead.
+&lt;/li&gt;&lt;/ul&gt;&lt;pre class=&quot;src-block&quot;&gt;&lt;code class=&quot;language-lisp&quot;&gt;(defun head (x)
  (car x))
 (defun tail (x)
   (cdr x))
 (- (head '(4 3 2 1)) (head (tail '(4 3 2 1))))  ;; 1 is expected as (- 4 3)
 &lt;/code&gt;&lt;/pre&gt;&lt;pre class=&quot;src-block&quot;&gt;&lt;code class=&quot;language-results&quot;&gt;1
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;div class=&quot;special-block block-test&quot;&gt;&lt;p&gt;Q: Is &lt;code class=&quot;inline-verbatim&quot;&gt;head&lt;/code&gt; replacing &lt;code class=&quot;inline-verbatim&quot;&gt;car&lt;/code&gt; or &lt;code class=&quot;inline-verbatim&quot;&gt;cdr&lt;/code&gt;?
+A: &lt;code class=&quot;inline-verbatim&quot;&gt;car&lt;/code&gt;
+&lt;/p&gt;&lt;/div&gt;</description>
   </item>
   <item>
    <title>Daylight lamp: first day</title>
@@ -147,7 +213,7 @@
    <description>&lt;p&gt;I've bought a daylight lamp and not sure about it.
 &lt;/p&gt;&lt;p&gt;The idea beside this product is that if human being has less daylight than usual due to bad weather or wrong lifestyle, they may use artificial light source with the spectrum of emission that is similar to natural sunlight. Moreover, it may be constructed in such a way, that no harmful UV radiation is created. And, of course, but companies decided that it's time to make a big buck selling cheap lamps. Let's see how it goes.
 &lt;/p&gt;&lt;p&gt;I'm using Beurer TL 100 lamp. This is not a proper review or paid promotion. This is my first day impressions.
-&lt;/p&gt;&lt;h2&gt;First look&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;file:static/daylight-lamp.gif&quot;&gt;
+&lt;/p&gt;&lt;h2&gt;First look&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;https://vlnn.dev/static/daylight-lamp.gif&quot;&gt;
 &lt;/p&gt;&lt;p&gt;Big, round, milky white lamp needs constant connection to the power outlet. Using buttons on the unit you may switch it on/off and control brightness to some extent.
 &lt;/p&gt;&lt;h2&gt;Another sun&lt;/h2&gt;&lt;p&gt;Imagine you close the curtains and then go out of room. When you return to the room first you think that someone has opened the curtains and it's a sunny outside. Everything is illuminated with nice (and surprizingly cold -- meaning more to the blue side of spectrum) light. This is how the lamp is working. The picture doesn't present it too good, but it was pretty sunny even without the lamp switched on, but with the light from the lamp everything else looks like deep shadow. Also it's nice to have two sources of light that comes from different directions (there's even a specific pattern called &quot;Light on Two Sides of Every Room&quot; in a book &quot;A Pattern Language&quot; by Christopher Alexander).
 &lt;/p&gt;&lt;h2&gt;Good&lt;/h2&gt;&lt;p&gt;Lots of things are better when illuminated. I like how everything looks under the daylight lamp. This made me a bit happier, of course, but not sure if it's antistress effect of shopping or lamp really works in this context.
@@ -161,7 +227,7 @@
    <pubDate>Wed, 12 Oct 2022 00:00:00 GMT</pubDate>
    <description>&lt;p&gt;Some time ago I was a part of a team who introduced modern software development processes (text-based sources, CI, CD, cloud here and there) across the company with humongous and very cleverly written monolith. Yup, internally sources were not stored as text files. Yup, the format was created in-house. Yup, you had to use internal toolings only to work with this code. Yup, it was a great revelation for me to understand how different real work is from the world of js-hipsters deploying things over heroku.
 &lt;/p&gt;&lt;p&gt;Interestingly enough, the core of the my team was consisted of people who actually wrote the most clever parts. I was a part of this project for couple years trying my best and watching superheroes around me trying their best to finish this project. At some point I left the company and all I have now is this screenshot of one-week project of providing developers possibility to load customized tools into the work environment.
-&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;file:static/things-i-did.jpeg&quot;&gt;
+&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;https://vlnn.dev/static/things-i-did.jpeg&quot;&gt;
 &lt;/p&gt;&lt;p&gt;Two unsettling ideas arise in my brain after I share the picture above:
 &lt;/p&gt;&lt;ol&gt;&lt;li&gt;Software industry is expanding so fast that half of your colleagues perhaps have less than 5 years of experience (stole the idea from someone, but it's as unsettling as my one).
 &lt;/li&gt;&lt;li&gt;Some senior clever guys and girls right now are trying to help 'newcomers' to work with legacy code bases they themeselves developed over the years. This task may be much harder than actually developing the legacy code base.
