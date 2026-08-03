@@ -1,7 +1,7 @@
 ---
-title: "Kent Beck"
+title: Kent Beck
 date: 2026-08-03
-tags: ["person"]
+tags: [person, public]
 brain-id: d8ab7089-8c8a-40e6-acca-2279874c4aa2
 ---
 

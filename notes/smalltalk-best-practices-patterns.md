@@ -1,7 +1,7 @@
 ---
-title: "Smalltalk Best Practices Patterns"
+title: Smalltalk Best Practices Patterns
 date: 2026-08-03
-tags: ["book", "i-have"]
+tags: [public, i-have, book]
 brain-id: 4bab1267-64f5-5bdf-8f0f-3d47d059907e
 ---
 
