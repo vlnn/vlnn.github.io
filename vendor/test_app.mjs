@@ -1,5 +1,67 @@
 import assert from "node:assert/strict";
-import { parseStack, stackUrl, stackAfter, slugFromHref, visiblePanes, trailOf, timelineEntries, timeArrowLayout, yearTicks, trailAsOrg } from "../app.js";
+import { parseStack, stackUrl, stackAfter, slugFromHref, visiblePanes, trailOf, timelineEntries, timeArrowLayout, yearTicks, trailAsOrg, paneKey } from "../app.js";
+
+assert.equal(paneKey("a", 0, true), paneKey("a", 0, true), "paneKey should be stable for an unchanged pane");
+assert.notEqual(paneKey("a", 0, true), paneKey("a", 1, true), "paneKey should change when the pane moves to another position");
+assert.notEqual(paneKey("a", 0, true), paneKey("b", 0, true), "paneKey should change when the slug changes");
+assert.notEqual(paneKey("a", 0, true), paneKey("a", 0, false), "paneKey should change when closability flips");
+assert.notEqual(paneKey("a", 12, true), paneKey("a:1", 2, true), "paneKey should not collide for slugs containing delimiter-like characters");
+assert.equal(paneKey("test", 0, true), null, "paneKey should refuse a key for the stack-dependent quiz pane");
+assert.notEqual(paneKey("test:a", 0, true), null, "paneKey should still key per-note quiz panes");
+console.log("paneKey tests passed");
+
+import { reconcilePanes } from "../app.js";
+
+function fakePane(name) {
+  return { name, detaches: 0, remove() { this.parentChildren.splice(this.parentChildren.indexOf(this), 1); } };
+}
+
+function fakeContainer(...panes) {
+  const container = { children: [] };
+  container.insertBefore = (pane, ref) => {
+    if (pane.parentChildren) {
+      pane.detaches += 1;
+      pane.remove();
+    }
+    pane.parentChildren = container.children;
+    container.children.splice(ref ? container.children.indexOf(ref) : container.children.length, 0, pane);
+  };
+  panes.forEach((pane) => container.insertBefore(pane, null));
+  panes.forEach((pane) => (pane.detaches = 0));
+  return container;
+}
+
+const names = (container) => container.children.map((pane) => pane.name);
+
+{
+  const [a, b, c] = [fakePane("a"), fakePane("b"), fakePane("c")];
+  const container = fakeContainer(a, b);
+  reconcilePanes(container, [a, b, c]);
+  assert.deepEqual(names(container), ["a", "b", "c"], "reconcilePanes should append a new pane after the kept ones");
+  assert.equal(a.detaches + b.detaches, 0, "reconcilePanes should not detach kept panes when appending");
+}
+{
+  const [a, b, c, d] = [fakePane("a"), fakePane("b"), fakePane("c"), fakePane("d")];
+  const container = fakeContainer(a, b, c);
+  reconcilePanes(container, [a, d]);
+  assert.deepEqual(names(container), ["a", "d"], "reconcilePanes should drop truncated panes and add the newly opened one");
+  assert.equal(a.detaches, 0, "reconcilePanes should not detach the kept prefix when truncating");
+}
+{
+  const [a, b, c] = [fakePane("a"), fakePane("b"), fakePane("c")];
+  const container = fakeContainer(a, c);
+  reconcilePanes(container, [a, b, c]);
+  assert.deepEqual(names(container), ["a", "b", "c"], "reconcilePanes should insert a middle pane at its position");
+  assert.equal(a.detaches + c.detaches, 0, "reconcilePanes should not detach neighbours of a middle insert");
+}
+{
+  const [a, b] = [fakePane("a"), fakePane("b")];
+  const container = fakeContainer(a, b);
+  reconcilePanes(container, [a, b]);
+  assert.deepEqual(names(container), ["a", "b"], "reconcilePanes should keep an unchanged stack as is");
+  assert.equal(a.detaches + b.detaches, 0, "reconcilePanes should touch nothing when the stack is unchanged");
+}
+console.log("reconcilePanes tests passed");
 
 const cases = [
   [() => parseStack("?stackedNotes=a&stackedNotes=b"), ["a", "b"], "parseStack should read repeated params in order"],

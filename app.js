@@ -295,6 +295,11 @@ const TAGS = "tags";
 const TEST = "test";
 const SYNTHETIC_TITLES = { [TIMELINE]: "Timeline", [TAGS]: "Tags", [TEST]: "Test" };
 
+export function paneKey(slug, paneIndex, closable) {
+  if (slug === TEST) return null;
+  return `${paneIndex}:${closable ? "closable" : "solo"}:${slug}`;
+}
+
 function metaOf(slug) {
   const synthetic = SYNTHETIC_TITLES[slug];
   if (synthetic) return { title: synthetic, date: "", tags: [], backlinks: [], file: "" };
@@ -682,24 +687,49 @@ function revealLastPane(panes) {
   else panes[panes.length - 1].scrollIntoView({ inline: "end" });
 }
 
+async function buildPane(slug, stack, paneIndex, openFromPane, closeFromPane, closable, openTag) {
+  if (slug === TIMELINE) return renderTimelinePane(paneIndex, openFromPane, closeFromPane, closable, openTag);
+  if (slug === TAGS) return renderTagsPane(paneIndex, closeFromPane, closable, openTag);
+  if (slug === TEST || testSlugOf(slug)) return renderTestPane(slug, stack, paneIndex, openFromPane, closeFromPane, closable, openTag);
+  try {
+    return renderPane(slug, paneIndex, await fetchNote(slug), openFromPane, closeFromPane, closable, openTag);
+  } catch {
+    return renderErrorPane(slug, paneIndex);
+  }
+}
+
+function existingPanesByKey(container) {
+  return new Map([...container.children].map((pane) => [pane.dataset.paneKey, pane]));
+}
+
+async function reusedOrBuiltPane(existing, slug, stack, paneIndex, openFromPane, closeFromPane, closable, openTag) {
+  const key = paneKey(slug, paneIndex, closable);
+  const reused = key && existing.get(key);
+  if (reused) return reused;
+  const pane = await buildPane(slug, stack, paneIndex, openFromPane, closeFromPane, closable, openTag);
+  if (key) pane.dataset.paneKey = key;
+  return pane;
+}
+
+// insertBefore detaches a node and resets its scroll, so kept panes are left untouched
+export function reconcilePanes(container, panes) {
+  [...container.children].filter((child) => !panes.includes(child)).forEach((child) => child.remove());
+  panes.forEach((pane, position) => {
+    if (container.children[position] !== pane) container.insertBefore(pane, container.children[position] ?? null);
+  });
+}
+
 async function renderStack(stack, openFromPane, openTrail, closeFromPane, openTag) {
   renderTrail(stack, openTrail);
   const container = document.getElementById("panes");
-  container.replaceChildren();
+  const existing = existingPanesByKey(container);
+  const closable = stack.length > 1;
   const panes = await Promise.all(
-    visiblePanes(stack, narrowScreen.matches).map(async ([slug, paneIndex]) => {
-      const closable = stack.length > 1;
-      if (slug === TIMELINE) return renderTimelinePane(paneIndex, openFromPane, closeFromPane, closable, openTag);
-      if (slug === TAGS) return renderTagsPane(paneIndex, closeFromPane, closable, openTag);
-      if (slug === TEST || testSlugOf(slug)) return renderTestPane(slug, stack, paneIndex, openFromPane, closeFromPane, closable, openTag);
-      try {
-        return renderPane(slug, paneIndex, await fetchNote(slug), openFromPane, closeFromPane, closable, openTag);
-      } catch {
-        return renderErrorPane(slug, paneIndex);
-      }
-    })
+    visiblePanes(stack, narrowScreen.matches).map(([slug, paneIndex]) =>
+      reusedOrBuiltPane(existing, slug, stack, paneIndex, openFromPane, closeFromPane, closable, openTag)
+    )
   );
-  container.append(...panes);
+  reconcilePanes(container, panes);
   renderTimeArrow(stack, openFromPane);
   document.title = `${metaOf(stack[stack.length - 1]).title} — @vlnn`;
   revealLastPane(panes);
