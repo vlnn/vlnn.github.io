@@ -6,7 +6,7 @@ const SPINE_STEP = 42;
 const noteCache = new Map();
 let index = { notes: {} };
 
-const SLUG_SHAPE = /^[a-z0-9-]+$/;
+const SLUG_SHAPE = /^[A-Za-z0-9_-]+$/;
 const TEST_PREFIX = "test:";
 
 function innerSlug(slug) {

@@ -271,12 +271,20 @@ for (const [run, expected, message] of trackCases) assert.deepEqual(run(), expec
 console.log("track position tests passed");
 
 const slugSafetyCases = [
-  [() => parseStack("?stack=good,%3Cimg%20src%3Dx%3E"), ["good"], "parseStack should drop slugs containing characters outside a-z 0-9 dash"],
+  [() => parseStack("?stack=good,%3Cimg%20src%3Dx%3E"), ["good"], "parseStack should drop slugs containing characters outside letters digits dash underscore"],
   [() => parseStack("?stack=..%2F..%2Fsecret"), ["about-these-notes"], "parseStack should fall back to the entry note when every slug is invalid"],
   [() => parseStack("?stackedNotes=ok&stackedNotes=Not%20OK"), ["ok"], "parseStack should validate the legacy form the same way"],
   [() => parseStack("?stack=a1-b2,timeline"), ["a1-b2", "timeline"], "parseStack should keep well-formed slugs and synthetic panes untouched"],
+  [() => parseStack("?stack=a2b_converter"), ["a2b_converter"], "parseStack should keep slugs with underscores"],
+  [() => parseStack("?stack=Dr-Toomas-Karmo"), ["Dr-Toomas-Karmo"], "parseStack should keep slugs with uppercase letters"],
 ];
 for (const [run, expected, message] of slugSafetyCases) assert.deepEqual(run(), expected, message);
+
+import { readFileSync } from "node:fs";
+const realIndex = JSON.parse(readFileSync(new URL("../index.json", import.meta.url), "utf8"));
+for (const slug of Object.keys(realIndex.notes)) {
+  assert.deepEqual(parseStack(`?stack=${slug}`), [slug], `parseStack should keep the real note slug "${slug}", or its pane silently vanishes from shared urls`);
+}
 console.log("slug safety tests passed");
 
 import { tokenize, searchNotes, snippetFor } from "../app.js";
