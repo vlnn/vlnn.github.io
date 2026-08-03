@@ -1,12 +1,12 @@
 ---
 title: Digital Garden
 date: 2026-08-03
-tags: [infrastructure,web,knowledge]
+tags: [infrastructure,web,knowledge-management,history]
 ---
 
 Somehow Digital Garden term means today "shared interlinked personal notes online", even though it all started with 1998 [essay "Hypertext Gardens"](https://www.eastgate.com/garden/Enter.html) by Mark Bernstein, and it was pretty much meta on how to write hypertext sequentially with community in mind.
 
-Main theses (__lessons__!):
+Main theses (they call them _lessons_):
 
 1. Hypertext disorientation most often arises from muddled writing, or from the complexity of the subject. Many hypertexts do not require elaborate navigational apparatus.
 
