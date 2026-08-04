@@ -1,0 +1,20 @@
+#+title: Top Of Mind
+#+date: <2026-08-04 22:41>
+#+filetags: meta
+
+I stole the idea for this one from [[https://notes.andymatuschak.org/zPKTSiU725W9WQCqoVPBcxm][this Andy Matuschak's note]]. What main things that I'm interested in right now? This is to be updated frequently.
+
+* General
+- Techniques for reading code efficiently
+- Memorization techniques
+
+* Programming
+- Estimating and measuring programs resources
+- Improving my [[https://github.com/vlnn/zt][zt: forth for z80]]
+
+* Books
+- Topoi by Robert Goldblatt
+- Aubrey-Maturin series
+
+* Games
+- FF14 on Switch2
