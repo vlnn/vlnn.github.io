@@ -4,7 +4,7 @@ date: 2026-08-05
 brain-id: 340366fd-64ba-423a-a3f7-225ccb0a2260
 ---
 
-tokenization and rotating the index:<br><br>
+tokenizing and rotating the index:<br><br>
 ```
 doc1: "the quick brown fox"
 doc2: "the lazy dog"

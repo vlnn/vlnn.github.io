@@ -5,7 +5,7 @@
 I stole the idea for this one from [[https://notes.andymatuschak.org/zPKTSiU725W9WQCqoVPBcxm][this Andy Matuschak's note]]. What main things that I'm interested in right now? This is to be updated frequently.
 
 * General
-- Techniques for [[file:reading-efficiently.org][reading efficiently]] (also [[file:code-reviews.org][code reviews]])
+- Techniques for [[file:depth-graded-overviews-method.md][reading efficiently]] (also [[file:code-reviews.org][code reviews]])
 - [[file:memorization-techniques.org][Memorization techniques]]
 
 * Programming
