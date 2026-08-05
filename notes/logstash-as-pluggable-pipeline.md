@@ -15,6 +15,7 @@ Q: What does the pluggable design make of swapping file input for Kafka, or Elas
 A: A config change, not a rewrite.
 Q: Where does the value of the pipeline concentrate?
 A: In the filter stage — turning unstructured lines into structured, queryable fields before they hit the index.
+```
 
 ## Related
 

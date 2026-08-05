@@ -12,6 +12,7 @@ Q: Why is a classic k-d tree terrible for disk?
 A: One point per leaf — ~100 bytes stored in a ~4KB disk block.
 Q: How does a BKD tree fix that?
 A: It packs points into large leaf blocks — 512–1024 points per block in Lucene.
+```
 
 ## Related
 

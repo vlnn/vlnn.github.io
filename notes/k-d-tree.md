@@ -11,3 +11,4 @@ A k-d tree (k-dimensional tree) is a [binary search tree](binary-search-tree.md)
 ```test
 Q: How does a k-d tree generalize the BST comparison?
 A: Instead of comparing whole keys, each level compares points along one axis, cycling through axes as you descend.
+```

@@ -10,6 +10,7 @@ Known as BST. Linear time complexity depends on height of the tree.
 ```test
 Q: What does BST time complexity depend on?
 A: The height of the tree.
+```
 
 ## Related
 

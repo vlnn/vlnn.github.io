@@ -16,6 +16,7 @@ Q: What is the main staple of a Lucene index?
 A: Immutability — the index is a collection of segments, and a segment, once written, is never modified.
 Q: What does segment immutability buy?
 A: Better compression and no cache invalidation.
+```
 
 ## Related
 

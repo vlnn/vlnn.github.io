@@ -17,3 +17,4 @@ Q: What goes in and what comes out of an HNSW search?
 A: In: a query vector. Out: the `k` closest vectors out of millions, without comparing against all of them.
 Q: How does HNSW avoid comparing the query against every vector?
 A: Hierarchy — several linked layers with increasing density.
+```
