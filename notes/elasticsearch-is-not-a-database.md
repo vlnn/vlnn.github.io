@@ -1,6 +1,5 @@
 ---
 title: Elasticsearch is not a database
-date: 2026-08-05
 tags: [elasticsearch]
 brain-id: 44852e1b-e00e-48ec-81df-a659fe5f54ae
 ---
@@ -13,6 +12,6 @@ But it is also supports [HNSW graphs](hnsw-graphs.md), [BKD trees](bkd-trees.md)
 
 - [Inverted Index](inverted-index.md)
 - [Doc values](doc-values.md)
-- [BKD trees](bkd-trees.md)
 - [HNSW graphs](hnsw-graphs.md)
+- [BKD trees](bkd-trees.md)
 

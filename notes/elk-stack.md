@@ -1,6 +1,5 @@
 ---
 title: ELK stack
-date: 2026-08-05
 brain-id: 49a2c228-d13c-4ecc-95b6-4b48e757b28b
 ---
 
@@ -8,6 +7,6 @@ Combines the powerful search (Elasticsearch), data ingestion and transformation 
 
 ## Related
 
-- [Logstash](logstash.md)
 - [Kibana](kibana.md)
+- [Logstash](logstash.md)
 

@@ -1,6 +1,5 @@
 ---
 title: The Rise of Worse is Better
-date: 2026-08-08
 brain-id: e06bbf64-a4ce-4a50-9a7f-96b555fbc586
 ---
 
@@ -25,12 +24,12 @@ The essay also carries a quieter, sadder point about the Lisp community specific
 
 ## Related
 
-- [John McCarthy](john-mccarthy.md)
-- [Richard Gabriel](richard-gabriel.md)
 - [Natural Selection](natural-selection.md)
-- [Environment Selection](environment-selection.md)
-- [Right Thing (MIT approach)](right-thing-mit-approach.md)
-- [Optimizing for the Wrong Fitness Function](optimizing-for-the-wrong-fitness-function.md)
-- [Recall vs Recognition](recall-vs-recognition.md)
 - [Worse is Better (New Jersey approach)](worse-is-better-new-jersey-approach.md)
+- [Recall vs Recognition](recall-vs-recognition.md)
+- [Right Thing (MIT approach)](right-thing-mit-approach.md)
+- [Richard Gabriel](richard-gabriel.md)
+- [John McCarthy](john-mccarthy.md)
+- [Environment Selection](environment-selection.md)
+- [Optimizing for the Wrong Fitness Function](optimizing-for-the-wrong-fitness-function.md)
 

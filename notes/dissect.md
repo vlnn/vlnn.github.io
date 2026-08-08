@@ -1,6 +1,5 @@
 ---
 title: dissect
-date: 2026-08-05
 brain-id: 754df55f-4a28-41a4-9329-59f058db8034
 ---
 

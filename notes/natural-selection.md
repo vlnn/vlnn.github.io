@@ -1,6 +1,5 @@
 ---
 title: Natural Selection
-date: 2026-08-08
 brain-id: 8a0a38c9-8e6a-439f-a8ad-e0fde01ab6c1
 ---
 

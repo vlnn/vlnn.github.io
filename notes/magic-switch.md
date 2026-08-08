@@ -1,7 +1,6 @@
 ---
 title: Magic Switch
-date: 2026-08-08
-tags: [history, til, electronics]
+tags: [electronics, history, til]
 brain-id: 48b23d05-f2ad-4f8a-b739-a8d00fb9f1b5
 ---
 
@@ -29,7 +28,7 @@ I still have that switch in my basement. Maybe I'm silly, but I usually keep it 
 
 ## Related
 
-- [David A. Moon](david-a-moon.md)
 - [MIT AI Lab](mit-ai-lab.md)
 - [Richard Greenblatt](richard-greenblatt.md)
+- [David A. Moon](david-a-moon.md)
 

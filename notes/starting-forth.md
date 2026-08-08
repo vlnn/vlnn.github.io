@@ -1,7 +1,6 @@
 ---
 title: Starting Forth
-date: 2026-08-03
-tags: [i-have, book]
+tags: [book, i-have]
 brain-id: 62b4422b-93ff-4d5c-819d-cce9cbad4e03
 ---
 

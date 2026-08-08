@@ -1,6 +1,5 @@
 ---
 title: Worse is Better (New Jersey approach)
-date: 2026-08-08
 brain-id: 8ca71164-a8ba-405f-bb49-72fcf6c1d023
 ---
 

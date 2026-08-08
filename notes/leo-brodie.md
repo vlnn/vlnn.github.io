@@ -1,6 +1,5 @@
 ---
 title: Leo Brodie
-date: 2026-08-03
 tags: [person]
 brain-id: 4b50dddd-5721-4b36-b415-d7a73e76b36a
 ---

@@ -1,7 +1,6 @@
 ---
 title: Do What I Mean
-date: 2026-08-07
-tags: [programming, psy, design]
+tags: [design, programming, psy]
 brain-id: 6997157d-5c39-41e3-9216-93c1ee6931e3
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: Environment Selection
-date: 2026-08-08
 brain-id: c5ee8362-b1f9-42df-aa08-f5971393a37d
 ---
 
@@ -14,6 +13,6 @@ In a way, choosing the [Working methods](working-methods.md) is **environment se
 ## Related
 
 - [Niche construction](niche-construction.md)
-- [Habitat selection](habitat-selection.md)
 - [Working methods](working-methods.md)
+- [Habitat selection](habitat-selection.md)
 

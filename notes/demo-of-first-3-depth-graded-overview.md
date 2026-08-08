@@ -1,6 +1,5 @@
 ---
 title: Demo of First 3 Depth-graded Overview
-date: 2026-08-05
 brain-id: 90b8f3ab-f03b-485e-9a18-4f60a5621094
 ---
 

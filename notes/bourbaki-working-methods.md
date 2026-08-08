@@ -1,7 +1,6 @@
 ---
 title: Bourbaki working methods
-date: 2026-08-05
-tags: [writing, math]
+tags: [math, writing]
 brain-id: 14b28ab6-c1ac-4e4f-9983-833a6ebcafb2
 ---
 
