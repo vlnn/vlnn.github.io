@@ -17,7 +17,7 @@ LLMs hit twice in that area:
 
 So practically the method becomes "use LLMs to generate a sequence of overviews with raising complexity for the learner's sequential understanding of the whole source". I can imagine how this could be used for code reviews, general texts, even music sheets.
 
-This is similar to [Bruner's spiral curriculum](bruner-s-spiral-curriculum.md), but customized to the field of interest. It also reminds of Vygotsky's [zone of proximal development,](zone-of-proximal-development.md) but with textual aid instead of teacher figure. It's very similar to [Elaborative sequencing](elaborative-sequencing.md) of [Elaboration Theory](elaboration-theory.md).
+This is similar to [Bruner's spiral curriculum](bruner-s-spiral-curriculum.md), but customized to the field of interest. It also reminds of Vygotsky's [zone of proximal development,](zone-of-proximal-development.md) but with textual aid instead of teacher figure. It's very similar to [Elaborative sequencing](elaborative-sequencing.md) of [Elaboration Theory](elaboration-theory.md). Also related to the [Feynman technique](feynman-technique.md).
 
 ## Related
 
@@ -25,4 +25,5 @@ This is similar to [Bruner's spiral curriculum](bruner-s-spiral-curriculum.md), 
 - [Elaboration Theory](elaboration-theory.md)
 - [Bruner's spiral curriculum](bruner-s-spiral-curriculum.md)
 - [Demo of First 3 Depth-graded Overview](demo-of-first-3-depth-graded-overview.md)
+- [Feynman technique](feynman-technique.md)
 
