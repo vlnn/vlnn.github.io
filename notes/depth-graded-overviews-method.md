@@ -7,7 +7,13 @@ brain-id: f91c3da3-1e7d-4f6c-a06c-c6718c7bbae9
 
 My idea is to effectively consume a complex information with sequence of depth-graded overviews of the sources.
 
+## Examples:
+
 Imagine some complex Quantum Physics Course you're interested in. I generated a simplified [demo of first 3 depth-graded overview](demo-of-first-3-depth-graded-overview.md).
+
+Another note written using this approach is [The Rise of Worse is Better](the-rise-of-worse-is-better.md)
+
+## Differences from usual learning
 
 Traditionally you would search for a good textbook, where good means "accessible enough" and "precise enough" at the same time. It's a hard problem, easily leading to yak shaving or canceling the project.
 
