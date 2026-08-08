@@ -169,3 +169,25 @@ def test_build_index_includes_prompts(tmp_path):
     assert index["notes"]["plain"]["prompts"] == [], (
         "build_index should give promptless notes an empty prompts list"
     )
+
+
+def test_current_commit(mocker):
+    from build_index import current_commit
+
+    run = mocker.patch("build_index.subprocess.run")
+    run.return_value.stdout = "d42fgw3\n"
+    assert current_commit() == "d42fgw3", (
+        "current_commit should return the short hash git prints, stripped"
+    )
+    assert run.call_args.args[0] == ["git", "rev-parse", "--short", "HEAD"], (
+        "current_commit should ask git for the short HEAD hash"
+    )
+
+
+def test_current_commit_without_git(mocker):
+    from build_index import current_commit
+
+    mocker.patch("build_index.subprocess.run", side_effect=OSError)
+    assert current_commit() == "", (
+        "current_commit should degrade to empty when git is unavailable"
+    )

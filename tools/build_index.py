@@ -1,5 +1,6 @@
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -79,6 +80,16 @@ def extract_md_prompts(text):
     return [prompt for block in MD_TEST_RE.findall(text) for prompt in parse_prompt_pairs(block)]
 
 
+def current_commit():
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True
+        )
+        return result.stdout.strip()
+    except OSError:
+        return ""
+
+
 def note_files(notes_dir):
     return sorted(Path(notes_dir).glob("*.md"))
 
@@ -108,7 +119,7 @@ def build_index(notes_dir):
 def main():
     notes_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("notes")
     output = Path(sys.argv[2]) if len(sys.argv) > 2 else Path("index.json")
-    index = build_index(notes_dir)
+    index = {**build_index(notes_dir), "commit": current_commit()}
     output.write_text(json.dumps(index, ensure_ascii=False, indent=1))
     print(f"{output}: {len(index['notes'])} notes indexed")
 

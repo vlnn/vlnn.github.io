@@ -429,3 +429,9 @@ console.log("append pane tests passed");
 
 assert.ok(/<code[^>]*>head<\/code>/.test(mdToHtml("Is `head` replacing `car`?")), "mdToHtml should render md inline code in prompt fragments");
 console.log("prompt rendering tests passed");
+
+import { siteTitleText } from "../app.js";
+assert.equal(siteTitleText("d42fgw3"), "vlnn.dev/d42fgw3", "siteTitleText should show the deployed commit hash");
+assert.equal(siteTitleText(""), "vlnn.dev / notes", "siteTitleText should fall back to the plain title without a hash");
+assert.equal(siteTitleText(undefined), "vlnn.dev / notes", "siteTitleText should fall back when the index predates the commit field");
+console.log("site title tests passed");

@@ -843,7 +843,12 @@ function copyTrail() {
     .catch(() => toast("clipboard unavailable"));
 }
 
+export function siteTitleText(commit) {
+  return commit ? `vlnn.dev/${commit}` : "vlnn.dev / notes";
+}
+
 function start() {
+  document.querySelector(".site-title").textContent = siteTitleText(index.commit);
   const rerender = () => renderStack(parseStack(location.search), openFromPane, openTrail, closeFromPane, openTag);
   const navigate = (stack) => {
     history.pushState(null, "", stackUrl(stack));
