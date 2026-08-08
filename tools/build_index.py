@@ -3,36 +3,14 @@ import re
 import sys
 from pathlib import Path
 
-TITLE_RE = re.compile(r"^#\+title:\s*(.*)$", re.IGNORECASE | re.MULTILINE)
-DATE_RE = re.compile(r"^#\+date:\s*<?(\d{4}-\d{2}-\d{2})", re.IGNORECASE | re.MULTILINE)
-TAGS_RE = re.compile(r"^#\+filetags:\s*(.*)$", re.IGNORECASE | re.MULTILINE)
-ORG_LINK_RE = re.compile(r"\[\[file:([^]/]+)\.(?:org|md)\]")
 FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
 MD_HEADING_RE = re.compile(r"^#\s+(.*)$", re.MULTILINE)
-MD_LINK_RE = re.compile(r"(?<!!)\[[^]]*\]\(([^)/:]+)\.(?:org|md)\)")
-ORG_TEST_RE = re.compile(r"^#\+begin_test\s*\n(.*?)^#\+end_test", re.IGNORECASE | re.DOTALL | re.MULTILINE)
+MD_LINK_RE = re.compile(r"(?<!!)\[[^]]*\]\(([^)/:]+)\.md\)")
 MD_TEST_RE = re.compile(r"^```test\s*\n(.*?)^```", re.DOTALL | re.MULTILINE)
 
 
 def split_words(raw):
     return [word for word in re.split(r"[\s,:\[\]]+", raw) if word]
-
-
-def parse_org_metadata(text):
-    title = TITLE_RE.search(text)
-    date = DATE_RE.search(text)
-    tags = TAGS_RE.search(text)
-    return {
-        "title": re.sub(r"^#\+title:\s*", "", title.group(1), flags=re.IGNORECASE).strip()
-        if title
-        else "",
-        "date": date.group(1) if date else "",
-        "tags": split_words(tags.group(1)) if tags else [],
-    }
-
-
-def parse_metadata(text):
-    return parse_org_metadata(text)
 
 
 def frontmatter_fields(text):
@@ -63,10 +41,6 @@ def unique(items):
         if item not in seen:
             seen.append(item)
     return seen
-
-
-def extract_note_links(text):
-    return unique(ORG_LINK_RE.findall(text))
 
 
 def extract_md_note_links(text):
@@ -101,37 +75,22 @@ def parse_prompt_pairs(body):
     return [prompt for prompt in prompts if prompt["a"] is not None]
 
 
-def extract_prompts(block_re, text):
-    return [prompt for block in block_re.findall(text) for prompt in parse_prompt_pairs(block)]
-
-
-def extract_org_prompts(text):
-    return extract_prompts(ORG_TEST_RE, text)
-
-
 def extract_md_prompts(text):
-    return extract_prompts(MD_TEST_RE, text)
-
-
-PARSERS = {
-    ".org": (parse_org_metadata, extract_note_links, extract_org_prompts),
-    ".md": (parse_md_metadata, extract_md_note_links, extract_md_prompts),
-}
+    return [prompt for block in MD_TEST_RE.findall(text) for prompt in parse_prompt_pairs(block)]
 
 
 def note_files(notes_dir):
-    paths = sorted(path for path in Path(notes_dir).iterdir() if path.suffix in PARSERS)
-    slugs = [slug_of(path) for path in paths]
-    for slug in slugs:
-        if slugs.count(slug) > 1:
-            raise ValueError(f"slug collision: {slug}")
-    return paths
+    return sorted(Path(notes_dir).glob("*.md"))
 
 
 def parse_note(path):
-    parse, extract_links, extract_prompts = PARSERS[path.suffix]
     text = path.read_text()
-    return {**parse(text), "file": path.name, "links": extract_links(text), "prompts": extract_prompts(text)}
+    return {
+        **parse_md_metadata(text),
+        "file": path.name,
+        "links": extract_md_note_links(text),
+        "prompts": extract_md_prompts(text),
+    }
 
 
 def build_index(notes_dir):

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { parseStack, stackUrl, stackAfter, slugFromHref, visiblePanes, trailOf, timelineEntries, timeArrowLayout, yearTicks, trailAsOrg, paneKey } from "../app.js";
+import { parseStack, stackUrl, stackAfter, slugFromHref, visiblePanes, trailOf, timelineEntries, timeArrowLayout, yearTicks, trailAsMd, paneKey } from "../app.js";
 
 assert.equal(paneKey("a", 0, true), paneKey("a", 0, true), "paneKey should be stable for an unchanged pane");
 assert.notEqual(paneKey("a", 0, true), paneKey("a", 1, true), "paneKey should change when the pane moves to another position");
@@ -71,10 +71,11 @@ const cases = [
   [() => parseStack("?stack="), ["about-these-notes"], "parseStack should fall back to the entry note for an empty stack param"],
   [() => stackAfter(["a", "b", "c"], 0, "d"), ["a", "d"], "stackAfter should truncate panes right of the source pane"],
   [() => stackAfter(["a", "b"], 1, "a"), ["a", "b"], "stackAfter should not duplicate an already-open note"],
-  [() => slugFromHref("file:other.org"), "other", "slugFromHref should strip the file: prefix"],
-  [() => slugFromHref("./other.org"), "other", "slugFromHref should accept relative ./ links"],
-  [() => slugFromHref("https://x.com/a.org"), null, "slugFromHref should ignore external urls"],
-  [() => slugFromHref("static/pic.gif"), null, "slugFromHref should ignore non-org paths"],
+  [() => slugFromHref("file:other.md"), "other", "slugFromHref should strip the file: prefix"],
+  [() => slugFromHref("./other.md"), "other", "slugFromHref should accept relative ./ links"],
+  [() => slugFromHref("https://x.com/a.md"), null, "slugFromHref should ignore external urls"],
+  [() => slugFromHref("legacy.org"), null, "slugFromHref should no longer treat .org links as notes"],
+  [() => slugFromHref("static/pic.gif"), null, "slugFromHref should ignore non-note paths"],
   [() => visiblePanes(["a", "b", "c"], true), [["c", 2]], "visiblePanes should show only the last note with its stack index on narrow screens"],
   [() => visiblePanes(["a", "b"], false), [["a", 0], ["b", 1]], "visiblePanes should show the whole stack on wide screens"],
   [() => trailOf(["a", "b", "c"], true), ["a", "b"], "trailOf should list earlier notes as breadcrumbs on narrow screens"],
@@ -85,15 +86,14 @@ const cases = [
 for (const [run, expected, message] of cases) assert.deepEqual(run(), expected, message);
 console.log(`${cases.length} app tests passed`);
 
-import { noteToHtml, mdToHtml, orgToHtml } from "./org.js";
+import { mdToHtml } from "./org.js";
 
-const mdHtml = mdToHtml("---\ntitle: x\n---\n\n**bold** and a [link](a.org)\n\n| a | b |\n|---|---|\n| 1 | 2 |");
+const mdHtml = mdToHtml("---\ntitle: x\n---\n\n**bold** and a [link](a.md)\n\n| a | b |\n|---|---|\n| 1 | 2 |");
 assert.ok(mdHtml.includes("<strong>bold</strong>"), "mdToHtml should render markdown emphasis");
 assert.ok(!mdHtml.includes("title: x"), "mdToHtml should strip YAML frontmatter");
 assert.ok(mdHtml.includes("<table>"), "mdToHtml should render GFM tables");
 assert.equal(slugFromHref("a.md"), "a", "slugFromHref should treat bare .md links as notes");
-assert.ok(noteToHtml("n.md", "*em*").includes("<em>"), "noteToHtml should route .md to remark");
-assert.ok(noteToHtml("n.org", "*em*").includes("<strong>"), "noteToHtml should route .org to uniorg, where * means bold");
+assert.ok(mdToHtml("*em*").includes("<em>"), "mdToHtml should render md emphasis without a frontmatter block");
 console.log("markdown pipeline tests passed");
 
 const sampleIndex = {
@@ -168,13 +168,13 @@ assert.deepEqual(yearTicks([{ date: "2024-03-01" }, { date: "2024-06-01" }]), []
 console.log("time arrow tests passed");
 
 const trailNotes = {
-  "about-these-notes": { title: "About these notes", file: "about-these-notes.org" },
+  "about-these-notes": { title: "About these notes", file: "about-these-notes.md" },
   "how-this-site-works": { title: "How this site works", file: "how-this-site-works.md" },
 };
 assert.equal(
-  trailAsOrg(["about-these-notes", "timeline", "how-this-site-works"], trailNotes),
-  "- [[file:about-these-notes.org][About these notes]]\n- [[file:how-this-site-works.md][How this site works]]",
-  "trailAsOrg should emit an org list of file links, keeping md extensions and skipping synthetic panes"
+  trailAsMd(["about-these-notes", "timeline", "how-this-site-works"], trailNotes),
+  "- [About these notes](about-these-notes.md)\n- [How this site works](how-this-site-works.md)",
+  "trailAsMd should emit a md list of file links, skipping synthetic panes"
 );
 console.log("trail export tests passed");
 
@@ -379,9 +379,9 @@ assert.equal(quizDone(quizStart(), 2), false, "quizDone should be false while pr
 assert.equal(quizDone({ position: 2, revealed: false, recalled: 1 }, 2), true, "quizDone should be true past the last prompt");
 
 assert.equal(
-  trailAsOrg(["a", "test:a"], { a: { file: "a.org", title: "A" } }),
-  "- [[file:a.org][A]]",
-  "trailAsOrg should exclude test panes from the copied trail"
+  trailAsMd(["a", "test:a"], { a: { file: "a.md", title: "A" } }),
+  "- [A](a.md)",
+  "trailAsMd should exclude test panes from the copied trail"
 );
 console.log("test-pane tests passed");
 
@@ -427,6 +427,5 @@ assert.deepEqual(appendPane(["a", "b"], "test"), ["a", "b", "test"], "appendPane
 assert.deepEqual(appendPane(["a", "test"], "test"), ["a", "test"], "appendPane should not duplicate an already-open pane");
 console.log("append pane tests passed");
 
-assert.ok(/<code[^>]*>head<\/code>/.test(noteToHtml("n.org", "Is =head= replacing =car=?")), "noteToHtml should render org verbatim markup in prompt fragments");
-assert.ok(/<code[^>]*>head<\/code>/.test(noteToHtml("n.md", "Is `head` replacing `car`?")), "noteToHtml should render md inline code in prompt fragments");
+assert.ok(/<code[^>]*>head<\/code>/.test(mdToHtml("Is `head` replacing `car`?")), "mdToHtml should render md inline code in prompt fragments");
 console.log("prompt rendering tests passed");

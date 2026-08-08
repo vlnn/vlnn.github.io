@@ -3,126 +3,14 @@ import json
 import pytest
 
 from build_index import (
-    extract_md_prompts,
-    extract_org_prompts,
-    parse_prompt_pairs,
-    extract_md_note_links,
-    parse_md_metadata,
     build_index,
-    extract_note_links,
+    extract_md_note_links,
+    extract_md_prompts,
     invert_links,
-    parse_metadata,
+    parse_md_metadata,
+    parse_prompt_pairs,
     slug_of,
 )
-
-
-@pytest.mark.parametrize(
-    "text, expected_title",
-    [
-        ("#+title: Plain Title\n\nBody", "Plain Title"),
-        ("#+TITLE: Upper Case Key\n", "Upper Case Key"),
-        ("#+title: #+title: Doubled Prefix\n", "Doubled Prefix"),
-        ("No metadata at all", ""),
-    ],
-)
-def test_parse_metadata_title(text, expected_title):
-    assert parse_metadata(text)["title"] == expected_title, (
-        "parse_metadata should extract the title, stripping a doubled #+title: prefix"
-    )
-
-
-@pytest.mark.parametrize(
-    "text, expected_date",
-    [
-        ("#+date: <2024-05-20 23:10>\n", "2024-05-20"),
-        ("#+date: 2022-10-08\n", "2022-10-08"),
-        ("#+title: only title\n", ""),
-    ],
-)
-def test_parse_metadata_date(text, expected_date):
-    assert parse_metadata(text)["date"] == expected_date, (
-        "parse_metadata should extract a YYYY-MM-DD date from org timestamps"
-    )
-
-
-@pytest.mark.parametrize(
-    "text, expected_tags",
-    [
-        ("#+filetags: emacs repl clojure\n", ["emacs", "repl", "clojure"]),
-        ("#+filetags: macos,keyboard,ua\n", ["macos", "keyboard", "ua"]),
-        ("#+filetags: :a:b:\n", ["a", "b"]),
-        ("#+title: none\n", []),
-    ],
-)
-def test_parse_metadata_tags(text, expected_tags):
-    assert parse_metadata(text)["tags"] == expected_tags, (
-        "parse_metadata should split filetags on spaces, commas or colons"
-    )
-
-
-@pytest.mark.parametrize(
-    "text, expected_links",
-    [
-        ("See [[file:other-note.org][other]].", ["other-note"]),
-        ("Two: [[file:a.org][a]] and [[file:b.org]].", ["a", "b"]),
-        ("External only: [[https://example.com][x]].", []),
-        ("Image stays out: [[file:static/pic.gif]].", []),
-        ("Repeated [[file:a.org][a]] and [[file:a.org][again]].", ["a"]),
-    ],
-)
-def test_extract_note_links(text, expected_links):
-    assert extract_note_links(text) == expected_links, (
-        "extract_note_links should return unique slugs of file: links to .org notes only"
-    )
-
-
-def test_invert_links():
-    graph = {"a": ["b", "c"], "b": ["c"], "c": []}
-    assert invert_links(graph) == {"a": [], "b": ["a"], "c": ["a", "b"]}, (
-        "invert_links should map every note to the sorted list of notes linking to it"
-    )
-
-
-@pytest.mark.parametrize(
-    "filename, expected_slug",
-    [
-        ("programming-in-wartime.org", "programming-in-wartime"),
-        ("notes/nested/deep.org", "deep"),
-    ],
-)
-def test_slug_of(filename, expected_slug):
-    assert slug_of(filename) == expected_slug, (
-        "slug_of should return the bare filename without directories or extension"
-    )
-
-
-def test_build_index_end_to_end(tmp_path):
-    (tmp_path / "a.org").write_text(
-        "#+title: Note A\n#+date: <2024-01-01 10:00>\n#+filetags: x y\n\nLinks to [[file:b.org][B]].\n"
-    )
-    (tmp_path / "b.org").write_text("#+title: Note B\n\nNo links here.\n")
-
-    index = build_index(tmp_path)
-
-    assert set(index["notes"]) == {"a", "b"}, (
-        "build_index should include every .org note keyed by slug"
-    )
-    assert index["notes"]["a"]["links"] == ["b"], (
-        "build_index should record outgoing note links"
-    )
-    assert index["notes"]["b"]["backlinks"] == ["a"], (
-        "build_index should record incoming backlinks"
-    )
-    assert index["notes"]["a"] == {
-        "title": "Note A",
-        "date": "2024-01-01",
-        "tags": ["x", "y"],
-        "file": "a.org",
-        "links": ["b"],
-        "prompts": [],
-        "backlinks": [],
-    }, "build_index should produce complete metadata per note"
-    json.dumps(index)
 
 
 @pytest.mark.parametrize(
@@ -150,7 +38,7 @@ def test_parse_md_metadata(text, expected):
     "text, expected_links",
     [
         ("See [other](other-note.md).", ["other-note"]),
-        ("Cross-format [org one](some.org) works.", ["some"]),
+        ("Legacy [org one](some.org) no longer resolves.", []),
         ("External [x](https://example.com/a.md) ignored.", []),
         ("Image ![p](static/pic.gif) ignored.", []),
         ("Dupes [a](a.md) [a](a.md).", ["a"]),
@@ -158,47 +46,68 @@ def test_parse_md_metadata(text, expected):
 )
 def test_extract_md_note_links(text, expected_links):
     assert extract_md_note_links(text) == expected_links, (
-        "extract_md_note_links should return unique slugs of relative .md/.org links"
+        "extract_md_note_links should return unique slugs of relative .md links only"
     )
 
 
-def test_org_links_reach_md_notes():
-    assert extract_note_links("See [[file:md-note.md][md]].") == ["md-note"], (
-        "extract_note_links should follow org file links to .md notes too"
+def test_invert_links():
+    graph = {"a": ["b", "c"], "b": ["c"], "c": []}
+    assert invert_links(graph) == {"a": [], "b": ["a"], "c": ["a", "b"]}, (
+        "invert_links should map every note to the sorted list of notes linking to it"
     )
 
 
-def test_build_index_mixed_formats(tmp_path):
-    (tmp_path / "o.org").write_text("#+title: Org\n\n[[file:m.md][m]]\n")
-    (tmp_path / "m.md").write_text("---\ntitle: Md\n---\n\n[back](o.org)\n")
+@pytest.mark.parametrize(
+    "filename, expected_slug",
+    [
+        ("programming-in-wartime.md", "programming-in-wartime"),
+        ("notes/nested/deep.md", "deep"),
+    ],
+)
+def test_slug_of(filename, expected_slug):
+    assert slug_of(filename) == expected_slug, (
+        "slug_of should return the bare filename without directories or extension"
+    )
+
+
+def test_build_index_end_to_end(tmp_path):
+    (tmp_path / "a.md").write_text(
+        "---\ntitle: Note A\ndate: 2024-01-01\ntags: [x, y]\n---\n\nLinks to [B](b.md).\n"
+    )
+    (tmp_path / "b.md").write_text("---\ntitle: Note B\n---\n\nNo links here.\n")
 
     index = build_index(tmp_path)
 
-    assert index["notes"]["o"]["file"] == "o.org", (
-        "build_index should record each note's filename so the client knows the format"
+    assert set(index["notes"]) == {"a", "b"}, (
+        "build_index should include every .md note keyed by slug"
     )
-    assert index["notes"]["m"]["file"] == "m.md", (
-        "build_index should index .md notes alongside .org"
+    assert index["notes"]["a"] == {
+        "title": "Note A",
+        "date": "2024-01-01",
+        "tags": ["x", "y"],
+        "file": "a.md",
+        "links": ["b"],
+        "prompts": [],
+        "backlinks": [],
+    }, "build_index should produce complete metadata per note"
+    assert index["notes"]["b"]["backlinks"] == ["a"], (
+        "build_index should record incoming backlinks"
     )
-    assert index["notes"]["m"]["backlinks"] == ["o"], (
-        "build_index should resolve org→md links into backlinks"
-    )
-    assert index["notes"]["o"]["backlinks"] == ["m"], (
-        "build_index should resolve md→org links into backlinks"
-    )
+    json.dumps(index)
 
 
-def test_build_index_rejects_slug_collision(tmp_path):
-    (tmp_path / "same.org").write_text("#+title: A\n")
-    (tmp_path / "same.md").write_text("---\ntitle: B\n---\n")
+def test_build_index_ignores_non_md_files(tmp_path):
+    (tmp_path / "a.md").write_text("---\ntitle: A\n---\n")
+    (tmp_path / "stale.org").write_text("#+title: Stale\n")
 
-    with pytest.raises(ValueError, match="same"):
-        build_index(tmp_path)
+    assert set(build_index(tmp_path)["notes"]) == {"a"}, (
+        "build_index should index .md files only"
+    )
 
 
 def test_build_index_drops_links_to_unknown_notes(tmp_path):
-    (tmp_path / "a.org").write_text("#+title: A\n\n[[file:b.org][real]] [[file:ghost.org][gone]]\n")
-    (tmp_path / "b.org").write_text("#+title: B\n")
+    (tmp_path / "a.md").write_text("---\ntitle: A\n---\n\n[real](b.md) [gone](ghost.md)\n")
+    (tmp_path / "b.md").write_text("---\ntitle: B\n---\n")
 
     index = build_index(tmp_path)
 
@@ -234,31 +143,6 @@ def test_parse_prompt_pairs(body, expected):
 @pytest.mark.parametrize(
     "text, expected",
     [
-        (
-            "#+title: x\n\n#+begin_test\nQ: What?\nA: That.\n#+end_test\n",
-            [{"q": "What?", "a": "That."}],
-        ),
-        (
-            "#+BEGIN_TEST\nQ: Upper?\nA: Also works.\n#+END_TEST",
-            [{"q": "Upper?", "a": "Also works."}],
-        ),
-        (
-            "#+begin_test\nQ: One?\nA: 1.\n#+end_test\ntext between\n#+begin_test\nQ: Two?\nA: 2.\n#+end_test",
-            [{"q": "One?", "a": "1."}, {"q": "Two?", "a": "2."}],
-        ),
-        ("#+begin_src python\nQ = 1\n#+end_src", []),
-        ("Plain note, no blocks.", []),
-    ],
-)
-def test_extract_org_prompts(text, expected):
-    assert extract_org_prompts(text) == expected, (
-        "extract_org_prompts should collect Q/A pairs from every #+begin_test block, case-insensitively"
-    )
-
-
-@pytest.mark.parametrize(
-    "text, expected",
-    [
         ("```test\nQ: What?\nA: That.\n```", [{"q": "What?", "a": "That."}]),
         ("```python\nQ = 1\n```", []),
         (
@@ -274,10 +158,10 @@ def test_extract_md_prompts(text, expected):
 
 
 def test_build_index_includes_prompts(tmp_path):
-    (tmp_path / "quizzy.org").write_text(
-        "#+title: Quizzy\n\n#+begin_test\nQ: What?\nA: That.\n#+end_test\n"
+    (tmp_path / "quizzy.md").write_text(
+        "---\ntitle: Quizzy\n---\n\n```test\nQ: What?\nA: That.\n```\n"
     )
-    (tmp_path / "plain.org").write_text("#+title: Plain\n")
+    (tmp_path / "plain.md").write_text("---\ntitle: Plain\n---\n")
     index = build_index(tmp_path)
     assert index["notes"]["quizzy"]["prompts"] == [{"q": "What?", "a": "That."}], (
         "build_index should carry extracted prompts into the note entry"

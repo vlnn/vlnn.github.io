@@ -1,5 +1,0 @@
-#+title: Dr Toomas Karmo
-#+date: <2026-08-03 Mon>
-#+filetags: person
-
-[[https://www.metascientia.com]]

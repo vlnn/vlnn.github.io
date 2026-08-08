@@ -1,0 +1,9 @@
+---
+title: Transcendental Incompatibility with Non-dimensionless arguments
+date: 2026-08-03
+tags: [math]
+---
+
+Transcendental functions like `ln`, `exp`, `sin` only make mathematical sense for dimensionless arguments. You can see this from the `Taylor series` — `ln(V)` would require summing terms proportional to `V`, `V²`, `V³`…, which have incompatible units. So an expression like `ln(V)` where `V` is in `m³` is, strictly speaking, meaningless.
+
+(Found in the talk of [Dr Toomas Karmo](Dr-Toomas-Karmo.md))

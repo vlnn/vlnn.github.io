@@ -1,6 +1,6 @@
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { noteToHtml } from "../vendor/org.js";
+import { mdToHtml } from "../vendor/org.js";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -103,7 +103,7 @@ function renderAll(notesDir, index) {
   return Object.fromEntries(
     Object.entries(index.notes)
       .filter(([, note]) => files.has(note.file))
-      .map(([slug, note]) => [slug, noteToHtml(note.file, readFileSync(`${notesDir}/${note.file}`, "utf8"))])
+      .map(([slug, note]) => [slug, mdToHtml(readFileSync(`${notesDir}/${note.file}`, "utf8"))])
   );
 }
 

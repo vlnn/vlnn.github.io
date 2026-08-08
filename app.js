@@ -1,4 +1,4 @@
-import { noteToHtml } from "./vendor/org.js";
+import { mdToHtml } from "./vendor/org.js";
 
 const ENTRY = "about-these-notes";
 const SPINE_STEP = 42;
@@ -265,20 +265,20 @@ export function quizDone(state, total) {
   return state.position >= total;
 }
 
-export function trailAsOrg(stack, notes) {
+export function trailAsMd(stack, notes) {
   return stack
     .filter((slug) => !SYNTHETIC.has(slug) && notes[slug])
-    .map((slug) => `- [[file:${notes[slug].file}][${notes[slug].title}]]`)
+    .map((slug) => `- [${notes[slug].title}](${notes[slug].file})`)
     .join("\n");
 }
 
 export function slugFromHref(href) {
-  const match = /^(?:file:)?(?:\.\/)?([^/]+)\.(?:org|md)$/.exec(href);
+  const match = /^(?:file:)?(?:\.\/)?([^/]+)\.md$/.exec(href);
   return match ? match[1] : null;
 }
 
 function fileOf(slug) {
-  return metaOf(slug).file || `${slug}.org`;
+  return metaOf(slug).file || `${slug}.md`;
 }
 
 async function fetchNote(slug) {
@@ -425,7 +425,7 @@ function renderPane(slug, paneIndex, noteText, openFromPane, closeFromPane, clos
   if (metaOf(slug).date || metaOf(slug).tags.length) body.append(dateLine);
 
   const content = el("div", "note-content");
-  content.innerHTML = noteToHtml(fileOf(slug), noteText);
+  content.innerHTML = mdToHtml(noteText);
   content.querySelectorAll(".block-test").forEach((block) => block.remove());
   content.querySelectorAll("code.language-test").forEach((code) => (code.closest("pre") || code).remove());
   adoptContentLinks(content, openFromPane, paneIndex);
@@ -510,7 +510,7 @@ function noteLinkTo(slug, paneIndex, openFromPane) {
 
 function renderedPromptText(className, prompt, field, openFromPane, paneIndex) {
   const box = el("div", className);
-  box.innerHTML = noteToHtml(fileOf(prompt.slug), prompt[field]);
+  box.innerHTML = mdToHtml(prompt[field]);
   adoptContentLinks(box, openFromPane, paneIndex);
   return box;
 }
@@ -835,11 +835,11 @@ function toast(message) {
 }
 
 function copyTrail() {
-  const org = trailAsOrg(parseStack(location.search), index.notes);
-  if (!org) return;
+  const md = trailAsMd(parseStack(location.search), index.notes);
+  if (!md) return;
   navigator.clipboard
-    .writeText(org)
-    .then(() => toast("trail copied as org links"))
+    .writeText(md)
+    .then(() => toast("trail copied as md links"))
     .catch(() => toast("clipboard unavailable"));
 }
 

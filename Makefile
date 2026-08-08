@@ -10,7 +10,7 @@ rss.xml atom.xml: index.json tools/build_feed.mjs
 test:
 	uv run --project tools --group dev pytest tools -q
 
-test-js:
+test-js: index.json
 	node vendor/test_app.mjs
 	node vendor/test_feed.mjs
 

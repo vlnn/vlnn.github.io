@@ -1,6 +1,6 @@
 # vlnn.dev notes
 
-Andy-Matuschak-style stacked panes blog engine based on plain org and markdown files, served as static files. The deployed site *is* the source tree: notes ship as raw `.org`/`.md`, parsed in the browser by bundled [uniorg](https://github.com/rasendubi/uniorg) and remark (GFM enabled). The only generated artifact is `index.json` (titles + link graph for backlinks and pane headers).
+Andy-Matuschak-style stacked panes blog engine based on plain markdown files, served as static files. The deployed site *is* the source tree: notes ship as raw `.md`, parsed in the browser by bundled remark (GFM enabled). The only generated artifact is `index.json` (titles + link graph for backlinks and pane headers).
 
 ## Run locally
 
@@ -21,14 +21,10 @@ make test-js          # stack/url/timeline/feed logic (needs node; CI always run
 
 ## Writing notes
 
-Add `notes/my-note.org` (`#+title:`, optional `#+date:`, `#+filetags:`) or `notes/my-note.md` (YAML frontmatter with `title`, `date`, `tags`; falls back to the first `#` heading). One slug namespace across both formats — `foo.org` and `foo.md` together is a build error. Link between notes with bare relative filenames, formats mixing freely:
-
-```org
-See [[file:other-note.org][the other note]] and [[file:md-note.md][that one]].
-```
+Add `notes/my-note.md` (YAML frontmatter with `title`, `date`, `tags`; falls back to the first `#` heading). The slug is the filename without extension. Link between notes with bare relative filenames:
 
 ```md
-See [the other note](other-note.org) and [that one](md-note.md).
+See [the other note](other-note.md) and [that one](md-note.md).
 ```
 
 Clicking such a link opens the target as a new pane; the trail is encoded compactly in `?stack=slug,slug,...` so any view is shareable (the older `?stackedNotes=a&stackedNotes=b` form still parses, so old links and feed permalinks keep working).

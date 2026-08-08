@@ -1,4 +1,10 @@
+.DS_Store
+__pycache__/
+atom.xml
+index.json
+rss.xml
+tools/.pytest_cache/
+tools/.venv/
+tools/__pycache__/
 vendor/node_modules/
 vendor/package-lock.json
-tools/.venv/
-__pycache__/

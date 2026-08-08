@@ -2,13 +2,13 @@ import assert from "node:assert/strict";
 import { escapeXml, rfc822, rfc3339, feedItems, buildFeed, buildAtom } from "../tools/build_feed.mjs";
 
 assert.equal(escapeXml('a<b>&"c"'), "a&lt;b&gt;&amp;&quot;c&quot;", "escapeXml should escape all xml-significant characters");
-assert.equal(rfc822("2024-05-20"), "Mon, 20 May 2024 00:00:00 GMT", "rfc822 should format org dates as RFC-822 pubDates at midnight UTC");
+assert.equal(rfc822("2024-05-20"), "Mon, 20 May 2024 00:00:00 GMT", "rfc822 should format note dates as RFC-822 pubDates at midnight UTC");
 
 const index = {
   notes: {
-    b: { title: "B & co", date: "2022-01-01", file: "b.org", tags: [] },
+    b: { title: "B & co", date: "2022-01-01", file: "b.md", tags: [] },
     a: { title: "A", date: "2024-06-01", file: "a.md", tags: ["x"] },
-    meta: { title: "No date", date: "", file: "meta.org", tags: [] },
+    meta: { title: "No date", date: "", file: "meta.md", tags: [] },
   },
 };
 const rendered = { a: '<p><strong>bold</strong></p><img src="file:static/x.png">', b: "<p>hi</p>", meta: "<p>skip</p>" };
@@ -26,7 +26,7 @@ assert.ok(!xml.includes("No date"), "buildFeed should exclude undated notes");
 assert.ok(xml.includes(escapeXml('src="https://vlnn.dev/static/x.png"')), "buildFeed should absolutize file: image sources so readers can load them");
 assert.ok(!xml.includes("file:static"), "buildFeed should leave no file: urls behind");
 
-assert.equal(rfc3339("2024-05-20"), "2024-05-20T00:00:00Z", "rfc3339 should format org dates as atom timestamps at midnight UTC");
+assert.equal(rfc3339("2024-05-20"), "2024-05-20T00:00:00Z", "rfc3339 should format note dates as atom timestamps at midnight UTC");
 
 const atom = buildAtom("https://vlnn.dev", index, rendered);
 assert.ok(atom.startsWith('<?xml version="1.0" encoding="UTF-8"?>'), "buildAtom should emit an xml prolog");
