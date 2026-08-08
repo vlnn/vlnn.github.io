@@ -10,4 +10,5 @@ brain-id: 6200ade7-41ce-4e04-9aa1-2a5a5f66792e
 - [ELK stack](elk-stack.md)
 - [Depth-graded overviews method](depth-graded-overviews-method.md)
 - [Bourbaki working methods](bourbaki-working-methods.md)
+- [How I write these notes](how-i-write-these-notes.md)
 

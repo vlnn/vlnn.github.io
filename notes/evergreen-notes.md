@@ -17,6 +17,6 @@ Andy Matuschak introduces [Evergreen notes](https://notes.andymatuschak.org/z5E5
 
 ## Related
 
-- [Knowledge work](knowledge-work.md)
 - [How I write these notes](how-i-write-these-notes.md)
+- [Knowledge work](knowledge-work.md)
 

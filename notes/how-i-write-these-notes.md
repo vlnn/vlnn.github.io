@@ -15,6 +15,7 @@ You can see that links for [a2b converter](a2b_converter.md) and [TheBrain](theb
 
 ## Related
 
+- [About these notes](about-these-notes.md)
 - [TheBrain](thebrain.md)
 - [a2b converter](a2b_converter.md)
 
