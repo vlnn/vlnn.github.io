@@ -1,5 +1,6 @@
 ---
 title: Zone of proximal development
+date: 2026-08-05
 tags: [learning]
 brain-id: 73499bef-21cd-4ed1-a5a9-b67852a21fe6
 ---

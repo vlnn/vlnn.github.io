@@ -1,5 +1,6 @@
 ---
 title: grok
+date: 2026-08-05
 brain-id: 802f442a-cea2-4269-b3ff-fc243ea317e6
 ---
 

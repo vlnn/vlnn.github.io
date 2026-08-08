@@ -1,5 +1,6 @@
 ---
 title: BKD trees
+date: 2026-08-05
 tags: [data-structure]
 brain-id: baba30fe-c16e-479c-adaa-88d7719a69ea
 ---

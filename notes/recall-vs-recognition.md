@@ -1,5 +1,6 @@
 ---
 title: Recall vs Recognition
+date: 2026-08-07
 tags: [design, programming, psy]
 brain-id: 9777c915-0c21-44d1-8bea-da84350b8848
 ---

@@ -1,5 +1,6 @@
 ---
 title: which-key ≅ FORTH and embark ≅ (any syntactically sugared lang)
+date: 2026-08-07
 tags: [emacs, forth]
 brain-id: eeb896bc-2a57-4afd-9f6f-53e16e6535ac
 ---

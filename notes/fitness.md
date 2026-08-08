@@ -1,5 +1,6 @@
 ---
 title: Fitness
+date: 2026-08-08
 brain-id: a26dce98-6ec3-4323-b8d0-e097b79f9201
 ---
 

@@ -1,5 +1,6 @@
 ---
 title: Capacitor Plague
+date: 2026-08-07
 tags: [electronics, til]
 brain-id: bd0c3a51-0ecf-4acb-b42f-f7c6c6cb425a
 ---

@@ -1,5 +1,6 @@
 ---
 title: Elasticsearch is not a database
+date: 2026-08-05
 tags: [elasticsearch]
 brain-id: 44852e1b-e00e-48ec-81df-a659fe5f54ae
 ---

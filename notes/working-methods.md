@@ -1,5 +1,6 @@
 ---
 title: Working methods
+date: 2026-08-08
 brain-id: 8f424617-f824-40c7-9807-cae4a5045a68
 ---
 

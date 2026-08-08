@@ -1,5 +1,6 @@
 ---
 title: Magic Switch
+date: 2026-08-08
 tags: [electronics, history, til]
 brain-id: 48b23d05-f2ad-4f8a-b739-a8d00fb9f1b5
 ---

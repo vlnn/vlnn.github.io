@@ -1,5 +1,6 @@
 ---
 title: Meat Loaf had a role in Fight Club
+date: 2026-08-05
 tags: [til]
 brain-id: 0c6ec715-8dea-4137-bb64-147ba6d5a81d
 ---

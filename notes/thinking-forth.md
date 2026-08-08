@@ -1,5 +1,6 @@
 ---
 title: Thinking Forth
+date: 2026-08-03
 tags: [book, i-have]
 brain-id: 1e5f1126-4c7f-493b-8a2a-571c964cda34
 ---

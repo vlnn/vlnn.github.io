@@ -1,5 +1,6 @@
 ---
 title: Optimizing for the Wrong Fitness Function
+date: 2026-08-08
 brain-id: c85d4e28-9215-461b-99b1-03c5064c6c70
 ---
 

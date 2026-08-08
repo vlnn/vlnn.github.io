@@ -1,5 +1,6 @@
 ---
 title: Lucene
+date: 2026-08-05
 tags: [elasticsearch]
 brain-id: 9dba4c08-5eac-4c9f-a4f6-223062554c52
 ---
