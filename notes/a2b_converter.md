@@ -1,7 +1,7 @@
 ---
 title: a2b converter
 date: 2026-08-03
-tags: [tool]
+brain-id: dbbacbf9-4780-4208-aa54-23b35c6d8daf
 ---
 
 [a2b tool](https://github.com/vlnn/andy2brain) is a (private at the moment) tool to convert several [Digital Gardens](digital-garden.md) into [TheBrain](https://thebrain.com) **brz* archives and back. 
