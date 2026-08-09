@@ -11,7 +11,9 @@ I'm writing this note (and most of the notes on this site) using [TheBrain](theb
 
 ![](../static/brain/how-i-write-these-notes/268684d8-ea67-4c82-b5b8-59a1baa1856c.png)
 
-You can see that links for [a2b converter](a2b_converter.md) and [TheBrain](thebrain.md) and [Evergreen notes](evergreen-notes.md) are shown (semi)automatically — for most of then I have to right click on plain text and choose "link NodeName".
+You can see that links for [a2b converter](a2b_converter.md) and [TheBrain](thebrain.md) and [Evergreen notes](evergreen-notes.md) are shown (semi)automatically — for most of then I have to right click on plain text and choose "link NodeName". 
+
+Then to publish it's only a matter of `notes2brain sync --notes-dir ./local-dir/notes` and `git add .`  `git commit "new entry"`  `git push`  from blog directory.
 
 ## Related
 

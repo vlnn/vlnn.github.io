@@ -4,7 +4,7 @@ date: 2026-07-29
 brain-id: 75aace98-059e-4d9c-b3ad-4280853b1bc4
 ---
 
-Hi! I'm Volodymyr Anokhin ([@vlnn](https://github.com/vlnn)). These are my working notes, all in interlinked disarray. Click any internal link (the "ochre" ones) and it opens as a new pane to the right; the trail you follow lives in the URL, so you can share it. Curious about the machinery? See [How this site works](how-this-site-works.md).
+Hi! I'm Volodymyr Anokhin ([@vlnn](https://github.com/vlnn)). These are my working notes, all in interlinked disarray. Click any internal link (the "ochre" ones) and it opens as a new pane to the right; the trail you follow lives in the URL, so you can share it. Curious about the machinery? See [How this site works](how-this-site-works.md), [How I write these notes](how-i-write-these-notes.md).
 
 * The note I'm most proud of: [Programming during wartime](programming-in-wartime.md).
 * My current [Top of mind](top-of-mind.md).
