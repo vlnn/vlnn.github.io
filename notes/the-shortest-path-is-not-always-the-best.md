@@ -2,6 +2,7 @@
 title: The shortest path is not always the best.
 date: 2026-08-09
 brain-id: b8dc82e0-3914-48bf-b2f4-b50abc4f8b47
+tags: [psy, quote]
 ---
 
 Shortest path may be too short for adventurer to understand the adventure. 
