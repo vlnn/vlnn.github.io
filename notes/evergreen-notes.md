@@ -2,6 +2,7 @@
 title: Evergreen notes
 brain-id: 463fa7b5-8420-47ae-9eda-2261971b4ba9
 date: 2026-08-08
+tags: [learning, writing]
 ---
 
 Andy Matuschak introduces [Evergreen notes](https://notes.andymatuschak.org/z5E5QawiXCMbtNtupvxeoEX) as a specific format of [knowledge work](knowledge-work.md) (and also as fundamental unit of such work).
@@ -18,8 +19,8 @@ Not all notes here are evergreen for sure. This is rather spectrum quality that 
 
 ## Related
 
-- [How I write these notes](how-i-write-these-notes.md)
 - [Knowledge work](knowledge-work.md)
+- [How I write these notes](how-i-write-these-notes.md)
 - [Evergreen notes should be concept-oriented](evergreen-notes-should-be-concept-oriented.md)
 - [Evergreen notes should be atomic](evergreen-notes-should-be-atomic.md)
 - [Digital Garden](digital-garden.md)

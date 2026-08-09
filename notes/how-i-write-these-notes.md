@@ -2,7 +2,7 @@
 title: How I write these notes
 date: 2026-08-08
 brain-id: 963d09d7-ffc6-4721-9388-e432fb303b26
-tags: [writing]
+tags: [meta, writing]
 ---
 
 *(historical: I started writing all notes in plain .org format using old trusty Emacs. This was good for 10 notes, it's awful for 100 notes)*

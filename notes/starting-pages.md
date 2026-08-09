@@ -2,6 +2,7 @@
 title: Starting Pages
 date: 2026-07-29
 brain-id: 71806441-229e-43f6-9200-8a793fa50fc4
+tags: [meta]
 ---
 
 ## Start here
