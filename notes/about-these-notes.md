@@ -15,3 +15,8 @@ Curious about the machinery? See [How this site works](how-this-site-works.md), 
 Note that for some notes you can test yourself clicking on [test yourself](https://vlnn.dev/?stack=test) link at the bottom of the note (if available). Moreover, I've made a general test link at the top of the page – it will test you either for all open notes, or for all notes in the system (e.g. if you want an overview of things you supposed to take out of this site).
 
 I don't expect any feedback here, but you're free to leave your comments/suggestions [here](https://github.com/vlnn/vlnn.github.io/issues). Be aware that I'm free to ignore them though.
+
+## Related
+
+- [Starting Pages](starting-pages.md)
+
