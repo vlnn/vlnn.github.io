@@ -11,7 +11,6 @@ tags: [meta]
 ## On languages and data
 
 - [SQL as the Data Analysis' Volapük](sql-as-data-analysis-volapuk.md),
-- [Art of Lisp questions](art-of-lisp-questions.md),
 - [Historical bits and pieces](historical-bits-and-pieces.md)
 
 ## On tools and Emacs:
