@@ -4,7 +4,7 @@ date: 2026-07-29
 brain-id: 71806441-229e-43f6-9200-8a793fa50fc4
 ---
 
-## War times
+## Start here
 * [Programming in wartime](programming-in-wartime.md)
 * [Depth-graded overviews method](depth-graded-overviews-method.md) of learning
 
