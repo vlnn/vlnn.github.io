@@ -47,7 +47,7 @@ export function feedItems(site, index, rendered) {
       link: `${site}/?stack=${slug}`,
       html: absolutizeFileUrls(site, rendered[slug]),
     }))
-    .filter(item => countWords(item.html) >= 50);
+    .filter(item => countWords(item.html) >= 250);
 }
 
 function itemXml(item) {
