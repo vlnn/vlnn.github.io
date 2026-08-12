@@ -29,6 +29,13 @@ export function absolutizeFileUrls(site, html) {
   return html?.replaceAll('"file:', `"${site}/`);
 }
 
+export function countWords(html) {
+  if (!html) return 0;
+  // Extract text from HTML and count words
+  const text = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  return text.split(' ').filter(Boolean).length;
+}
+
 export function feedItems(site, index, rendered) {
   return Object.entries(index.notes)
     .filter(([, note]) => note.date)
@@ -39,7 +46,8 @@ export function feedItems(site, index, rendered) {
       date: note.date,
       link: `${site}/?stack=${slug}`,
       html: absolutizeFileUrls(site, rendered[slug]),
-    }));
+    }))
+    .filter(item => countWords(item.html) >= 50);
 }
 
 function itemXml(item) {
