@@ -60,6 +60,7 @@ export function timelineEntries(index) {
 }
 
 const RANK_BLEND = 0.4;
+const BLEND_STEP = 0.05;
 
 function dateSpan(entries) {
   const times = entries.map((entry) => Date.parse(entry.date));
@@ -77,11 +78,11 @@ function fractionalRank(times, time) {
   return upper - 1 + (time - times[upper - 1]) / (times[upper] - times[upper - 1]);
 }
 
-function blendedX(times, min, span) {
+function blendedX(times, min, span, blend) {
   const steps = Math.max(times.length - 1, 1);
   return (time, rank) =>
-    (1 - RANK_BLEND) * linearX(time, min, span) +
-    RANK_BLEND * (rank ?? fractionalRank(times, time)) / steps;
+    (1 - blend) * linearX(time, min, span) +
+    blend * (rank ?? fractionalRank(times, time)) / steps;
 }
 
 function assignLane(lastAt, x, minGap) {
@@ -89,13 +90,13 @@ function assignLane(lastAt, x, minGap) {
   return free >= 0 ? free : lastAt.indexOf(Math.min(...lastAt));
 }
 
-export function timeArrowLayout(entries, minGap) {
+function layoutWithBlend(entries, minGap, blend) {
   const ordered = [...entries].sort(
-    (a, b) => a.date.localeCompare(b.date) || a.slug.localeCompare(b.slug)
+    (a, b) => a.date.localeCompare(b.date) || (a.slug ?? a.id ?? "").localeCompare(b.slug ?? b.id ?? "")
   );
   if (ordered.length === 1) return [{ ...ordered[0], x: 0.5, lane: 0 }];
   const { min, span } = dateSpan(ordered);
-  const scale = blendedX(ordered.map((entry) => Date.parse(entry.date)), min, span);
+  const scale = blendedX(ordered.map((entry) => Date.parse(entry.date)), min, span, blend);
   const lastAt = [-Infinity, -Infinity, -Infinity];
   return ordered.map((entry, rank) => {
     const x = scale(Date.parse(entry.date), rank);
@@ -103,6 +104,34 @@ export function timeArrowLayout(entries, minGap) {
     lastAt[lane] = x;
     return { ...entry, x, lane };
   });
+}
+
+export function minLaneGap(layout) {
+  const lastAt = new Map();
+  let gap = Infinity;
+  [...layout]
+    .sort((a, b) => a.x - b.x)
+    .forEach(({ x, lane }) => {
+      if (lastAt.has(lane)) gap = Math.min(gap, x - lastAt.get(lane));
+      lastAt.set(lane, x);
+    });
+  return gap;
+}
+
+function blendCandidates() {
+  const candidates = [];
+  for (let blend = RANK_BLEND; blend < 1; blend += BLEND_STEP) candidates.push(Math.round(blend * 100) / 100);
+  return [...candidates, 1];
+}
+
+export function feasibleBlend(entries, minGap) {
+  return (
+    blendCandidates().find((blend) => minLaneGap(layoutWithBlend(entries, minGap, blend)) >= minGap) ?? 1
+  );
+}
+
+export function timeArrowLayout(entries, minGap, blend = feasibleBlend(entries, minGap)) {
+  return layoutWithBlend(entries, minGap, blend);
 }
 
 export function arcPairs(index, layout) {
@@ -144,11 +173,19 @@ export function dotScale(degree, maxDegree) {
   return DOT_MIN + (DOT_MAX - DOT_MIN) * Math.sqrt(degree / maxDegree);
 }
 
-export function yearTicks(entries) {
+export function fisheyeX(x, focus, distortion) {
+  if (!distortion || x === focus) return x;
+  const bound = x < focus ? 0 : 1;
+  const t = (x - focus) / (bound - focus);
+  const magnified = ((distortion + 1) * t) / (distortion * t + 1);
+  return focus + magnified * (bound - focus);
+}
+
+export function yearTicks(entries, blend = RANK_BLEND) {
   const { min, span } = dateSpan(entries);
   if (!span) return [];
   const times = entries.map((entry) => Date.parse(entry.date)).sort((a, b) => a - b);
-  const scale = blendedX(times, min, span);
+  const scale = blendedX(times, min, span, blend);
   const ticks = [];
   const firstYear = new Date(min).getUTCFullYear() + 1;
   for (let year = firstYear; ; year++) {
@@ -157,6 +194,31 @@ export function yearTicks(entries) {
     if (time > min) ticks.push({ year: String(year), x: scale(time) });
   }
   return ticks;
+}
+
+const MONTH_LABELS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+
+export function monthTicks(entries, blend = RANK_BLEND) {
+  const { min, span } = dateSpan(entries);
+  if (!span) return [];
+  const times = entries.map((entry) => Date.parse(entry.date)).sort((a, b) => a - b);
+  const scale = blendedX(times, min, span, blend);
+  const ticks = [];
+  const start = new Date(min);
+  for (let months = start.getUTCFullYear() * 12 + start.getUTCMonth() + 1; ; months++) {
+    const time = Date.UTC(Math.floor(months / 12), months % 12, 1);
+    if (linearX(time, min, span) >= 1) break;
+    if (months % 12 !== 0 && time > min) ticks.push({ label: MONTH_LABELS[months % 12], x: scale(time) });
+  }
+  return ticks;
+}
+
+export function thinTicks(ticks, minGap) {
+  const kept = [];
+  ticks.forEach((tick) => {
+    if (kept.every((other) => Math.abs(other.x - tick.x) >= minGap - 1e-9)) kept.push(tick);
+  });
+  return kept;
 }
 
 export function slugsForTag(index, tag) {
@@ -616,16 +678,17 @@ function renderArcs(bar, layout) {
   svg.setAttribute("class", "arrow-arcs");
   svg.setAttribute("viewBox", `0 0 ${ARC_VIEW_WIDTH} 96`);
   svg.setAttribute("preserveAspectRatio", "none");
-  arcPairs(index, layout).forEach((pair) => {
+  const arcs = arcPairs(index, layout).map((pair) => {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", arcPath(pair));
     path.setAttribute("vector-effect", "non-scaling-stroke");
     path.dataset.from = pair.from;
     path.dataset.to = pair.to;
     svg.append(path);
+    return { path, pair };
   });
   bar.append(svg);
-  return svg;
+  return { svg, arcs };
 }
 
 function highlightArcs(svg, slug) {
@@ -636,21 +699,72 @@ function highlightArcs(svg, slug) {
   });
 }
 
+const ARROW_MIN_GAP = 0.018;
+const LENS_DISTORTION = 3;
+const TICK_MIN_GAP = 0.02;
+
+export function trackFraction(width, offset) {
+  const along = (offset - TRACK_PAD_LEFT) / (width - TRACK_PAD_LEFT - TRACK_PAD_RIGHT);
+  return Math.min(Math.max(along, 0), 1);
+}
+
+function lensX(x, focus) {
+  return focus == null ? x : fisheyeX(x, focus, LENS_DISTORTION);
+}
+
+function refocusArrow(dots, ticks, arcs, focus) {
+  dots.forEach(({ dot, x }) => (dot.style.left = trackPosition(lensX(x, focus))));
+  ticks.forEach(({ label, x }) => (label.style.left = trackPosition(lensX(x, focus))));
+  arcs.forEach(({ path, pair }) =>
+    path.setAttribute(
+      "d",
+      arcPath({ ...pair, fromX: lensX(pair.fromX, focus), toX: lensX(pair.toX, focus) })
+    )
+  );
+}
+
+function wireLens(bar, dots, ticks, arcs) {
+  let frame = null;
+  const schedule = (focus) => {
+    if (frame) cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => refocusArrow(dots, ticks, arcs, focus));
+  };
+  bar.addEventListener("mousemove", (event) => {
+    const rect = bar.getBoundingClientRect();
+    schedule(trackFraction(rect.width, event.clientX - rect.left));
+  });
+  bar.addEventListener("mouseleave", () => schedule(null));
+}
+
 function renderTimeArrow(stack, openFromPane) {
   const bar = document.getElementById("timearrow");
   bar.replaceChildren();
   if (narrowScreen.matches) return;
   const entries = timelineEntries(index);
   if (entries.length < 2) return;
-  const layout = timeArrowLayout(entries, 0.018);
-  const svg = renderArcs(bar, layout);
-  yearTicks(entries).forEach((tick) => {
-    const label = el("span", "arrow-year", tick.year);
-    label.style.left = trackPosition(tick.x);
+  const blend = feasibleBlend(entries, ARROW_MIN_GAP);
+  const layout = timeArrowLayout(entries, ARROW_MIN_GAP, blend);
+  const { svg, arcs } = renderArcs(bar, layout);
+  const marks = thinTicks(
+    [
+      ...yearTicks(entries, blend).map((tick) => ({ label: tick.year, x: tick.x, style: "arrow-year" })),
+      ...monthTicks(entries, blend).map((tick) => ({ ...tick, style: "arrow-month" })),
+    ],
+    TICK_MIN_GAP
+  );
+  const ticks = marks.map((mark) => {
+    const label = el("span", mark.style, mark.label);
+    label.style.left = trackPosition(mark.x);
     bar.append(label);
+    return { label, x: mark.x };
   });
   const maxDegree = Math.max(...entries.map((entry) => degreeOf(entry.slug)));
-  layout.forEach((entry) => bar.append(timeArrowDot(entry, stack, openFromPane, maxDegree)));
+  const dots = layout.map((entry) => {
+    const dot = timeArrowDot(entry, stack, openFromPane, maxDegree);
+    bar.append(dot);
+    return { dot, x: entry.x };
+  });
+  wireLens(bar, dots, ticks, arcs);
   bar.addEventListener("mouseover", (event) => {
     const dot = event.target.closest(".arrow-dot");
     if (dot) highlightArcs(svg, dot.dataset.slug);

@@ -435,3 +435,103 @@ assert.equal(siteTitleText("d42fgw3"), "vlnn.dev/d42fgw3", "siteTitleText should
 assert.equal(siteTitleText(""), "vlnn.dev / notes", "siteTitleText should fall back to the plain title without a hash");
 assert.equal(siteTitleText(undefined), "vlnn.dev / notes", "siteTitleText should fall back when the index predates the commit field");
 console.log("site title tests passed");
+
+import { minLaneGap, feasibleBlend, fisheyeX, trackFraction } from "../app.js";
+
+assert.equal(
+  minLaneGap([{ x: 0, lane: 0 }, { x: 0.35, lane: 1 }, { x: 0.3, lane: 0 }]),
+  0.3,
+  "minLaneGap should report the smallest x-gap between neighbours sharing a lane"
+);
+assert.equal(minLaneGap([{ x: 0.5, lane: 0 }]), Infinity, "minLaneGap should be infinite when no lane holds two dots");
+
+function burstNotes(count, startDay) {
+  return Array.from({ length: count }, (_, at) => ({
+    slug: `n${String(at).padStart(2, "0")}`,
+    date: `2026-08-${String(startDay + (at % 8)).padStart(2, "0")}`,
+  }));
+}
+const bursty = [{ slug: "old", date: "2022-01-01" }, { slug: "older", date: "2023-01-01" }, ...burstNotes(30, 1)];
+
+assert.equal(
+  feasibleBlend([{ slug: "a", date: "2022-01-01" }, { slug: "b", date: "2023-01-01" }, { slug: "c", date: "2024-01-01" }], 0.02),
+  0.4,
+  "feasibleBlend should keep the base blend when it already satisfies the gap"
+);
+assert.ok(feasibleBlend(bursty, 0.05) > 0.4, "feasibleBlend should raise the blend for a burst the base blend cannot decompress");
+assert.equal(feasibleBlend(burstNotes(8, 1), 0.5), 1, "feasibleBlend should cap at pure rank when no blend can satisfy the gap");
+
+const adaptive = timeArrowLayout(bursty, 0.05);
+assert.ok(minLaneGap(adaptive) >= 0.05, "timeArrowLayout should pick a blend that keeps every same-lane gap above the minimum when feasible");
+assert.ok(
+  adaptive.every((dot, at) => at === 0 || dot.x >= adaptive[at - 1].x),
+  "timeArrowLayout should stay chronological under an adaptive blend"
+);
+assert.deepEqual(
+  timeArrowLayout(bursty, 0.05).map((dot) => dot.x),
+  timeArrowLayout(bursty, 0.05, feasibleBlend(bursty, 0.05)).map((dot) => dot.x),
+  "timeArrowLayout should default to the feasible blend so callers can share it with yearTicks"
+);
+console.log("adaptive blend tests passed");
+
+assert.equal(fisheyeX(0.3, 0.3, 3), 0.3, "fisheyeX should keep the focus point fixed");
+assert.equal(fisheyeX(0, 0.3, 3), 0, "fisheyeX should pin the left edge of the axis");
+assert.equal(fisheyeX(1, 0.3, 3), 1, "fisheyeX should pin the right edge of the axis");
+assert.equal(fisheyeX(0.7, 0.3, 0), 0.7, "fisheyeX should be the identity at zero distortion");
+
+const nearGap = fisheyeX(0.32, 0.3, 3) - fisheyeX(0.3, 0.3, 3);
+assert.ok(nearGap > 0.02, "fisheyeX should magnify spacing next to the focus");
+
+const farGap = fisheyeX(0.95, 0.1, 3) - fisheyeX(0.9, 0.1, 3);
+assert.ok(farGap < 0.05, "fisheyeX should compress spacing far from the focus");
+
+const grid = Array.from({ length: 101 }, (_, at) => at / 100);
+assert.ok(
+  grid.every((x, at) => at === 0 || fisheyeX(x, 0.37, 3) > fisheyeX(grid[at - 1], 0.37, 3)),
+  "fisheyeX should stay strictly monotone so chronology never reorders under the lens"
+);
+
+assert.equal(trackFraction(1006, 6), 0, "trackFraction should map the left track edge to 0");
+assert.equal(trackFraction(1032, 1006), 1, "trackFraction should map the right track edge to 1");
+assert.equal(trackFraction(1032, 506), 0.5, "trackFraction should map the track midpoint to 0.5");
+assert.equal(trackFraction(1032, 0), 0, "trackFraction should clamp positions left of the track");
+assert.equal(trackFraction(1032, 2000), 1, "trackFraction should clamp positions right of the track");
+console.log("fisheye tests passed");
+
+import { monthTicks, thinTicks } from "../app.js";
+
+const spring = monthTicks([{ date: "2024-02-15" }, { date: "2024-05-10" }]);
+assert.deepEqual(
+  spring.map((tick) => tick.label),
+  ["mar", "apr", "may"],
+  "monthTicks should mark each first-of-month inside the range"
+);
+assert.ok(spring.every((tick) => tick.x > 0 && tick.x < 1), "monthTicks should position ticks strictly inside the axis");
+
+assert.deepEqual(
+  monthTicks([{ date: "2023-11-15" }, { date: "2024-02-10" }]).map((tick) => tick.label),
+  ["dec", "feb"],
+  "monthTicks should leave January to the year tick"
+);
+assert.deepEqual(monthTicks([{ date: "2024-03-01" }, { date: "2024-03-20" }]), [], "monthTicks should be empty when no month boundary is crossed");
+assert.deepEqual(monthTicks([{ date: "2024-03-05" }]), [], "monthTicks should be empty for a zero span");
+
+const crowdedTicks = thinTicks(
+  [
+    { label: "2026", x: 0.5 },
+    { label: "aug", x: 0.505 },
+    { label: "sep", x: 0.6 },
+  ],
+  0.02
+);
+assert.deepEqual(
+  crowdedTicks.map((tick) => tick.label),
+  ["2026", "sep"],
+  "thinTicks should drop a later tick crowding an earlier-priority one"
+);
+assert.deepEqual(
+  thinTicks([{ label: "a", x: 0.1 }, { label: "b", x: 0.12 }], 0.02).map((tick) => tick.label),
+  ["a", "b"],
+  "thinTicks should keep ticks separated by exactly the minimum gap"
+);
+console.log("month tick tests passed");
