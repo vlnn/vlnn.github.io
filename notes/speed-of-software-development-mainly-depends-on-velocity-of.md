@@ -1,5 +1,5 @@
 ---
-title: Speed of software development mainly depends on velocity of learning
+title: Speed of software development mainly depends on velocity of…
 date: 2026-08-10
 tags: [learning, programming, psy]
 brain-id: 9d04604c-3bcb-4442-b553-b29084329a9e

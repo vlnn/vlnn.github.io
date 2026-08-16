@@ -5,4 +5,15 @@ tags: [person]
 brain-id: 87e517b8-44d2-4c3a-8ff6-b6fc048a7dc8
 ---
 
+[FORTH](forth-programming-language.md) inventor
+
+His main technique is:
+> [!quote]
+> You [factor](factoring-technique.md). You [factor](factoring-technique.md), you [factor](factoring-technique.md), you [factor](factoring-technique.md) and you [throw away everything that isn't being used, that isn't justified](tree-shaking.md).
+
+## Related
+
+- [FORTH](forth-programming-language.md)
+- [FORTH (Programming language)](forth-programming-language.md)
+- [Tree shaking](tree-shaking.md)
 
