@@ -94,6 +94,18 @@ assert.ok(!mdHtml.includes("title: x"), "mdToHtml should strip YAML frontmatter"
 assert.ok(mdHtml.includes("<table>"), "mdToHtml should render GFM tables");
 assert.equal(slugFromHref("a.md"), "a", "slugFromHref should treat bare .md links as notes");
 assert.ok(mdToHtml("*em*").includes("<em>"), "mdToHtml should render md emphasis without a frontmatter block");
+
+const inlineCallout = mdToHtml("> [!quote]\n> some wisdom");
+assert.ok(inlineCallout.includes('<blockquote class="callout callout-quote">'), "mdToHtml should turn [!quote] blockquotes into callout blockquotes");
+assert.ok(!inlineCallout.includes("[!quote]"), "mdToHtml should strip the callout marker from the rendered blockquote");
+assert.ok(inlineCallout.includes("<p>some wisdom</p>"), "mdToHtml should keep the callout body intact");
+
+const aloneCallout = mdToHtml("> [!quote]\n>\n> some wisdom");
+assert.ok(aloneCallout.includes('<blockquote class="callout callout-quote">'), "mdToHtml should recognize a marker-only first paragraph");
+assert.ok(!aloneCallout.includes("<p></p>"), "mdToHtml should not leave an empty paragraph behind the marker");
+
+assert.ok(mdToHtml("> [!note]\n> nb").includes("callout-note"), "mdToHtml should map the callout kind onto its class");
+assert.ok(!mdToHtml("> plain quote").includes("callout"), "mdToHtml should leave plain blockquotes untouched");
 console.log("markdown pipeline tests passed");
 
 const sampleIndex = {

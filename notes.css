@@ -238,6 +238,18 @@ body { display: flex; flex-direction: column; }
 
 .note-content code { font-family: var(--mono); font-size: 0.88em; }
 
+.note-content blockquote {
+  margin: 0 0 1em;
+  padding: 2px 16px;
+  border-left: 3px solid var(--rule);
+  color: var(--ink-soft);
+}
+
+.note-content blockquote.callout-quote {
+  border-left-color: var(--accent-warm);
+  font-style: italic;
+}
+
 .timeline-year {
   font-family: var(--mono);
   font-size: 13px;
