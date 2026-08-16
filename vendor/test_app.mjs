@@ -547,3 +547,26 @@ assert.deepEqual(
   "thinTicks should keep ticks separated by exactly the minimum gap"
 );
 console.log("month tick tests passed");
+
+import { revealScrollLeft } from "../app.js";
+
+{
+  const paneWidth = 520;
+  const spineStep = 42;
+  const viewportXAt = (paneIndex, scrollLeft) => paneIndex * paneWidth - scrollLeft;
+  assert.equal(revealScrollLeft(0, paneWidth, spineStep), 0, "revealScrollLeft should keep the first pane at the container origin");
+  [1, 3, 7].forEach((paneIndex) => {
+    const scrollLeft = revealScrollLeft(paneIndex, paneWidth, spineStep);
+    assert.equal(
+      viewportXAt(paneIndex, scrollLeft),
+      paneIndex * spineStep,
+      "revealScrollLeft should park the pane exactly at its sticky spine slot"
+    );
+    assert.equal(
+      viewportXAt(paneIndex + 1, scrollLeft),
+      paneIndex * spineStep + paneWidth,
+      "revealScrollLeft should leave the next pane starting where the revealed body ends"
+    );
+  });
+}
+console.log("reveal scroll tests passed");

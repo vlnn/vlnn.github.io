@@ -334,6 +334,29 @@ export function trailAsMd(stack, notes) {
     .join("\n");
 }
 
+export function revealScrollLeft(paneIndex, paneWidth, spineStep = SPINE_STEP) {
+  return paneIndex * (paneWidth - spineStep);
+}
+
+// scrollIntoView misfires on stuck position:sticky panes, so scroll the container explicitly
+function revealPane(pane, paneIndex) {
+  const container = pane.parentElement;
+  if (container) container.scrollTo({ left: revealScrollLeft(paneIndex, pane.getBoundingClientRect().width) });
+}
+
+function paneSpine(title, pane, paneIndex) {
+  const spine = el("div", "pane-spine", title);
+  spine.tabIndex = 0;
+  spine.addEventListener("click", () => revealPane(pane, paneIndex));
+  spine.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      revealPane(pane, paneIndex);
+    }
+  });
+  return spine;
+}
+
 export function slugFromHref(href) {
   const match = /^(?:file:)?(?:\.\/)?([^/]+)\.md$/.exec(href);
   return match ? match[1] : null;
@@ -476,9 +499,7 @@ function renderPane(slug, paneIndex, noteText, openFromPane, closeFromPane, clos
   pane.style.left = `${paneIndex * SPINE_STEP}px`;
   pane.style.zIndex = paneIndex;
 
-  const spine = el("div", "pane-spine", metaOf(slug).title || slug);
-  spine.tabIndex = 0;
-  spine.addEventListener("click", () => pane.scrollIntoView({ inline: "start" }));
+  const spine = paneSpine(metaOf(slug).title || slug, pane, paneIndex);
 
   const body = el("div", "pane-body");
   body.append(el("h1", "note-title", metaOf(slug).title || slug));
@@ -501,9 +522,7 @@ function syntheticPaneShell(title, paneIndex) {
   const pane = el("article", "pane");
   pane.style.left = `${paneIndex * SPINE_STEP}px`;
   pane.style.zIndex = paneIndex;
-  const spine = el("div", "pane-spine", title);
-  spine.tabIndex = 0;
-  spine.addEventListener("click", () => pane.scrollIntoView({ inline: "start" }));
+  const spine = paneSpine(title, pane, paneIndex);
   const body = el("div", "pane-body");
   body.append(el("h1", "note-title", title));
   pane.append(spine, body);
@@ -797,8 +816,9 @@ function renderTrail(stack, openTrail) {
 }
 
 function revealLastPane(panes) {
-  if (narrowScreen.matches) window.scrollTo(0, 0);
-  else panes[panes.length - 1].scrollIntoView({ inline: "end" });
+  if (narrowScreen.matches) return window.scrollTo(0, 0);
+  const container = panes[panes.length - 1].parentElement;
+  if (container) container.scrollTo({ left: container.scrollWidth });
 }
 
 async function buildPane(slug, stack, paneIndex, openFromPane, closeFromPane, closable, openTag) {
