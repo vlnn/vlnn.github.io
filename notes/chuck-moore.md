@@ -13,7 +13,6 @@ His main technique is:
 
 ## Related
 
-- [FORTH](forth-programming-language.md)
 - [FORTH (Programming language)](forth-programming-language.md)
 - [Tree shaking](tree-shaking.md)
 
