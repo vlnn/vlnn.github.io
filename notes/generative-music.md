@@ -1,7 +1,7 @@
 ---
 title: Generative music
 date: 2026-08-16
-tags: [music]
+tags: [music, programming]
 brain-id: 460b4267-ca91-4916-a5c6-b84188fe45cd
 ---
 

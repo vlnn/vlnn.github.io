@@ -2,6 +2,7 @@
 title: Habitat selection
 date: 2026-08-08
 brain-id: f1323ba7-f68c-4cef-b08c-cf9c9a044f80
+tags: [evolution]
 ---
 
 Organisms actively choose where to live: a moth picking bark that matches its coloration, a bird choosing a nesting microclimate. 

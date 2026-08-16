@@ -1,7 +1,7 @@
 ---
 title: K-d Tree
 date: 2026-08-05
-tags: [data-structure]
+tags: [data-structure, programming]
 brain-id: c6004cf4-18cd-4af5-8e5e-b6759090e115
 ---
 

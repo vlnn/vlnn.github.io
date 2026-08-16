@@ -1,7 +1,7 @@
 ---
 title: Bruner's spiral curriculum
 date: 2026-08-05
-tags: [learning]
+tags: [learning, psy]
 brain-id: 1ae4cd2a-4049-487d-8930-e0e8947f9933
 ---
 

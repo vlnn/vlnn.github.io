@@ -2,6 +2,7 @@
 title: Elaborative sequencing
 date: 2026-08-05
 brain-id: 026fd95c-70c2-4160-a3fe-de350799ba40
+tags: [learning, psy, writing]
 ---
 
 "...work on one topic, writing increasingly sophisticated arguments as the semester progresses"

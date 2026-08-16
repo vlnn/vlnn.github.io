@@ -2,6 +2,7 @@
 title: Feedback
 date: 2026-08-16
 brain-id: 90386282-ba82-4b96-90e2-970e22c03972
+tags: [design, electronics, learning, music]
 ---
 
 Feedback is the return to the input of a part of the output of a machine, system, or process.

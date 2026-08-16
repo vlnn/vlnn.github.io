@@ -2,6 +2,7 @@
 title: C4 model
 date: 2026-08-16
 brain-id: 63bda9ad-37ca-43b9-bf88-5f92ed042429
+tags: [design]
 ---
 
 1. **Context** — the system as a single box, surrounded by its users and the external systems it talks to. Answers "what is this and who/what interacts with it?"

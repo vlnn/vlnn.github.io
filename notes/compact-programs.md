@@ -18,6 +18,6 @@ The need to write the Compact programs is twofold: this is either technical  (e.
 - [Notation as a Tool of Thought](notation-as-a-tool-of-thought.md)
 - [Data outlives code](data-outlives-code.md)
 - [Precompute](precompute.md)
-- [Constraints define the style](constraints-define-the-style.md)
 - [Prefer Tables to Logic](prefer-tables-to-logic.md)
+- [Constraints define the style](constraints-define-the-style.md)
 

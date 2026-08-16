@@ -2,6 +2,7 @@
 title: Seven lessons from gardening
 date: 2026-08-09
 brain-id: 2fad9920-7c81-4dd6-8775-1d4c0b6ab699
+tags: [data-structure, meta, psy]
 ---
 
 1. Hypertext disorientation most often arises from muddled writing, or from the complexity of the subject. Many hypertexts do not require elaborate navigational apparatus.

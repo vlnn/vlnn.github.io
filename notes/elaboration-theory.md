@@ -1,7 +1,7 @@
 ---
 title: Elaboration Theory
 date: 2026-08-05
-tags: [learning]
+tags: [learning, psy]
 brain-id: 9e8ffc92-976c-4a77-a0e0-f731af31e7f4
 ---
 

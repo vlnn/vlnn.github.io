@@ -2,6 +2,7 @@
 title: The Rise of Worse is Better
 date: 2026-08-08
 brain-id: e06bbf64-a4ce-4a50-9a7f-96b555fbc586
+tags: [book, design, psy, writing]
 ---
 
 [Richard Gabriel](richard-gabriel.md)'s 1991 essay ([part of "Lisp: Good News, Bad News, How to Win Big"](https://www.dreamsongs.com/RiseOfWorseIsBetter.html))

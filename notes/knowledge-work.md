@@ -2,6 +2,7 @@
 title: Knowledge work
 date: 2026-08-08
 brain-id: f8ccf169-b183-455f-9839-050d01067965
+tags: [learning, writing]
 ---
 
 * [Defining the Task](defining-the-task.md)

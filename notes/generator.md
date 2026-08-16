@@ -2,9 +2,13 @@
 title: Generator
 date: 2026-08-16
 brain-id: a23a2bea-1be5-44a8-8e41-add41baddbc7
+tags: [electronics]
 ---
 
 A generator creates signal from nothing or rather from it's own [architecture](system-architecture.md).
+
+In electronics examples are frequency generators or electric generators.
+In programming examples are LLMs, or lazy sequence generators in Python or Clojure.
 
 ## Related
 

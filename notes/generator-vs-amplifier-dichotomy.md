@@ -2,6 +2,7 @@
 title: Generator vs Amplifier dichotomy
 date: 2026-08-16
 brain-id: 533e1f4f-2641-4219-acaa-24a9ba356aab
+tags: [electronics, psy]
 ---
 
 Good [generator](generator.md) is bad [amplifier](amplifier.md).
