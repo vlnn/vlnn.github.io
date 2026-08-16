@@ -5,7 +5,7 @@ tags: [programming]
 brain-id: 9d04604c-3bcb-4442-b553-b29084329a9e
 ---
 
-Long time ago bottleneck in programming was the technical part: punching the cards, waiting for your time window, waiting for results etc. Starting around 80s even microcomputers made days or hours feedback to the minutes feedback: you could build your program and start testing several times a day. Now the bottleneck of the development efforts moves radically to the understanding stuff.
+Long time ago bottleneck in programming was the technical part: punching the cards, waiting for your time window, waiting for results etc. Starting around 80s even microcomputers made days or hours feedback to the minutes [feedback](feedback.md): you could build your program and start testing several times a day. Now the bottleneck of the development efforts moves radically to the understanding stuff.
 
 Testing is learning, so it takes time. Documenting is learning so it takes time. Planning the architecture and debugging the processes is learning, so it takes time. Communication in the team is learning, so it takes time. Converting effort to velocity of development is learning, so it takes time.
 
@@ -19,4 +19,5 @@ Related to:
 
 - [Pair programming works best for cognitive demanding tasks](pair-programming-works-best-for-cognitive-demanding-tasks.md)
 - [Pair programming costs x2](pair-programming-costs-x2.md)
+- [Feedback](feedback.md)
 
