@@ -2,6 +2,7 @@
 title: Intermittent work
 date: 2026-08-17
 brain-id: 1fe4bd6c-10dd-427c-b2e7-4d23c3a4c271
+tags: [psy]
 ---
 
 Instead of starting and finishing a task in one go, engage with it in distributed sessions — treating it as an activity rather than a task. Sessions are open-ended: no minimum, work while it flows, stop without guilt. 
