@@ -2,6 +2,7 @@
 title: Category
 date: 2026-08-16
 brain-id: a2406c69-f0a3-475a-a704-8ffb6c06d75d
+tags: [math]
 ---
 
 Category is a system of objects, such as '[groups](groups.md)' or '[topological spaces](topological-spaces.md)' and [maps](morphism.md) between them.

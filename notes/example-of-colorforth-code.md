@@ -2,6 +2,7 @@
 title: Example of ColorForth code
 date: 2026-08-16
 brain-id: dff6d55c-91a7-44b3-b683-83c908546899
+tags: [forth, programming]
 ---
 
 https://unternet.net/cf2/cf.html
