@@ -1,6 +1,7 @@
 ---
 title: Top Of Mind
 date: 2026-08-04
+brain-id: 802f442a-cea2-4269-b3ff-fc243ea317e6
 tags: [meta]
 ---
 
@@ -23,4 +24,5 @@ I stole the idea for this one from [this Andy Matuschak's note](https://notes.an
 
 # Games
 
+- create 80s style self-playing heavy lore game (code name Heavy on the Marsport), where player can intervene at any moment.
 - FF14 on Switch2
