@@ -1,7 +1,7 @@
 ---
 title: Depth-graded overviews method
 date: 2026-08-05
-tags: [learning, llm]
+tags: [learning, llm-models]
 brain-id: f91c3da3-1e7d-4f6c-a06c-c6718c7bbae9
 ---
 

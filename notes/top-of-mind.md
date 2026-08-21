@@ -1,28 +1,22 @@
 ---
-title: Top Of Mind
+title: grok
 date: 2026-08-04
 brain-id: 802f442a-cea2-4269-b3ff-fc243ea317e6
-tags: [meta]
+tags: [elasticsearch, service]
 ---
 
-I stole the idea for this one from [this Andy Matuschak's note](https://notes.andymatuschak.org/zPKTSiU725W9WQCqoVPBcxm). What main things that I'm interested in right now? This is to be updated frequently.
+grok is main parsing filter in [Logstash](logstash.md). It's a  library of named regex patterns (`%{IP:client}`, `%{NUMBER:duration}`) composed into line-matchers. It makes regexes readable and reusable, but it is still regex with it's problems: unanchored or greedy patterns on high-volume streams are a classic Logstash CPU sink. 
 
-# General
+For fixed formats, `dissect` (positional splitting) is much cheaper: [grok vs dissect](grok-vs-dissect.md)
 
-- Techniques for [reading efficiently](depth-graded-overviews-method.md) (also [code reviews](code-reviews.md))
-- [Memorization techniques](memorization-techniques.md)
+Q: What is grok?
+A: The main parsing filter in Logstash — a library of named regex patterns (`%{IP:client}`) composed into line-matchers.
+Q: What is the classic grok CPU sink?
+A: Unanchored or greedy patterns on high-volume streams.
+Q: What is much cheaper for fixed formats?
+A: dissect — positional splitting.
 
-# Programming
+## Related
 
-- Estimating and measuring programs resources
-- Improving my [zt: forth for z80](https://github.com/vlnn/zt)
+- [grok vs dissect](grok-vs-dissect.md)
 
-# Books
-
-- Topoi by Robert Goldblatt
-- Aubrey-Maturin series
-
-# Games
-
-- create 80s style self-playing heavy lore game (code name Heavy on the Marsport), where player can intervene at any moment.
-- FF14 on Switch2

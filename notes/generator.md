@@ -8,7 +8,7 @@ tags: [electronics]
 A generator creates signal from nothing or rather from it's own [architecture](system-architecture.md).
 
 In electronics examples are frequency generators or electric generators.
-In programming examples are LLMs, or lazy sequence generators in Python or Clojure.
+In programming examples are Llm modelss, or lazy sequence generators in Python or Clojure.
 
 ## Related
 

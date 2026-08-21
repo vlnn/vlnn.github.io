@@ -19,6 +19,6 @@ A: In the filter stage — turning unstructured lines into structured, queryable
 
 ## Related
 
-- [grok](grok.md)
+- [grok](top-of-mind.md)
 - [dissect](dissect.md)
 
