@@ -9,3 +9,8 @@ Replace branching, arithmetic, or repeated computation with a [precomputed](prec
 There's also a correctness benefit that's easy to underestimate: a table is data, so it can be generated, exhaustively verified, and diffed, whereas equivalent branching logic hides its behavior inside control flow and invites edge-case bugs. 
 
 Tables make behavior inspectable — you can print one, review it, or hand it to a domain expert who couldn't read the code. The approach shades naturally into table-driven design more broadly: state machines defined as transition tables, parsers driven by grammar tables, and dispatch tables replacing switch statements all follow the same instinct.
+
+## Related
+
+- [Behavior](behavior.md)
+
