@@ -24,4 +24,5 @@ I stole the idea for this one from [this Andy Matuschak's note](https://notes.an
 ## Related
 
 - [Heavy on the Marsport](heavy-on-the-marsport.md)
+- [Memorization techniques](memorization-techniques.md)
 
