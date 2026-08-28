@@ -14,4 +14,5 @@ In programming examples are Llm modelss, or lazy sequence generators in Python o
 
 - [System Architecture](system-architecture.md)
 - [Generator vs Amplifier dichotomy](generator-vs-amplifier-dichotomy.md)
+- [Creative persons are not smarter than others](creative-persons-are-not-smarter-than-others.md)
 
