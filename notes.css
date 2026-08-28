@@ -242,7 +242,7 @@ body { display: flex; flex-direction: column; }
   margin: 0 0 1em;
   padding: 2px 16px;
   border-left: 3px solid var(--rule);
-  color: var(--ink-soft);
+  color: var(--green);
 }
 
 .note-content blockquote.callout-quote {
