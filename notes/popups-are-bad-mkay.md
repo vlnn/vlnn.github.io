@@ -1,6 +1,7 @@
 ---
 title: Popups are bad, Mkay?
 date: 2026-08-01
+tags: [web, design, rant]
 ---
 
 Popups on websites are one of the most invasive and focus-eating things (to me)

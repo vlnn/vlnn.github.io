@@ -1,7 +1,7 @@
 ---
 title: Knowledge work should accrete
 date: 2026-08-08
-tags: [meta, learning, methods]
+tags: [learning, meta, methods]
 brain-id: b8fce7ac-5290-4b08-8621-c6117e5b4f9f
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: n8n nodemation
 date: 2026-08-19
+tags: [llm-models, service]
 brain-id: 26e5a51d-e852-4703-89f3-57511337a8fa
 ---
 

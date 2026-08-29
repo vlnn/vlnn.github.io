@@ -1,6 +1,7 @@
 ---
 title: Scientific Method
 date: 2026-08-22
+tags: [meta, methods]
 brain-id: a622483b-968e-40a8-82ae-87c292bb7112
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Memorization techniques
 date: 2026-08-28
-tags: [methods, learning]
+tags: [learning, methods]
 brain-id: 87b93cda-d039-4fde-80e4-2df3a290ac11
 ---
 

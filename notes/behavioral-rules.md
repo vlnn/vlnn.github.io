@@ -1,7 +1,7 @@
 ---
 title: Behavioral Rules
 date: 2026-08-27
-tags: [methods, psy, learning]
+tags: [learning, methods, psy]
 brain-id: e839034a-b1c8-47b3-9579-d19ba2708517
 ---
 

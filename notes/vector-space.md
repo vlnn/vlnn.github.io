@@ -1,6 +1,7 @@
 ---
 title: Vector Space
 date: 2026-08-16
+tags: [math]
 brain-id: 79fa195b-6617-49ea-b40c-a5b92144562b
 ---
 

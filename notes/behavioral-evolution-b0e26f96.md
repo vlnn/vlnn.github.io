@@ -1,7 +1,7 @@
 ---
 title: Behavioral Evolution
 date: 2026-08-22
-tags: [psy, methods, evolution]
+tags: [evolution, methods, psy]
 brain-id: b0e26f96-9b8b-42f5-8f66-b76614d7d045
 ---
 

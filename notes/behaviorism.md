@@ -1,7 +1,7 @@
 ---
 title: Behaviorism
 date: 2026-08-22
-tags: [psy, methods, history]
+tags: [history, methods, psy]
 brain-id: 2ab0a465-8b5d-4f2a-871e-c81eb8c7632c
 ---
 

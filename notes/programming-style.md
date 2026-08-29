@@ -1,7 +1,7 @@
 ---
 title: Elements/Parts of the Programming Style in K
 date: 2026-07-30
-tags: [programming]
+tags: [programming, k]
 ---
 
 Reading ["K: Remarks on Style"](https://nsl.com/papers/style.pdf) I've found great quote on great book I've never liked:

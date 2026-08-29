@@ -1,9 +1,10 @@
 ---
 title: Play
 date: 2026-08-28
-tags: [psy, methods, learning]
 brain-id: 713bb434-60a1-481f-a06f-dadf9758264e
 ---
+
+# Play
 
 ## Related
 

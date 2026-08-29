@@ -1,6 +1,7 @@
 ---
 title: Prefer Tables to Logic
 date: 2026-08-15
+tags: [data-structure, programming, design]
 brain-id: f00789ba-4f77-4439-9e51-b9b51f87edac
 ---
 

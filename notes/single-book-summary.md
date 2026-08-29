@@ -1,6 +1,7 @@
 ---
 title: 단권화 Single Book Summary
 date: 2026-08-27
+tags: [methods, learning]
 brain-id: 716353f6-1371-4bc5-8222-d98ae40c5d39
 ---
 

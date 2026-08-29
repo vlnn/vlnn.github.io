@@ -1,7 +1,7 @@
 ---
 title: Overall, the goal of breaking your program into methods is to communicate your…
 date: 2026-08-03
-tags: [public, quote, quotes]
+tags: [public, quote]
 brain-id: 0c85f9ce-9866-59be-9b76-b4473f988496
 ---
 

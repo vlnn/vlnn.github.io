@@ -1,7 +1,7 @@
 ---
 title: Logstash as pluggable pipeline
 date: 2026-08-05
-tags: [elasticsearch, design, programming]
+tags: [design, elasticsearch, programming]
 brain-id: 40446b16-d885-4374-aeb1-36c8007f0291
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: Top of mind
 date: 2026-08-21
+tags: [meta]
 brain-id: f0393ab8-4233-4b77-82e8-d25cf3955ccf
 ---
 

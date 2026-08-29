@@ -1,6 +1,7 @@
 ---
 title: System Architecture
 date: 2026-08-16
+tags: [design, programming]
 brain-id: 1ce58568-85c6-491c-9756-adf1ef0e6f17
 ---
 

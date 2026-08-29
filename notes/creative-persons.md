@@ -1,7 +1,6 @@
 ---
-title: Creative persons
+title: Creativity
 date: 2026-08-28
-tags: [psy, learning, person]
 brain-id: 241d519c-4bd4-4e72-8708-10a14548aee1
 ---
 
@@ -11,13 +10,13 @@ They rather manipulate themselves into special state of mind where they able to 
 
 Switching between the modes of function:
 * [Open mode](open-mode-of-operating.md): relaxed, expansive, curious and playful mood
-* Closed mode: busy, focused, goal-driven, stressful or manic
+* [Closed mode](closed-mode-of-operating.md): busy, focused, goal-driven, stressful or manic
 
 > [!quote]
 >  "We're pressing, we're pressing, we're working too hard. Relax. It will come."
 > [Alfred Hitchcock](alfred-hitchcock.md)
 
-But then
+Musical creativity is not that different — composer keeps balance between freedom and structure, and makes the listener to constantly admire this balance, similar to how voices in the fugue are fully admired only when being listened in kinda constant switching between them.
 
 ## Related
 

@@ -1,6 +1,7 @@
 ---
 title: Positivist Methodology
 date: 2026-08-22
+tags: [meta, methods, psy]
 brain-id: 8fc928a4-6fb1-418f-a0ec-a686ed7f7d9e
 ---
 

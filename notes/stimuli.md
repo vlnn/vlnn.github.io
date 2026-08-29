@@ -1,6 +1,7 @@
 ---
 title: Stimuli
 date: 2026-08-22
+tags: [psy]
 brain-id: d85dab44-d218-40ca-ad18-55b6361ad43f
 ---
 

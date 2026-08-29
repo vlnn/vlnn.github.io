@@ -1,7 +1,7 @@
 ---
 title: Open mode of operating
 date: 2026-08-28
-tags: [methods, learning, psy]
+tags: [learning, methods, psy]
 brain-id: 8a566118-c72f-4da7-8f87-1db403fbdb7d
 ---
 
