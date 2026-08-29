@@ -1,6 +1,7 @@
 ---
 title: Humor
 date: 2026-08-28
+tags: [psy, meta, methods]
 brain-id: 015eda8f-ba3a-488f-80aa-0969ad9a6335
 ---
 

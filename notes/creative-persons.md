@@ -1,6 +1,7 @@
 ---
 title: Creative persons
 date: 2026-08-28
+tags: [psy, learning, person]
 brain-id: 241d519c-4bd4-4e72-8708-10a14548aee1
 ---
 

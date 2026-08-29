@@ -1,6 +1,7 @@
 ---
 title: Commitment audit via feedback
 date: 2026-08-17
+tags: [meta, methods]
 brain-id: 8cd7b1df-c969-4fc5-9065-8f73e88a034b
 ---
 

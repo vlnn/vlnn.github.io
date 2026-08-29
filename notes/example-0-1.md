@@ -1,6 +1,7 @@
 ---
 title: Example 0.1
 date: 2026-08-16
+tags: [math]
 brain-id: 88e93d48-4400-4819-8a49-ef28297af02f
 ---
 

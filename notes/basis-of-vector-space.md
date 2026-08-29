@@ -1,6 +1,7 @@
 ---
 title: Basis of Vector Space
 date: 2026-08-16
+tags: [math]
 brain-id: 1222914b-e155-4724-922c-66844b0ada72
 ---
 

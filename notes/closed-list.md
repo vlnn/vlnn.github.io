@@ -1,6 +1,7 @@
 ---
 title: Closed List
 date: 2026-08-17
+tags: [meta, methods, learning]
 brain-id: 55572512-e618-45d0-b89b-31522d2301a9
 ---
 
