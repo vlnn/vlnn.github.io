@@ -5,6 +5,8 @@ tags: [meta]
 brain-id: 6200ade7-41ce-4e04-9aa1-2a5a5f66792e
 ---
 
+# vlnn-dev
+
 ## Related
 
 - [Smalltalk Best Practices Patterns](smalltalk-best-practices-patterns.md)

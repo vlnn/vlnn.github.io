@@ -9,9 +9,10 @@ Hi! I'm Volodymyr Anokhin ([@vlnn](https://github.com/vlnn)). These are my worki
 
 Curious about the machinery? See [How this site works](how-this-site-works.md), [How I write these notes](how-i-write-these-notes.md).
 
-* The note I'm most proud of: [Programming during wartime](programming-in-wartime.md).
-* My current [Top of mind](top-of-mind.md).
-* Other [starting pages](starting-pages.md).
+* The note I'm most proud of: [Programming during wartime](programming-in-wartime.md)
+* My current [Top of mind](top-of-mind.md)
+* Other [starting pages](starting-pages.md)
+* My current [workout](https://vlnn.dev/workout)
 
 Note that for some notes you can test yourself clicking on [test yourself](https://vlnn.dev/?stack=test) link at the bottom of the note (if available). Moreover, I've made a general test link at the top of the page – it will test you either for all open notes, or for all notes in the system (e.g. if you want an overview of things you supposed to take out of this site).
 

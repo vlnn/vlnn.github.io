@@ -1,7 +1,7 @@
 ---
 title: Systems should be frictionless
 date: 2026-08-17
-tags: [methods, design]
+tags: [design, methods]
 brain-id: 2db1b0ac-9621-4f9c-baca-30cc580a7738
 ---
 

@@ -5,6 +5,8 @@ tags: [learning, methods, psy]
 brain-id: 8a566118-c72f-4da7-8f87-1db403fbdb7d
 ---
 
+relaxed, expansive, less goal-driven, curious and humorous. Tolerates ambiguity and lets you play with ideas without needing to resolve them immediately. The [creativity is only possible in the open mode](creativity-is-only-possible-in-the-open-mode.md), because the closed mode's pressure and urgency shut down the wandering, associative thinking that new ideas come from.
+
 Receipt of open mode:
 
 1. Space (or [safe environment](safe-environment.md) without disturbance)
@@ -19,4 +21,5 @@ Receipt of open mode:
 - [Humor](humor.md)
 - [Closed Mode of Operating](closed-mode-of-operating.md)
 - [Play is distinct from ordinary life both as to locality and duration](play-is-distinct-from-ordinary-life-both-as-to-locality-and.md)
+- [Creativity Is only Possible in the Open Mode](creativity-is-only-possible-in-the-open-mode.md)
 

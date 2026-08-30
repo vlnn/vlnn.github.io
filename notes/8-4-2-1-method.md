@@ -1,7 +1,7 @@
 ---
 title: 8-4-2-1 Method
 date: 2026-08-27
-tags: [methods, learning]
+tags: [learning, methods]
 brain-id: 691e3b3e-0844-43cc-8449-e0a17019f86d
 ---
 
