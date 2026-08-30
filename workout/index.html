@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's Session</title>
+<style>
+:root {
+  --paper: #f2f4f1;
+  --pane: #fdfdfb;
+  --ink: #21272c;
+  --ink-soft: #5c666d;
+  --rule: #d8ddd6;
+  --accent: #2c5fad;
+  --accent-warm: #a97b12;
+  --green: #4f7d5a;
+  --green-light: #dcead8;
+  --modeline: #eef0ea;
+  --red: #a2453c;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "Departure Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@font-face {
+  font-family: "Departure Mono";
+  src: url("../static/fonts/DepartureMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+* { box-sizing: border-box; margin: 0; }
+::selection { background: var(--green-light); }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+}
+button, summary, input[type="range"] { -webkit-tap-highlight-color: transparent; }
+.page { width: 100%; max-width: 460px; padding: 20px 20px 44px; }
+
+.date {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+.session-letter {
+  font-family: var(--mono);
+  font-size: 96px;
+  line-height: 1;
+  margin: 6px 0 2px;
+}
+.session-name { font-size: 15px; color: var(--ink-soft); margin-bottom: 20px; }
+
+.picker { display: flex; gap: 8px; margin-bottom: 12px; }
+.picker button {
+  flex: 1;
+  padding: 8px 0;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+  background: var(--pane);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .picker button:hover { color: var(--accent); }
+}
+.picker button.active { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+
+.dial {
+  background: var(--modeline);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 12px 14px 8px;
+  margin-bottom: 24px;
+}
+.dial-readout {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+.dial-readout .lvl { color: var(--ink); }
+.dial input[type="range"] {
+  width: 100%;
+  accent-color: var(--green);
+  margin: 0;
+}
+.dial-ends {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.moves { list-style: none; padding: 0; background: var(--pane); border: 1px solid var(--rule); border-radius: 3px; }
+.moves li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.moves li:last-child { border-bottom: none; }
+.move-name { font-size: 16px; }
+.move-note { display: block; font-size: 12.5px; color: var(--ink-soft); margin-top: 3px; }
+.scheme {
+  font-family: var(--mono);
+  font-size: 14px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.chip {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  color: var(--pane);
+}
+.chip-16 { background: var(--accent-warm); }
+.chip-24 { background: var(--green); }
+.chip-32 { background: var(--red); }
+.chip-bw { background: var(--modeline); color: var(--ink-soft); border: 1px solid var(--rule); }
+
+.rest-card {
+  background: var(--pane);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 22px 20px;
+  font-size: 16px;
+  line-height: 1.55;
+}
+.rest-card .big { font-family: var(--mono); font-size: 26px; margin-bottom: 8px; }
+
+.guide { display: flex; flex-direction: column; gap: 14px; }
+.guide-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.06em;
+  margin-bottom: 3px;
+}
+.guide p { font-size: 14.5px; line-height: 1.55; }
+.guide .next { font-family: var(--mono); font-size: 13px; color: var(--green); }
+
+details { margin-bottom: 16px; }
+summary {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 6px 0;
+}
+@media (hover: hover) {
+  summary:hover { color: var(--accent); }
+}
+details p { font-size: 14.5px; line-height: 1.6; padding: 8px 0 4px; }
+
+.rules {
+  margin-top: 28px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.rules strong { color: var(--ink); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="date" id="date"></div>
+  <div class="session-letter" id="letter"></div>
+  <div class="session-name" id="name"></div>
+  <div class="picker" id="picker"></div>
+  <div class="dial" id="dial">
+    <div class="dial-readout"><span class="lvl" id="lvl"></span><span id="lvl-hint"></span></div>
+    <input type="range" id="lvl-slider" min="1" max="10" step="1">
+    <div class="dial-ends"><span>very start</span><span>hardware max</span></div>
+  </div>
+  <details id="warmup-box">
+    <summary>warm-up · 8 min</summary>
+    <p>Walk or march 3–5 min · hip circles and small leg swings ×10 · shoulder circles ×10 · bodyweight glute bridge ×10 slow · RDL with the 16 ×5 as a rehearsal.</p>
+    <p>Optional quad experiment after warm-up: sit-to-stand from a high chair, 2 × 5, slow. Zero pain during and next day, or shelve it for two weeks. Painless for two weeks — lower the seat an inch.</p>
+  </details>
+  <div id="content"></div>
+  <div class="rules">
+    <strong>Never grind, never hold your breath.</strong> 2–3 reps in the tank, exhale on effort, rest until conversation-pace.<br>
+    <strong>Knees set the range, pain sets the load.</strong> Sharp pain or worse-next-day means drop back or skip.
+  </div>
+</div>
+
+<script>
+const MAX_LEVEL = 10;
+
+const MOVES = {
+  pushup: {
+    name: "Pushup",
+    steps: [
+      { scheme: "2 × 8", load: "bw", note: "hands elevated" },
+      { scheme: "2 × 5", load: "bw" },
+      { scheme: "2 × 8", load: "bw" },
+      { scheme: "3 × 8", load: "bw" },
+      { scheme: "3 × 10", load: "bw" },
+      { scheme: "3 × 8", load: "bw", note: "3 s lowering" },
+      { scheme: "3 × 10", load: "bw", note: "3 s lowering" },
+      { scheme: "3 × 8", load: "bw", note: "feet elevated" },
+      { scheme: "3 × 8", load: "bw", note: "deep, on bell handles" },
+      { scheme: "2 × 3 /side", load: "bw", note: "archer" }
+    ]
+  },
+  rdl: {
+    name: "Kettlebell RDL",
+    steps: [
+      { scheme: "3 × 5", load: 16 },
+      { scheme: "3 × 8", load: 16 },
+      { scheme: "3 × 5", load: 24 },
+      { scheme: "3 × 6", load: 24 },
+      { scheme: "3 × 8", load: 24 },
+      { scheme: "3 × 3", load: 32 },
+      { scheme: "3 × 5", load: 32 },
+      { scheme: "3 × 6", load: 32 },
+      { scheme: "3 × 8", load: 32 },
+      { scheme: "3 × 8", load: 32, note: "3 s lowering" }
+    ]
+  },
+  row: {
+    name: "One-arm row",
+    steps: [
+      { scheme: "2 × 5 /side", load: 16 },
+      { scheme: "2 × 8 /side", load: 16 },
+      { scheme: "2 × 5 /side", load: 24 },
+      { scheme: "2 × 8 /side", load: 24 },
+      { scheme: "3 × 8 /side", load: 24 },
+      { scheme: "2 × 5 /side", load: 32 },
+      { scheme: "2 × 6 /side", load: 32 },
+      { scheme: "2 × 8 /side", load: 32 },
+      { scheme: "3 × 8 /side", load: 32 },
+      { scheme: "3 × 8 /side", load: 32, note: "3 s lowering" }
+    ]
+  },
+  carry: {
+    name: "Carry",
+    steps: [
+      { scheme: "2 × 20 m /side", load: 16, note: "suitcase" },
+      { scheme: "2 × 30 m /side", load: 16, note: "suitcase" },
+      { scheme: "2 × 30 m /side", load: 24, note: "suitcase" },
+      { scheme: "2 × 40 m /side", load: 24, note: "suitcase" },
+      { scheme: "3 × 40 m /side", load: 24, note: "suitcase" },
+      { scheme: "2 × 30 m /side", load: 32, note: "suitcase" },
+      { scheme: "2 × 40 m /side", load: 32, note: "suitcase" },
+      { scheme: "3 × 40 m /side", load: 32, note: "suitcase" },
+      { scheme: "2 × 30 m", load: "16+24", note: "farmer, swap hands halfway" },
+      { scheme: "2 × 30 m", load: "24+32", note: "farmer, swap hands halfway" }
+    ]
+  },
+  deadbug: {
+    name: "Dead bug",
+    steps: [
+      { scheme: "2 × 5 /side", load: "bw", note: "slow" },
+      { scheme: "2 × 8 /side", load: "bw", note: "slow" },
+      { scheme: "3 × 8 /side", load: "bw", note: "slow" },
+      { scheme: "2 × 8 /side", load: "bw", note: "3 s pause" },
+      { scheme: "3 × 8 /side", load: "bw", note: "3 s pause" },
+      { scheme: "2 × 5 /side", load: 16, note: "bell over chest" },
+      { scheme: "2 × 8 /side", load: 16, note: "bell over chest" },
+      { scheme: "3 × 8 /side", load: 16, note: "bell over chest" },
+      { scheme: "2 × 8 /side", load: 24, note: "bell over chest" },
+      { scheme: "3 × 8 /side", load: 24, note: "bell over chest" }
+    ]
+  },
+  board: {
+    name: "Board pull-up",
+    steps: [
+      { scheme: "3 × 3", load: "bw", note: "5 s negatives, jug holds" },
+      { scheme: "3 × 5", load: "bw", note: "5 s negatives" },
+      { scheme: "3 × 3", load: "bw", note: "assisted, foot on stool" },
+      { scheme: "3 × 5", load: "bw", note: "assisted" },
+      { scheme: "3 × 1", load: "bw", note: "strict" },
+      { scheme: "3 × 2", load: "bw", note: "strict" },
+      { scheme: "3 × 3", load: "bw", note: "strict" },
+      { scheme: "3 × 5", load: "bw", note: "strict" },
+      { scheme: "5 × 5", load: "bw", note: "strict" },
+      { scheme: "3 × 2", load: 16, note: "bell on a belt" }
+    ]
+  },
+  press: {
+    name: "One-arm press",
+    steps: [
+      { scheme: "2 × 3 /side", load: 16 },
+      { scheme: "2 × 5 /side", load: 16 },
+      { scheme: "2 × (1-2-3) /side", load: 16, note: "ladders" },
+      { scheme: "3 × (1-2-3) /side", load: 16, note: "ladders" },
+      { scheme: "2 × 2 /side", load: 24 },
+      { scheme: "2 × 3 /side", load: 24 },
+      { scheme: "2 × 5 /side", load: 24 },
+      { scheme: "3 × 5 /side", load: 24 },
+      { scheme: "2 × (1-2-3) /side", load: 24, note: "ladders" },
+      { scheme: "2 × 1–2 /side", load: 32 }
+    ]
+  },
+  bridge: {
+    name: "Glute bridge",
+    steps: [
+      { scheme: "2 × 8", load: "bw" },
+      { scheme: "2 × 8", load: 16, note: "bell on hips" },
+      { scheme: "2 × 10", load: 16, note: "bell on hips" },
+      { scheme: "2 × 8", load: 24, note: "bell on hips" },
+      { scheme: "2 × 10", load: 24, note: "bell on hips" },
+      { scheme: "3 × 10", load: 24, note: "bell on hips" },
+      { scheme: "2 × 8", load: 32, note: "bell on hips" },
+      { scheme: "2 × 10", load: 32, note: "bell on hips" },
+      { scheme: "3 × 10", load: 32, note: "bell on hips" },
+      { scheme: "2 × 5 /side", load: 16, note: "single leg" }
+    ]
+  },
+  staggered: {
+    name: "Staggered RDL",
+    steps: [
+      { scheme: "2 × 5 /side", load: 16, note: "regular stance until comfortable" },
+      { scheme: "2 × 5 /side", load: 16 },
+      { scheme: "2 × 8 /side", load: 16 },
+      { scheme: "2 × 5 /side", load: 24 },
+      { scheme: "2 × 6 /side", load: 24 },
+      { scheme: "2 × 8 /side", load: 24 },
+      { scheme: "3 × 8 /side", load: 24 },
+      { scheme: "2 × 5 /side", load: 32 },
+      { scheme: "2 × 8 /side", load: 32 },
+      { scheme: "2 × 5 /side", load: 16, note: "single leg" }
+    ]
+  },
+  getup: {
+    name: "Half get-up",
+    steps: [
+      { scheme: "2 × 2 /side", load: 16, note: "to the hand, no lunge" },
+      { scheme: "2 × 3 /side", load: 16, note: "to the hand" },
+      { scheme: "3 × 3 /side", load: 16, note: "to the hand" },
+      { scheme: "2 × 2 /side", load: 24, note: "to the hand" },
+      { scheme: "2 × 3 /side", load: 24, note: "to the hand" },
+      { scheme: "3 × 3 /side", load: 24, note: "to the hand" },
+      { scheme: "2 × 2 /side", load: 32, note: "to the hand" },
+      { scheme: "2 × 3 /side", load: 32, note: "to the hand" },
+      { scheme: "3 × 3 /side", load: 32, note: "to the hand" },
+      { scheme: "1 × 1 /side", load: 16, note: "full get-up — only if knees allow" }
+    ]
+  }
+};
+
+const SESSIONS = {
+  A: { name: "Push · Hinge · Pull", moves: ["pushup", "rdl", "row", "carry", "deadbug"] },
+  B: { name: "Pull · Hinge · Press", moves: ["board", "rdl", "press", "bridge", "carry"] },
+  C: { name: "Press · Hinge · Pull", moves: ["press", "staggered", "pushup", "getup", "row"] },
+  REST: { name: "Today walk and rest" }
+};
+
+const WEEKDAY_PLAN = ["REST", "A", "REST", "B", "REST", "C", "REST"];
+
+const state = {
+  session: WEEKDAY_PLAN[new Date().getDay()],
+  level: clampLevel(Number(localStorage.getItem("kb-level")) || 1)
+};
+
+function clampLevel(n) {
+  return Math.min(MAX_LEVEL, Math.max(1, n));
+}
+
+function isTrainingDay() {
+  return state.session !== "REST";
+}
+
+function nextSession() {
+  const now = new Date();
+  for (let i = 1; i <= 7; i++) {
+    const key = WEEKDAY_PLAN[(now.getDay() + i) % 7];
+    if (key !== "REST") {
+      const date = new Date(now);
+      date.setDate(now.getDate() + i);
+      return { key, date };
+    }
+  }
+}
+
+function chipClass(load) {
+  if (load === "bw") return "chip-bw";
+  const heaviest = Math.max(...String(load).split("+").map(Number));
+  return `chip-${heaviest}`;
+}
+
+function chipLabel(load) {
+  return load === "bw" ? "BW" : `${load}kg`;
+}
+
+function moveRow(key) {
+  const move = MOVES[key];
+  const step = move.steps[state.level - 1];
+  const note = step.note ? `<span class="move-note">${step.note}</span>` : "";
+  return `<li>
+    <span><span class="move-name">${move.name}</span>${note}</span>
+    <span class="scheme">${step.scheme}<span class="chip ${chipClass(step.load)}">${chipLabel(step.load)}</span></span>
+  </li>`;
+}
+
+function movesList(session) {
+  return `<ul class="moves">${session.moves.map(moveRow).join("")}</ul>`;
+}
+
+function guideSection(label, text) {
+  return `<div><div class="guide-label">${label}</div><p>${text}</p></div>`;
+}
+
+function restCard() {
+  const next = nextSession();
+  const when = next.date.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "short" });
+  return `<div class="rest-card guide">
+    <div class="big">Today walk and rest</div>
+    <p class="next">next session: ${next.key} · ${when}</p>
+    ${guideSection("the walk",
+      "30–45 minutes, flat ground, easy pace. Progress by adding minutes, never speed.")}
+    ${guideSection("the program",
+      "Three short sessions a week on non-consecutive days. Each is five slots — push, hinge, pull, carry, core — a few easy sets each, ~30 min with warm-up. Every set ends with 2–3 clean reps left. Miss days freely; nothing is ruined, just do the next letter.")}
+    ${guideSection("the dial",
+      "One dial moves the whole program. Go up one level when the last two sessions both felt silly-light — last rep like the first, breathing calm. Go down after a break, a rough week, or cranky knees. The dial has no pride and no schedule.")}
+    ${guideSection("progress",
+      "Progress lives in the dial, not the calendar. Level 1 is deliberately too easy; level 10 is everything the bells and the board allow. Months per level is the plan working, not stalling. Sessions feeling easy is correct — the loads creep up underneath.")}
+    ${guideSection("when stale",
+      "Every 6–8 weeks, or whenever training feels like a chore, drop two levels for a week. Feeling like taking it easy is a valid trigger, not a failure.")}
+  </div>`;
+}
+
+function levelHint() {
+  if (state.level === 1) return "very start";
+  if (state.level === MAX_LEVEL) return "hardware max";
+  return "";
+}
+
+function renderHeader() {
+  const fmt = { weekday: "long", month: "short", day: "numeric" };
+  document.getElementById("date").textContent = new Date().toLocaleDateString("en-GB", fmt);
+  document.getElementById("letter").textContent = isTrainingDay() ? state.session : "R";
+  document.getElementById("name").textContent = SESSIONS[state.session].name;
+}
+
+function renderPicker() {
+  document.getElementById("picker").innerHTML = ["A", "B", "C"].map(key =>
+    `<button class="${key === state.session ? "active" : ""}" data-session="${key}">${key}</button>`
+  ).join("");
+}
+
+function renderDial() {
+  document.getElementById("dial").style.display = isTrainingDay() ? "block" : "none";
+  document.getElementById("lvl").textContent = `level ${state.level}/${MAX_LEVEL}`;
+  document.getElementById("lvl-hint").textContent = levelHint();
+  document.getElementById("lvl-slider").value = state.level;
+}
+
+function renderWarmup() {
+  document.getElementById("warmup-box").style.display = isTrainingDay() ? "block" : "none";
+}
+
+function renderContent() {
+  return isTrainingDay() ? movesList(SESSIONS[state.session]) : restCard();
+}
+
+function render() {
+  renderHeader();
+  renderPicker();
+  renderDial();
+  renderWarmup();
+  document.getElementById("content").innerHTML = renderContent();
+}
+
+function setSession(key) {
+  state.session = key;
+  render();
+}
+
+function setLevel(n) {
+  state.level = clampLevel(n);
+  localStorage.setItem("kb-level", state.level);
+  render();
+}
+
+document.getElementById("picker").addEventListener("click", e => {
+  if (e.target.dataset.session) setSession(e.target.dataset.session);
+});
+document.getElementById("lvl-slider").addEventListener("input", e => {
+  setLevel(Number(e.target.value));
+});
+
+render();
+</script>
+</body>
+</html>
