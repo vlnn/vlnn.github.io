@@ -410,7 +410,7 @@ const SESSIONS = {
   A: { name: "Push · Hinge · Pull", moves: ["pushup", "rdl", "row", "carry", "deadbug"] },
   B: { name: "Pull · Hinge · Press", moves: ["board", "rdl", "press", "bridge", "carry"] },
   C: { name: "Press · Hinge · Pull", moves: ["press", "staggered", "pushup", "getup", "row"] },
-  REST: { name: "Today walk and rest" }
+  REST: { name: "5k steps and rest" }
 };
 
 const WEEKDAY_PLAN = ["REST", "A", "REST", "B", "REST", "C", "REST"];
@@ -473,10 +473,10 @@ function restCard() {
   const next = nextSession();
   const when = next.date.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "short" });
   return `<div class="rest-card guide">
-    <div class="big">Today walk and rest</div>
+    <div class="big">5k steps and rest</div>
     <p class="next">next session: ${next.key} · ${when}</p>
     ${guideSection("the walk",
-      "30–45 minutes, flat ground, easy pace. Progress by adding minutes, never speed.", true)}
+      "30–45 minutes or ~5,000 steps, flat ground, easy pace — you should be able to talk, or breathe through the nose, the whole way. Progress by adding minutes, never speed. This walk is the day's training; walks on session days are an optional easy bonus. If knees grumble, trim walk minutes before touching sessions.", true)}
     ${guideSection("the program",
       "Three short sessions a week on non-consecutive days. Each is five slots — push, hinge, pull, carry, core — a few easy sets each, ~30 min with warm-up. Every set ends with 2–3 clean reps left. Miss days freely; nothing is ruined, just do the next letter.")}
     ${guideSection("the dial",
