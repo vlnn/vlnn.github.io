@@ -74,6 +74,33 @@ button, summary, input[type="range"] { -webkit-tap-highlight-color: transparent;
 }
 .picker button.active { color: var(--paper); background: var(--ink); border-color: var(--ink); }
 
+.week { display: none; gap: 8px; margin-bottom: 12px; }
+.week button {
+  flex: 1;
+  padding: 7px 0 8px;
+  font-family: var(--mono);
+  background: var(--pane);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.week .wd {
+  display: block;
+  font-size: 10px;
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+.week .sl { display: block; font-size: 14px; color: var(--ink); }
+.week button.today { border-color: var(--green); }
+.week button.today .wd { color: var(--green); }
+.week button.active { background: var(--ink); border-color: var(--ink); }
+.week button.active .wd, .week button.active .sl { color: var(--paper); }
+@media (hover: hover) {
+  .week button:hover .sl { color: var(--accent); }
+  .week button.active:hover .sl { color: var(--paper); }
+}
+
 .dial {
   background: var(--modeline);
   border: 1px solid var(--rule);
@@ -180,6 +207,23 @@ details p { font-size: 14.5px; line-height: 1.6; padding: 8px 0 4px; }
   color: var(--ink-soft);
 }
 .rules strong { color: var(--ink); font-weight: 600; }
+
+@media (min-width: 700px) {
+  .page { max-width: 680px; padding: 32px 32px 56px; }
+  .picker { display: none; }
+  .week { display: flex; }
+  .session-letter { font-size: 120px; }
+  .moves li { padding: 15px 18px; }
+  .move-name { font-size: 17px; }
+  .scheme { font-size: 15px; }
+  .rest-card { padding: 26px 26px; }
+  .guide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 26px;
+  }
+  .guide .big, .guide .next, .guide .span { grid-column: 1 / -1; }
+}
 </style>
 </head>
 <body>
@@ -188,6 +232,7 @@ details p { font-size: 14.5px; line-height: 1.6; padding: 8px 0 4px; }
   <div class="session-letter" id="letter"></div>
   <div class="session-name" id="name"></div>
   <div class="picker" id="picker"></div>
+  <div class="week" id="week"></div>
   <div class="dial" id="dial">
     <div class="dial-readout"><span class="lvl" id="lvl"></span><span id="lvl-hint"></span></div>
     <input type="range" id="lvl-slider" min="1" max="10" step="1">
@@ -371,6 +416,7 @@ const SESSIONS = {
 const WEEKDAY_PLAN = ["REST", "A", "REST", "B", "REST", "C", "REST"];
 
 const state = {
+  day: new Date().getDay(),
   session: WEEKDAY_PLAN[new Date().getDay()],
   level: clampLevel(Number(localStorage.getItem("kb-level")) || 1)
 };
@@ -419,8 +465,8 @@ function movesList(session) {
   return `<ul class="moves">${session.moves.map(moveRow).join("")}</ul>`;
 }
 
-function guideSection(label, text) {
-  return `<div><div class="guide-label">${label}</div><p>${text}</p></div>`;
+function guideSection(label, text, span) {
+  return `<div class="${span ? "span" : ""}"><div class="guide-label">${label}</div><p>${text}</p></div>`;
 }
 
 function restCard() {
@@ -430,7 +476,7 @@ function restCard() {
     <div class="big">Today walk and rest</div>
     <p class="next">next session: ${next.key} · ${when}</p>
     ${guideSection("the walk",
-      "30–45 minutes, flat ground, easy pace. Progress by adding minutes, never speed.")}
+      "30–45 minutes, flat ground, easy pace. Progress by adding minutes, never speed.", true)}
     ${guideSection("the program",
       "Three short sessions a week on non-consecutive days. Each is five slots — push, hinge, pull, carry, core — a few easy sets each, ~30 min with warm-up. Every set ends with 2–3 clean reps left. Miss days freely; nothing is ruined, just do the next letter.")}
     ${guideSection("the dial",
@@ -455,10 +501,25 @@ function renderHeader() {
   document.getElementById("name").textContent = SESSIONS[state.session].name;
 }
 
+const WEEK_ORDER = [1, 2, 3, 4, 5, 6, 0];
+const WEEKDAY_NAMES = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+
 function renderPicker() {
   document.getElementById("picker").innerHTML = ["A", "B", "C"].map(key =>
     `<button class="${key === state.session ? "active" : ""}" data-session="${key}">${key}</button>`
   ).join("");
+}
+
+function renderWeek() {
+  const today = new Date().getDay();
+  document.getElementById("week").innerHTML = WEEK_ORDER.map(day => {
+    const plan = WEEKDAY_PLAN[day];
+    const classes = [day === state.day ? "active" : "", day === today ? "today" : ""].join(" ");
+    return `<button class="${classes}" data-day="${day}">
+      <span class="wd">${WEEKDAY_NAMES[day]}</span>
+      <span class="sl">${plan === "REST" ? "R" : plan}</span>
+    </button>`;
+  }).join("");
 }
 
 function renderDial() {
@@ -479,6 +540,7 @@ function renderContent() {
 function render() {
   renderHeader();
   renderPicker();
+  renderWeek();
   renderDial();
   renderWarmup();
   document.getElementById("content").innerHTML = renderContent();
@@ -486,6 +548,13 @@ function render() {
 
 function setSession(key) {
   state.session = key;
+  state.day = WEEKDAY_PLAN.indexOf(key);
+  render();
+}
+
+function setDay(day) {
+  state.day = day;
+  state.session = WEEKDAY_PLAN[day];
   render();
 }
 
@@ -497,6 +566,10 @@ function setLevel(n) {
 
 document.getElementById("picker").addEventListener("click", e => {
   if (e.target.dataset.session) setSession(e.target.dataset.session);
+});
+document.getElementById("week").addEventListener("click", e => {
+  const button = e.target.closest("button[data-day]");
+  if (button) setDay(Number(button.dataset.day));
 });
 document.getElementById("lvl-slider").addEventListener("input", e => {
   setLevel(Number(e.target.value));
