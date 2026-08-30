@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>takahashi</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #111111;
+    --muted: #999999;
+    --accent-light: #c1121f;
+    --accent-dark: #ff5c4d;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    overflow: hidden;
+    transition: background .25s ease, color .25s ease;
+  }
+  body.dark { --bg: #000000; --fg: #f5f5f5; --muted: #777777; }
+
+  #stage {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 6vmin;
+    cursor: default;
+  }
+  #word {
+    font-weight: 800;
+    line-height: 1.08;
+    text-align: center;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    white-space: pre-wrap;
+  }
+  .accent #word { color: var(--accent-light); }
+  body.dark .accent #word { color: var(--accent-dark); }
+  .divider #word { color: var(--muted); font-weight: 600; letter-spacing: .04em; }
+
+  #progress {
+    position: absolute; right: 1.2rem; bottom: 1rem;
+    font-size: .8rem; color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+  }
+  #hint {
+    position: absolute; left: 1.2rem; bottom: 1rem;
+    font-size: .8rem; color: var(--muted);
+    user-select: none;
+    transition: opacity 1s ease;
+  }
+
+  #notes {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    max-height: 34vh; overflow-y: auto;
+    padding: 1rem 1.6rem 1.4rem;
+    background: color-mix(in srgb, var(--bg) 88%, var(--fg));
+    color: var(--fg);
+    font-size: 1.05rem; line-height: 1.5;
+    display: none;
+    border-top: 1px solid var(--muted);
+  }
+  #notes.on { display: block; }
+  #notes p { margin: .35em 0; max-width: 70ch; }
+
+  #overview {
+    position: absolute; inset: 0;
+    background: var(--bg);
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px; padding: 16px;
+    overflow-y: auto;
+  }
+  #overview.on { display: grid; }
+  .thumb {
+    border: 1px solid var(--muted);
+    border-radius: 4px;
+    aspect-ratio: 16 / 9;
+    display: flex; align-items: center; justify-content: center;
+    padding: 8px; text-align: center;
+    font-weight: 700; font-size: .85rem;
+    white-space: pre-line;
+    cursor: pointer; overflow: hidden;
+    background: #fff; color: #111;
+  }
+  .thumb.dark { background: #000; color: #f5f5f5; }
+  .thumb.accent { color: var(--accent-light); }
+  .thumb.dark.accent { color: var(--accent-dark); }
+  .thumb.current { outline: 3px solid var(--accent-light); }
+
+  #editor {
+    position: absolute; inset: 0;
+    background: var(--bg);
+    display: none;
+    flex-direction: column;
+    padding: 16px; gap: 10px;
+  }
+  #editor.on { display: flex; }
+  #editor textarea {
+    flex: 1;
+    font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: var(--bg); color: var(--fg);
+    border: 1px solid var(--muted); border-radius: 4px;
+    padding: 12px; resize: none; outline: none;
+  }
+  #editor .bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  #editor button, #editor label.btn {
+    font: 600 14px/1 inherit;
+    padding: 9px 14px;
+    border: 1px solid var(--fg); border-radius: 4px;
+    background: var(--fg); color: var(--bg);
+    cursor: pointer;
+  }
+  #editor button.quiet, #editor label.btn.quiet { background: var(--bg); color: var(--fg); }
+  #editor .help { font-size: .85rem; color: var(--muted); }
+  #file { display: none; }
+
+  body.dropping::after {
+    content: "drop .md to load";
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: color-mix(in srgb, var(--bg) 70%, var(--fg));
+    font-size: 2rem; font-weight: 700;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="stage"><div id="word"></div></div>
+<div id="notes"></div>
+<div id="overview"></div>
+
+<div id="editor">
+  <div class="bar">
+    <button id="apply">Apply and present</button>
+    <label class="btn quiet" for="file">Load .md</label>
+    <input type="file" id="file" accept=".md,.markdown,.txt">
+    <button id="save" class="quiet">Save .md</button>
+    <button id="close" class="quiet">Close</button>
+    <span class="help">## line = slide · text below = presenter notes · flags: {dark} {accent} · | = line break · # line = section divider</span>
+  </div>
+  <textarea id="mdtext" spellcheck="false"></textarea>
+</div>
+
+<div id="progress"></div>
+<div id="hint">arrows: navigate · n: notes · o: overview · e: edit · p: presenter window · f: fullscreen</div>
+
+<script type="text/markdown" id="src">
+A deck about the deck format. Load it via "e" → Load .md, or drag it onto
+the viewer. Press n for the notes overlay, p for the presenter window.
+
+## the | Takahashi | method {accent}
+##  Takahashi |{accent}
+Named after Masayoshi Takahashi, a Rubyist from Tokyo. Around 2001 he had
+to give a talk with no presentation software and no images. His solution:
+plain HTML pages with a few enormous Japanese characters on each.
+It worked so well it became a genre.
+
+## born from a constraint {dark}
+No PowerPoint, no clip art, no bullet points — not as a style choice,
+but because he literally didn't have them. Constraint became method.
+
+## few words
+
+## huge type
+
+## many slides
+The three rules. A typical Takahashi talk runs several slides per minute —
+the slide changes roughly as fast as your sentences do.
+
+# why it works
+
+## a slide is read in one second {accent}
+The audience ingests the slide instantly and returns their attention to
+you. Nobody is reading paragraph three while you're explaining line one.
+
+## no reading ahead
+
+## you carry the content
+The slide is a signpost, not a script. This inverts the usual deck:
+a Takahashi deck is useless without the speaker — which is the point.
+If the deck works without you, why are you there?
+
+## the slide is rhythm {accent}
+Frequent changes create tempo. You can slow down by holding one slide,
+speed up by clicking through five. The deck becomes a percussion track
+for the talk.
+
+## readable from the back row
+The original, practical benefit: 100-point type survives bad projectors,
+bright rooms, and small screens in a way 24-point bullets never do.
+
+# writing one
+
+## one idea per slide
+
+## a phrase, not a sentence {accent}
+Cut until it stops being grammar and starts being a keyword. "Interruptions
+cost about twenty minutes of refocusing" becomes "≈ 20 minutes gone".
+The full sentence goes in your mouth, or in the notes.
+
+## split, don't shrink
+If a phrase wants smaller type, it wants to be two slides.
+Setup on one, punchline on the next — the click is your comma.
+
+## the notes hold the receipts
+Citations, numbers, caveats, transitions: everything that would clutter
+a slide lives in presenter notes. The audience gets the phrase;
+you get the substance.
+
+# how this viewer thinks
+
+## markdown is the deck {accent}
+One plain-text file is the entire talk. "##" is a slide, "#" is a section
+divider, anything under a header is yours alone. Diffable, greppable,
+editable on a phone. No XML, no drag handles.
+
+## text auto-fits
+Each phrase is sized by binary search to fill the screen. You never pick
+a font size — writing a shorter phrase IS the design tool, which quietly
+enforces the method.
+
+## light and dark are meaning {dark}
+The {dark} flag isn't decoration. In the creativity talk, light slides
+are open mode and dark slides are closed mode — the deck switches modes
+with the argument. Steal this: make the theme carry one bit of semantics.
+
+## one accent color {dark accent}
+{accent} exists for the handful of slides that are the talk's spine.
+If more than a fifth of your slides are accented, none of them are.
+
+## the deck stays dumb {accent}
+No transitions, no builds, no layouts. Every feature the viewer lacks
+is a decision the method already made for you. The only moving part
+is your next click.
+
+## now press e {accent}
+Open the editor, break this deck, make your own.
+That's the whole workflow.
+</script>
+
+<script>
+const stage = document.getElementById("stage");
+const word = document.getElementById("word");
+const notesEl = document.getElementById("notes");
+const progressEl = document.getElementById("progress");
+const hintEl = document.getElementById("hint");
+const overviewEl = document.getElementById("overview");
+const editorEl = document.getElementById("editor");
+const mdtext = document.getElementById("mdtext");
+
+let source = document.getElementById("src").textContent;
+let deck = [];
+let index = 0;
+let presenterWin = null;
+let startedAt = null;
+
+function parseHeader(text, divider) {
+  const flags = new Set();
+  const match = text.match(/\{([^}]*)\}\s*$/);
+  if (match) {
+    match[1].split(/\s+/).filter(Boolean).forEach(f => flags.add(f));
+    text = text.slice(0, match.index);
+  }
+  return {
+    text: text.trim().split(/\s*\|\s*/).join("\n"),
+    divider,
+    dark: flags.has("dark"),
+    accent: flags.has("accent"),
+    notes: []
+  };
+}
+
+function parseDeck(md) {
+  const slides = [];
+  let current = null;
+  for (const raw of md.split("\n")) {
+    const line = raw.replace(/\s+$/, "");
+    const h2 = line.match(/^##\s+(.*)$/);
+    const h1 = line.match(/^#\s+(.*)$/);
+    if (h2) { current = parseHeader(h2[1], false); slides.push(current); }
+    else if (h1) { current = parseHeader(h1[1], true); slides.push(current); }
+    else if (current && line.trim()) current.notes.push(line.trim());
+  }
+  return slides;
+}
+
+function fitText() {
+  const maxW = stage.clientWidth - stage.clientWidth * 0.12;
+  const maxH = stage.clientHeight - stage.clientHeight * 0.16;
+  let lo = 14, hi = Math.floor(maxH);
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    word.style.fontSize = mid + "px";
+    const fits = word.scrollWidth <= maxW && word.scrollHeight <= maxH;
+    if (fits) lo = mid; else hi = mid - 1;
+  }
+  word.style.fontSize = lo + "px";
+}
+
+function render() {
+  const slide = deck[index];
+  if (!slide) { word.textContent = "no slides — press e"; return; }
+  document.body.classList.toggle("dark", slide.dark);
+  stage.classList.toggle("accent", slide.accent);
+  stage.classList.toggle("divider", slide.divider);
+  word.textContent = slide.text;
+  fitText();
+  progressEl.textContent = (index + 1) + " / " + deck.length;
+  notesEl.innerHTML = slide.notes.map(n => "<p>" + escapeHtml(n) + "</p>").join("");
+  renderOverviewCursor();
+  updatePresenter();
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+
+function go(delta) {
+  index = Math.max(0, Math.min(deck.length - 1, index + delta));
+  render();
+}
+
+function goTo(i) {
+  index = Math.max(0, Math.min(deck.length - 1, i));
+  render();
+}
+
+function reload(md) {
+  source = md;
+  deck = parseDeck(source);
+  index = Math.min(index, Math.max(0, deck.length - 1));
+  buildOverview();
+  render();
+}
+
+function buildOverview() {
+  overviewEl.innerHTML = "";
+  deck.forEach((slide, i) => {
+    const el = document.createElement("div");
+    el.className = "thumb"
+      + (slide.dark ? " dark" : "")
+      + (slide.accent ? " accent" : "");
+    el.textContent = slide.text;
+    el.addEventListener("click", () => {
+      overviewEl.classList.remove("on");
+      goTo(i);
+    });
+    overviewEl.appendChild(el);
+  });
+}
+
+function renderOverviewCursor() {
+  [...overviewEl.children].forEach((el, i) =>
+    el.classList.toggle("current", i === index));
+}
+
+function toggleNotes() { notesEl.classList.toggle("on"); }
+function toggleOverview() { overviewEl.classList.toggle("on"); }
+
+function openEditor() {
+  mdtext.value = source;
+  editorEl.classList.add("on");
+  mdtext.focus();
+}
+function closeEditor() { editorEl.classList.remove("on"); }
+
+function openPresenter() {
+  presenterWin = window.open("", "presenter", "width=900,height=600");
+  if (!presenterWin) return;
+  presenterWin.document.write(`<!doctype html><meta charset="utf-8">
+    <title>presenter</title>
+    <style>
+      body { margin: 0; font-family: Helvetica, Arial, sans-serif;
+             background: #181818; color: #eee; display: flex; flex-direction: column;
+             height: 100vh; }
+      #top { display: flex; justify-content: space-between; align-items: baseline;
+             padding: 12px 18px; border-bottom: 1px solid #333; }
+      #cur { font-size: 1.6rem; font-weight: 800; }
+      #clock { font-size: 1.4rem; font-variant-numeric: tabular-nums; color: #aaa; }
+      #pnotes { flex: 1; padding: 18px; font-size: 1.5rem; line-height: 1.55; overflow-y: auto; }
+      #pnotes p { margin: .4em 0; max-width: 60ch; }
+      #next { padding: 12px 18px; border-top: 1px solid #333; color: #888; }
+      #next b { color: #ccc; }
+    </style>
+    <div id="top"><div id="cur"></div><div id="clock">00:00</div></div>
+    <div id="pnotes"></div>
+    <div id="next"></div>`);
+  presenterWin.document.close();
+  if (!startedAt) startedAt = Date.now();
+  updatePresenter();
+}
+
+function updatePresenter() {
+  if (!presenterWin || presenterWin.closed) return;
+  const doc = presenterWin.document;
+  const slide = deck[index];
+  const next = deck[index + 1];
+  doc.getElementById("cur").textContent =
+    (index + 1) + "/" + deck.length + "  " + slide.text;
+  doc.getElementById("pnotes").innerHTML =
+    slide.notes.length
+      ? slide.notes.map(n => "<p>" + escapeHtml(n) + "</p>").join("")
+      : "<p style='color:#666'>no notes</p>";
+  doc.getElementById("next").innerHTML =
+    next ? "next: <b>" + escapeHtml(next.text) + "</b>" : "last slide";
+}
+
+setInterval(() => {
+  if (!presenterWin || presenterWin.closed || !startedAt) return;
+  const s = Math.floor((Date.now() - startedAt) / 1000);
+  const mm = String(Math.floor(s / 60)).padStart(2, "0");
+  const ss = String(s % 60).padStart(2, "0");
+  presenterWin.document.getElementById("clock").textContent = mm + ":" + ss;
+}, 1000);
+
+document.getElementById("apply").addEventListener("click", () => {
+  reload(mdtext.value);
+  closeEditor();
+});
+document.getElementById("close").addEventListener("click", closeEditor);
+document.getElementById("save").addEventListener("click", () => {
+  const blob = new Blob([mdtext.value], { type: "text/markdown" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "talk.md";
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+document.getElementById("file").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  file.text().then(text => { mdtext.value = text; reload(text); closeEditor(); });
+});
+
+document.addEventListener("dragover", e => {
+  e.preventDefault();
+  document.body.classList.add("dropping");
+});
+document.addEventListener("dragleave", () => document.body.classList.remove("dropping"));
+document.addEventListener("drop", e => {
+  e.preventDefault();
+  document.body.classList.remove("dropping");
+  const file = e.dataTransfer.files[0];
+  if (file) file.text().then(text => reload(text));
+});
+
+stage.addEventListener("click", e => {
+  if (editorEl.classList.contains("on")) return;
+  go(e.clientX > window.innerWidth / 2 ? 1 : -1);
+});
+
+document.addEventListener("keydown", e => {
+  if (editorEl.classList.contains("on")) {
+    if (e.key === "Escape") closeEditor();
+    return;
+  }
+  const keys = {
+    "ArrowRight": () => go(1), "ArrowDown": () => go(1),
+    " ": () => go(1), "PageDown": () => go(1),
+    "ArrowLeft": () => go(-1), "ArrowUp": () => go(-1), "PageUp": () => go(-1),
+    "Home": () => goTo(0), "End": () => goTo(deck.length - 1),
+    "n": toggleNotes, "o": toggleOverview, "e": openEditor, "p": openPresenter,
+    "f": () => document.documentElement.requestFullscreen?.(),
+    "Escape": () => { overviewEl.classList.remove("on"); notesEl.classList.remove("on"); }
+  };
+  const action = keys[e.key];
+  if (action) { e.preventDefault(); action(); }
+});
+
+window.addEventListener("resize", fitText);
+setTimeout(() => hintEl.style.opacity = "0", 6000);
+
+reload(source);
+</script>
+</body>
+</html>
