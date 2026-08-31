@@ -158,7 +158,7 @@ button, summary, input[type="range"] { -webkit-tap-highlight-color: transparent;
   border-radius: 999px;
   color: var(--pane);
 }
-.chip-16 { background: var(--accent-warm); }
+.chip-12 { background: var(--accent); }
 .chip-24 { background: var(--green); }
 .chip-32 { background: var(--red); }
 .chip-bw { background: var(--modeline); color: var(--ink-soft); border: 1px solid var(--rule); }
@@ -240,7 +240,7 @@ details p { font-size: 14.5px; line-height: 1.6; padding: 8px 0 4px; }
   </div>
   <details id="warmup-box">
     <summary>warm-up · 8 min</summary>
-    <p>Walk or march 3–5 min · hip circles and small leg swings ×10 · shoulder circles ×10 · bodyweight glute bridge ×10 slow · RDL with the 16 ×5 as a rehearsal.</p>
+    <p>Walk or march 3–5 min · hip circles and small leg swings ×10 · shoulder circles ×10 · bodyweight glute bridge ×10 slow · RDL with the 12 ×5 as a rehearsal.</p>
     <p>Optional quad experiment after warm-up: sit-to-stand from a high chair, 2 × 5, slow. Zero pain during and next day, or shelve it for two weeks. Painless for two weeks — lower the seat an inch.</p>
   </details>
   <div id="content"></div>
@@ -257,23 +257,23 @@ const MOVES = {
   pushup: {
     name: "Pushup",
     steps: [
-      { scheme: "2 × 8", load: "bw", note: "hands elevated" },
-      { scheme: "2 × 5", load: "bw" },
-      { scheme: "2 × 8", load: "bw" },
-      { scheme: "3 × 8", load: "bw" },
-      { scheme: "3 × 10", load: "bw" },
+      { scheme: "2 × 8", load: "bw", note: "hands table-high, elbows ~45°" },
+      { scheme: "3 × 8", load: "bw", note: "hands table-high, elbows ~45°" },
+      { scheme: "2 × 8", load: "bw", note: "hands bench-high, elbows ~45°" },
+      { scheme: "3 × 8", load: "bw", note: "hands bench-high" },
+      { scheme: "2 × 5", load: "bw", note: "floor, elbows ~45°" },
+      { scheme: "3 × 8", load: "bw", note: "floor" },
+      { scheme: "3 × 10", load: "bw", note: "floor" },
       { scheme: "3 × 8", load: "bw", note: "3 s lowering" },
-      { scheme: "3 × 10", load: "bw", note: "3 s lowering" },
       { scheme: "3 × 8", load: "bw", note: "feet elevated" },
-      { scheme: "3 × 8", load: "bw", note: "deep, on bell handles" },
       { scheme: "2 × 3 /side", load: "bw", note: "archer" }
     ]
   },
   rdl: {
     name: "Kettlebell RDL",
     steps: [
-      { scheme: "3 × 5", load: 16 },
-      { scheme: "3 × 8", load: 16 },
+      { scheme: "3 × 5", load: 12 },
+      { scheme: "3 × 8", load: 12 },
       { scheme: "3 × 5", load: 24 },
       { scheme: "3 × 6", load: 24 },
       { scheme: "3 × 8", load: 24 },
@@ -287,13 +287,13 @@ const MOVES = {
   row: {
     name: "One-arm row",
     steps: [
-      { scheme: "2 × 5 /side", load: 16 },
-      { scheme: "2 × 8 /side", load: 16 },
+      { scheme: "2 × 5 /side", load: 12 },
+      { scheme: "2 × 8 /side", load: 12 },
+      { scheme: "3 × 8 /side", load: 12 },
       { scheme: "2 × 5 /side", load: 24 },
       { scheme: "2 × 8 /side", load: 24 },
       { scheme: "3 × 8 /side", load: 24 },
       { scheme: "2 × 5 /side", load: 32 },
-      { scheme: "2 × 6 /side", load: 32 },
       { scheme: "2 × 8 /side", load: 32 },
       { scheme: "3 × 8 /side", load: 32 },
       { scheme: "3 × 8 /side", load: 32, note: "3 s lowering" }
@@ -302,15 +302,15 @@ const MOVES = {
   carry: {
     name: "Carry",
     steps: [
-      { scheme: "2 × 20 m /side", load: 16, note: "suitcase" },
-      { scheme: "2 × 30 m /side", load: 16, note: "suitcase" },
+      { scheme: "2 × 20 m /side", load: 12, note: "suitcase" },
+      { scheme: "2 × 30 m /side", load: 12, note: "suitcase" },
       { scheme: "2 × 30 m /side", load: 24, note: "suitcase" },
       { scheme: "2 × 40 m /side", load: 24, note: "suitcase" },
       { scheme: "3 × 40 m /side", load: 24, note: "suitcase" },
       { scheme: "2 × 30 m /side", load: 32, note: "suitcase" },
       { scheme: "2 × 40 m /side", load: 32, note: "suitcase" },
       { scheme: "3 × 40 m /side", load: 32, note: "suitcase" },
-      { scheme: "2 × 30 m", load: "16+24", note: "farmer, swap hands halfway" },
+      { scheme: "2 × 30 m", load: "12+24", note: "farmer, swap hands halfway" },
       { scheme: "2 × 30 m", load: "24+32", note: "farmer, swap hands halfway" }
     ]
   },
@@ -322,9 +322,9 @@ const MOVES = {
       { scheme: "3 × 8 /side", load: "bw", note: "slow" },
       { scheme: "2 × 8 /side", load: "bw", note: "3 s pause" },
       { scheme: "3 × 8 /side", load: "bw", note: "3 s pause" },
-      { scheme: "2 × 5 /side", load: 16, note: "bell over chest" },
-      { scheme: "2 × 8 /side", load: 16, note: "bell over chest" },
-      { scheme: "3 × 8 /side", load: 16, note: "bell over chest" },
+      { scheme: "2 × 5 /side", load: 12, note: "bell over chest" },
+      { scheme: "2 × 8 /side", load: 12, note: "bell over chest" },
+      { scheme: "3 × 8 /side", load: 12, note: "bell over chest" },
       { scheme: "2 × 8 /side", load: 24, note: "bell over chest" },
       { scheme: "3 × 8 /side", load: 24, note: "bell over chest" }
     ]
@@ -341,67 +341,67 @@ const MOVES = {
       { scheme: "3 × 3", load: "bw", note: "strict" },
       { scheme: "3 × 5", load: "bw", note: "strict" },
       { scheme: "5 × 5", load: "bw", note: "strict" },
-      { scheme: "3 × 2", load: 16, note: "bell on a belt" }
+      { scheme: "3 × 2", load: 12, note: "bell on a belt" }
     ]
   },
   press: {
     name: "One-arm press",
     steps: [
-      { scheme: "2 × 3 /side", load: 16 },
-      { scheme: "2 × 5 /side", load: 16 },
-      { scheme: "2 × (1-2-3) /side", load: 16, note: "ladders" },
-      { scheme: "3 × (1-2-3) /side", load: 16, note: "ladders" },
-      { scheme: "2 × 2 /side", load: 24 },
+      { scheme: "2 × 5 /side", load: 12 },
+      { scheme: "2 × 8 /side", load: 12 },
+      { scheme: "2 × (1-2-3) /side", load: 12, note: "ladders" },
+      { scheme: "3 × (1-2-3) /side", load: 12, note: "ladders" },
+      { scheme: "2 × (1-2-3-4-5) /side", load: 12, note: "ladders" },
+      { scheme: "2 × 1–2 /side", load: 24, note: "big jump — singles first" },
       { scheme: "2 × 3 /side", load: 24 },
       { scheme: "2 × 5 /side", load: 24 },
-      { scheme: "3 × 5 /side", load: 24 },
       { scheme: "2 × (1-2-3) /side", load: 24, note: "ladders" },
-      { scheme: "2 × 1–2 /side", load: 32 }
+      { scheme: "2 × 1 /side", load: 32 }
     ]
   },
   bridge: {
     name: "Glute bridge",
     steps: [
       { scheme: "2 × 8", load: "bw" },
-      { scheme: "2 × 8", load: 16, note: "bell on hips" },
-      { scheme: "2 × 10", load: 16, note: "bell on hips" },
+      { scheme: "2 × 8", load: 12, note: "bell on hips" },
+      { scheme: "2 × 10", load: 12, note: "bell on hips" },
       { scheme: "2 × 8", load: 24, note: "bell on hips" },
       { scheme: "2 × 10", load: 24, note: "bell on hips" },
       { scheme: "3 × 10", load: 24, note: "bell on hips" },
       { scheme: "2 × 8", load: 32, note: "bell on hips" },
       { scheme: "2 × 10", load: 32, note: "bell on hips" },
       { scheme: "3 × 10", load: 32, note: "bell on hips" },
-      { scheme: "2 × 5 /side", load: 16, note: "single leg" }
+      { scheme: "2 × 5 /side", load: 12, note: "single leg" }
     ]
   },
   staggered: {
     name: "Staggered RDL",
     steps: [
-      { scheme: "2 × 5 /side", load: 16, note: "regular stance until comfortable" },
-      { scheme: "2 × 5 /side", load: 16 },
-      { scheme: "2 × 8 /side", load: 16 },
+      { scheme: "2 × 5 /side", load: 12, note: "regular stance until comfortable" },
+      { scheme: "2 × 5 /side", load: 12 },
+      { scheme: "2 × 8 /side", load: 12 },
+      { scheme: "3 × 8 /side", load: 12 },
       { scheme: "2 × 5 /side", load: 24 },
       { scheme: "2 × 6 /side", load: 24 },
       { scheme: "2 × 8 /side", load: 24 },
       { scheme: "3 × 8 /side", load: 24 },
       { scheme: "2 × 5 /side", load: 32 },
-      { scheme: "2 × 8 /side", load: 32 },
-      { scheme: "2 × 5 /side", load: 16, note: "single leg" }
+      { scheme: "2 × 5 /side", load: 12, note: "single leg" }
     ]
   },
   getup: {
     name: "Half get-up",
     steps: [
-      { scheme: "2 × 2 /side", load: 16, note: "to the hand, no lunge" },
-      { scheme: "2 × 3 /side", load: 16, note: "to the hand" },
-      { scheme: "3 × 3 /side", load: 16, note: "to the hand" },
-      { scheme: "2 × 2 /side", load: 24, note: "to the hand" },
+      { scheme: "2 × 2 /side", load: 12, note: "to the hand, no lunge" },
+      { scheme: "2 × 3 /side", load: 12, note: "to the hand" },
+      { scheme: "3 × 3 /side", load: 12, note: "to the hand" },
+      { scheme: "3 × 5 /side", load: 12, note: "to the hand" },
+      { scheme: "2 × 2 /side", load: 24, note: "big jump — take it slow" },
       { scheme: "2 × 3 /side", load: 24, note: "to the hand" },
       { scheme: "3 × 3 /side", load: 24, note: "to the hand" },
       { scheme: "2 × 2 /side", load: 32, note: "to the hand" },
       { scheme: "2 × 3 /side", load: 32, note: "to the hand" },
-      { scheme: "3 × 3 /side", load: 32, note: "to the hand" },
-      { scheme: "1 × 1 /side", load: 16, note: "full get-up — only if knees allow" }
+      { scheme: "1 × 1 /side", load: 12, note: "full get-up — only if knees allow" }
     ]
   }
 };
