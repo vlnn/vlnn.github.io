@@ -1,0 +1,1081 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Creativity _ Productivity</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #111111;
+    --muted: #999999;
+    --accent-light: #c1121f;
+    --accent-dark: #ff5c4d;
+    --green-light: #0b8a3e;
+    --green-dark: #37d97b;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    overflow: hidden;
+    transition: background .25s ease, color .25s ease;
+  }
+  body.dark, .stage.dark { --bg: #000000; --fg: #f5f5f5; --muted: #777777; }
+
+  .stage {
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg); color: var(--fg);
+    cursor: default;
+    transition: background .25s ease, color .25s ease;
+  }
+  #stage { position: absolute; inset: 0; padding: 6vmin; }
+  .word {
+    font-weight: 800;
+    line-height: 1.08;
+    text-align: center;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    white-space: pre-wrap;
+  }
+  .stage.accent .word { color: var(--accent-light); }
+  .stage.dark.accent .word { color: var(--accent-dark); }
+  .stage.green .word { color: var(--green-light); }
+  .stage.dark.green .word { color: var(--green-dark); }
+  .stage.divider .word { color: var(--muted); font-weight: 600; letter-spacing: .04em; }
+  .stage.mono .word { font-family: "JuliaMono", "Iosevka", "DejaVu Sans Mono", monospace; font-weight: 400; }
+  .stage.quote .word {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.25;
+  }
+  .stage.quote .word .cite {
+    display: block;
+    margin-top: .6em;
+    font-size: .45em;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: .05em;
+    color: var(--muted);
+  }
+
+  #progress {
+    position: absolute; right: 1.2rem; bottom: 1rem;
+    font-size: .8rem; color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+  }
+  #hint {
+    position: absolute; left: 1.2rem; bottom: 1rem;
+    font-size: .8rem; color: var(--muted);
+    user-select: none;
+    transition: opacity 1s ease;
+  }
+
+  #notes {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    max-height: 34vh; overflow-y: auto;
+    padding: 1rem 1.6rem 1.4rem;
+    background: color-mix(in srgb, var(--bg) 88%, var(--fg));
+    color: var(--fg);
+    font-size: 1.05rem; line-height: 1.5;
+    display: none;
+    border-top: 1px solid var(--muted);
+  }
+  #notes.on { display: block; }
+  #notes p, #pnotes p { margin: .35em 0; max-width: 70ch; }
+
+  #overview {
+    position: absolute; inset: 0;
+    background: var(--bg);
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px; padding: 16px;
+    overflow-y: auto;
+  }
+  #overview.on { display: grid; }
+  .thumb {
+    border: 1px solid var(--muted);
+    border-radius: 4px;
+    aspect-ratio: 16 / 9;
+    display: flex; align-items: center; justify-content: center;
+    padding: 8px; text-align: center;
+    font-weight: 700; font-size: .85rem;
+    white-space: pre-line;
+    cursor: pointer; overflow: hidden;
+    background: #fff; color: #111;
+  }
+  .thumb.dark { background: #000; color: #f5f5f5; }
+  .thumb.accent { color: var(--accent-light); }
+  .thumb.dark.accent { color: var(--accent-dark); }
+  .thumb.green { color: var(--green-light); }
+  .thumb.dark.green { color: var(--green-dark); }
+  .thumb.auto { border-style: dashed; }
+  .thumb.current { outline: 3px solid var(--accent-light); }
+
+  #editor {
+    position: absolute; inset: 0;
+    background: var(--bg);
+    display: none;
+    flex-direction: column;
+    padding: 16px; gap: 10px;
+  }
+  #editor.on { display: flex; }
+  #editor .panes { flex: 1; display: flex; gap: 12px; min-height: 0; }
+  #editor textarea {
+    flex: 1 1 55%; min-width: 0;
+    font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: var(--bg); color: var(--fg);
+    border: 1px solid var(--muted); border-radius: 4px;
+    padding: 12px; resize: none; outline: none;
+  }
+  #preview { flex: 1 1 45%; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+  #pstage {
+    width: 100%; aspect-ratio: 16 / 9; flex: none;
+    padding: 5%;
+    border: 1px solid var(--muted); border-radius: 4px;
+    cursor: pointer;
+  }
+  #plabel { font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  #pnotes { flex: 1; min-height: 0; overflow-y: auto; font-size: .95rem; line-height: 1.5; }
+  #editor .bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  #editor button, #editor label.btn {
+    font: 600 14px/1 inherit;
+    padding: 9px 14px;
+    border: 1px solid var(--fg); border-radius: 4px;
+    background: var(--fg); color: var(--bg);
+    cursor: pointer;
+  }
+  #editor button.quiet, #editor label.btn.quiet { background: var(--bg); color: var(--fg); }
+  #editor .help { font-size: .85rem; color: var(--muted); }
+  #file { display: none; }
+
+  body.dropping::after {
+    content: "drop .md to load";
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: color-mix(in srgb, var(--bg) 70%, var(--fg));
+    font-size: 2rem; font-weight: 700;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body, .stage { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="stage" class="stage"><div id="word" class="word"></div></div>
+<div id="notes"></div>
+<div id="overview"></div>
+
+<div id="editor">
+  <div class="bar">
+    <button id="apply">Apply and present</button>
+    <button id="savehtml">Save .html</button>
+    <label class="btn quiet" for="file">Load .md</label>
+    <input type="file" id="file" accept=".md,.markdown,.txt">
+    <button id="save" class="quiet">Save .md</button>
+    <button id="close" class="quiet">Close</button>
+    <span class="help">## line = slide · text below = presenter notes · flags: {dark accent green mono auto=ms loop pingpong} · | = line break · # line = section divider · ⌘↩ apply · ⌘S save .html · → skips a running animation, ← skips back over it, esc pauses it</span>
+  </div>
+  <div class="panes">
+    <textarea id="mdtext" spellcheck="false"></textarea>
+    <div id="preview">
+      <div id="pstage" class="stage"><div id="pword" class="word"></div></div>
+      <div id="plabel"></div>
+      <div id="pnotes"></div>
+    </div>
+  </div>
+</div>
+
+<div id="progress"></div>
+<div id="hint">arrows: navigate · n: notes · o: overview · e: edit · p: presenter window · f: fullscreen</div>
+
+<script type="text/markdown" id="src">
+
+
+
+
+
+
+
+
+
+
+A deck about the deck format. Load it via "e" → Load .md, or drag it onto
+the viewer. Press n for the notes overlay, p for the presenter window.
+##  ᗧ·•·•·•·•·•{mono auto=150 loop}
+##  ·O•·•·•·•·•{mono auto=50}
+##  ··ᗧ•·•·•·•·{mono auto=150}
+##  ···O·•·•·•·{mono auto=50}
+##  ····ᗧ·•·•·•{mono auto=150}
+##  ·····O•·•·•{mono auto=50}
+##  ······ᗧ·•·•{mono auto=150}
+##  ·······O•·•{mono auto=50}
+##  ········ᗧ·•{mono auto=150}
+##  ·········O·{mono auto=50}
+##  ··········ᗧ{mono auto=150}
+##  ···········{mono auto=750}
+# WELCOME
+welcome
+## Creativity | ██ | Productivity {dark}
+Our today's theme is Creativity khmmmm Productivity
+## 5W
+There is a known framework of five double-yus, which is used to properly describe a story or a fact
+## WHO
+WHO did
+## WHAT
+WHAT
+## WHERE
+WHERE and
+## WHEN
+WHEN and
+## WHY
+WHY
+## WHY
+Why is the hardest question of all 5 questions, as it provides biggest space for interpretations. For instance, during late meetings 5Ws become
+## 2Y
+the question of two Ys that is rarely answered and doesnt require an answer because it is rhetorical question. It is stated like that:
+## Why oh why
+Why oh why. Lots of interpretations as I said, for instance:
+## Why am I | in this room?
+Why am I here in this room?
+Every proper meeting should start with the answer for this main question:
+## Business
+Alas, for every meeting there is same answer: because business
+## Serious | business {accent}
+And it's serious business we're talking about
+## No time | to waste {dark accent}
+As this is a serious workshop, we all have lots of work to do, so let's jump right into the thick of it
+## Choose | a problem
+But in order proceed I want you to do one thing. Think of some specific problem that you're having: in the context of the work or life. Something you can't wrap your head around and that is bothering you. Thing that you several times postponed never finished. Take a 10 sec to remember one. 
+## Pick a problem: | 10 {auto=1200}
+## Pick a problem: | 9 {auto=1200}
+## Pick a problem: | 8 {auto=1200}
+## Pick a problem: | 7 {auto=1200}
+## Pick a problem: | 6 {auto=1200}
+## Pick a problem: | 5 {auto=1200}
+## Pick a problem: | 4 {auto=1200}
+## Pick a problem: | 3 {auto=1200}
+## Pick a problem: | 2 {auto=1200}
+## Pick a problem: | 1 {auto=1200}
+## Got it? {dark}
+OK, get one?
+## Keep it | nearby
+Keep it nearby, but not directly in your head. Let's say a front pocket will do. Now put it in your pocket.
+## img:img/akechi-goro-persona5.gif
+(pause)You may need it a bit later
+## Two words
+Now there are two words that we will use again and again today
+## Word #1
+First one
+## Effectiveness | of effort
+How would you call (in english) the effectiveness of the effort
+## img:img/productivity.jpeg
+hint if someone needs it
+## Productivity
+the effectiveness of the effort is called Productivity
+## Word #2
+Prepare for the second useful word
+## Innovation | imagination | originality
+What is the english word for the innovation, imagination and originality when solving a problem...
+## img:img/creativity.jpeg
+## Creativity
+innovation, imagination and originality during problem solving is called creativity
+## Productivity
+Productivity is expected from any professional
+## Creativity
+Creativity is expected from any professional as well
+## WHY?
+Why? because it's...(next)
+## Good | for | business {dark}
+...good for business
+## Why exactly |we are | here?
+So why exactly we are here?
+## Meeting goal
+The goal of this meeting is to get the answers about (forward quickly)
+## Creativity | vs | Productivity {dark auto=150 pingpong}
+## Creativity | | Productivity {dark auto=150}
+## Creativity | is | Productivity {dark auto=150}
+## Creativity | | Productivity {dark auto=150}
+## Creativity | not | Productivity {dark auto=150}
+## Creativity | | Productivity {dark auto=150}
+## Creativity | forms | Productivity {dark auto=150}
+## Creativity | | Productivity {dark auto=150}
+## Creativity | or | Productivity {dark auto=150}
+## Creativity | | Productivity {dark auto=150}
+## Creativity | kills | Productivity {dark auto=150}
+## Creativity | | Productivity {dark auto=150}
+## Creativity | feeds | Productivity {dark auto=150}
+## Creativity | | Productivity {dark auto=150}
+## Creativity | improves | Productivity {dark auto=150}
+## Creativity | | Productivity {dark auto=150}
+## Creativity | > | Productivity {dark auto=150}
+## Creativity | | Productivity {dark auto=150}
+## Creativity | < | Productivity {dark auto=150}
+## Creativity | | Productivity {dark auto=150}
+## Creativity |  ❤️ | Productivity {dark auto=150}
+## Creativity | ██ | Productivity {dark}
+... answers about this hole in the presentation
+
+## Productivity
+Returning to the productivity
+## measured | planned
+Productivity is loved by management as it works well as a metric as it can be easily:
+measured : it's just an amount of production per time unit: phone calls per day. keypresses per minute. 
+planned or predicted (it's not changing too fast, so historical data will give you good estimate -- if during a month you finish one average task per day it's quite stupid for someone to expect from you to finish 10 tomorrow)
+## Creativity
+Creativity...
+## Not so much
+Not so much! Because it's
+## Hard to | measure
+Hard to measure... How creative is John? How many of his ideas will go into production? How creative is Ooommpa-Loompa? Are they creative in same way as John? Hard to measure and compare.
+## Hard to | plan
+It's hard to plan -- you don't know when your muse will come down from the clouds and give you a genious idea how to fix your shit. To some people she never fly down!
+## Hard to | promise
+It's hard to promise... actually
+## Hard to | promise | and stay reliable
+It's hard to promise and still be reliable person.
+## img:img/strange-animal.jpg
+It's a strange animal! (wailt for a sec)
+## Good reason
+And there's a good reason for that:
+## Novelty
+creativity means producing something that did not exist before. Your brain does not know how to do it, your muscles don't know how to do it, sometimes there is no proper name for that yet -- it's NEW -- but you know, there are creative people that do exist and do creative stuff..
+## BUT | HOW
+If you wonder how you can learn to be creative or how one person is genius in making crazy but working solutions and another is eternally sad panda
+## right | meeting
+Congrats, you are in the right meeting room!
+## Science | approached
+Scientists tried to crack the creativity with usual cycle of hypothesis, experiments and theories and
+## img:img/tumbleweed1.gif
+(pause)
+## img:img/tumbleweed2.gif
+(pause)
+## img:img/tumbleweed3.gif
+(pause)
+## No good | theory
+No good theory. Or rather
+## No | GRAND | theory
+NO single theory, there are lots of good ones but applicable only in specific area.
+# NEGATIVE | APPROACH {dark}
+But what if we try to define non-creative work? Science readily said what creativity is NOT.
+## Not a | talent
+It's proven that the creativity is not a talent. All children are creative with their uncontrollable acts of singing and dancing in the middle of the night or running in circles when their parents are trying to fit them in the car.
+## Not an IQ
+As you may understand from previous example, creativity also is not about IQ level, as some children are pretty stupid but very creative. Starting with some median IQ level creativity stops corellating with IQ. If you're around 120 IQ your brain is not the bottleneck anymore.
+## Not the solution
+Creativity as strange as it may seem is rarely provides direct answers to the problem. It's rather provides you a general plan of action, pack of drafts on how you could approach the solution. In other words,
+## Way of | operating
+Creativity is a way of operating, way of doing things.
+## Imagine | yourself | at work
+Let's imagine how we usually work. Actually ...
+## Imagine | someone | at work
+We humans are not very good in imagining how we work, but we're pretty good in investigating someone else's work. So imagine your colleague or boss or imaginary friend at work
+## Typical work
+Typical work day is lots of things
+# Good for | business {dark}
+You know
+## Lots of things
+Lots of things
+## Lots of things | to be done
+lots of things to be done
+## Working person
+Working person is usually
+## Active
+They are active (pause) or pretending to be active, sometimes internally
+## Active + anxious
+Active and anxious, and this anxiety is because of some pressure of the environment like deadline or early meeting tomorrow
+## Active + anxious + impatient
+Active and anxious and impatient, as the brain tries to remove the pressure and remove it NOW
+## Active + anxious + impatient + tense
+Active and anxious and impatient and tense, as the body tries to be ready to react to the pressure
+## Active + anxious + impatient + tense + focused
+Active and anxious and impatient and tense and focused, at least for some time, as you know, we don't want to put even more stress by doing some mistakes
+## Active + anxious + impatient + tense + focused + goal-oriented
+So we are Active and anxious and imatient and tense and focused and goal-oriented, as it seems that getting to the finish of the todo list will remove the stress from your shoulders
+## Serious
+And to top all of that we are very serious, as it's hard to find time to joke around.
+# Serious | business {dark}
+It's a serious business
+# Very | productive
+This is default mode of any business environment called 
+## Closed mode
+Closed mode or to be more scientific
+## Closed mode of operation
+Closed mode of operation. Imagine a focused surgeon doing complex operation -- this is same psychological picture as you replying someone's email.
+## Expected default
+This is a mode in which worker is being trained to work in as this mode is very good to make shit done.
+## Two problems
+Two problems here:
+## 1. Not | creative
+ It is not creative, in fact it's opposite to the creativity
+## 2. Not fun
+If you heard about burn-out, this is the mode that is very closely correlated with burn-out, when productive specialists suddenly find out that it's harder and harder for them to even start task, not speaking of finishing ones that were started. So it's hard mode to be in.
+## Open | mode
+Open mode in contrast is
+## relaxed
+relaxed
+## relaxed + expansive
+relaxed and expansive -- in the meaning you're in slight unfocus, gathering a situation as a whole
+## relaxed + expansive + not goal-driven
+relaxed, expansive, not directly goal-driven, less purposeful, sometimes thinking about other stuff
+## relaxed + expansive + not goal driven + curious
+people in this mode are also curious. It's interesting stuff they are contemplating, the stuff that is not always the same, new stuff
+## relaxed + expansive + not goal driven + curious + | playful
+And also this mode is playful
+## Playful {green}
+Yes, playful! (autoplay now, wait for couple seconds)
+# Good | | | {dark green auto=1000}
+# Good | for | | {dark green auto=800}
+# Good | for | business {dark green}
+Which interstingly is also good for business
+## Creative
+Known creative persons like Einstein or Hitchkok even in very hard and pressing situations were tending to find some place for humor and relaxation, sometimes on schedule.
+
+## Sustainable work
+So sustainable work is a sequence of different modes of operation,
+## open -> closed
+where you switching between open and closed modes, 
+## open -> closed -> open -> closed
+getting ideas and new stuff in one, and making them work properly in another, getting feedback, and switch back again. Like breathing, where you need both get fresh air in and then exhale produced stuff. 
+## OPEN | to | INNOVATE
+Of course, open mode is very good for innovation and has some restorative qualities
+## BUT
+# CLOSE | to | PERFORM
+but closed mode is very good for actually performing your daily tasks
+
+## Creative | ...
+I mean imagine
+## Creative | surgeon
+surgeon who creatively adding you another nose
+## Creative | plumber
+or creative plumber doing state of art canalisation somewhere above your tv
+## Creative | banker
+or creative banker (small pause)
+## Creative | judge
+or creative judge.. you know... looks like I'm describing some ukrainian institutions here.
+
+## When to open
+So when should we use open mode?
+## Creative stuff | like planning
+Planning your work
+## Creative stuff | like solving problem
+Getting some complex stuff resolved or deciding how to resolve it
+## Creative stuff | like making art
+Making some art
+## Creative stuff | like connections
+Talking with people
+
+
+## When to close
+Now, when should we get back to closed mode?
+## Getting shit done
+Well, when you have good enough plan and you ready to perform.
+## Security related thing
+When you're doing some serious stuff (hopefully you already have some plan)
+## beginners task
+You will be shocked, but we usually close every newcomer by giving them first tasks. By definition they are simple and well-documented, and they cover the need of person to get around new company -- but it also starts a spiral of closed mode in their brain.
+
+## Stuck in | closed mode
+But as i said, usually at work we tend to stuck in the closed mode. Because we expect this to be a real work, and business usually expects the same. No-one usually saying to you: you know, just relax and think about things. No! You don't have time for that shit, and also did you answered my late night message? So organically we spend too much time being in closed mode.
+## Serious | business | strikes again {accent dark}
+because you know
+## How to | unstuck
+There is a way to quickly switch from closed to open mode
+## John Cleese's | recipe
+## img:img/cleese.jpg
+This guy from Monty Python who was very successful business trainer, and who knows a thing or two about creativity
+## 1. Space
+So you need Space (next)
+## 2. Time
+Time (next)
+## 3. Time
+Time (next)
+## 4. Confidence
+Time (next)
+## 5. Humor
+Humor 
+## 1. Space
+First, you need some safe place to be creative at. Go inside some room, close the door, lock the door, switch the phone off, forget the laptop outside -- sometimes a good idea. But main thing -- it should be some slightly unusual but safe place. Prefer park to your work desk.
+
+## 2. Time
+To use the space from previous slide you need to fit into it for some time. Take a pause for creativity to kick in. Usually it takes around
+## 30 min doing nothing
+Usually it take around 30 minutes to switch to open mode
+# BAD FOR | BuSINess
+bad for business, but whatever
+# Relax
+## don't eat
+## don't sleep
+## don't read
+## being tired is a plus {accent}
+Unexpected but proven scientifically
+## just be {green}
+## 3. Time
+After 30 minutes you spending to filter out usual stuff from your head, 
+## It's time | to think
+Actually your brain will manage it yourself. It will wonder around, your task is just keep returning it somewhere near the problem is. Where did we put it, into the front pocket? 
+## 30m + 1h
+Usually it's hard to be creative more than 40-60 minutes in one go, so
+## go block | 1h 30m | in calendar
+Go block 1h 30min in your calendar, maybe twice a week. Call it focus time or whatever. Don't expect anyone will make you do it, and even if your manager will make you to be creative from 900 till 1030 every day, it will not work. Believe me.
+
+## 4. Confidence
+Confidence is another quality of playful behavior. There is no place for fear in the game, or it's not a game anymore. So you should fearlessly investigate any ideas that kinda relate to your problem, like importing cheese from the moon? OK. FEARLESSLY. (don't forget, you're in your safe place and your phone is switched off)
+## fear of looking stupid | is the top predictor of | uncreative teams
+Google made experiments on internal teams and safe environments are the top predictors of creativity
+
+## 5. Humor
+Interesting thing about humor is that it switches brains from close to open mode faster than anything else. If you think about any good joke, it is always about taking different ideas and pushing them together.
+## Connecting | frameworks of | references
+it is called connecting frameworks of references
+# SCIENCE | AGAIN
+As an example: Imagine there is a scientific research on correllation between risk and sex, and when interviewing a fighter pilot they ask (among other thing) when he had sex last time. He answers, well around twenty-oh-one. 
+## 2001
+Interviewer is taken a bit aback, as they know a you know reputation of fighter pilots after rewatching TOP GUN several times, and asks back -- what, twenty-oh-one, so long time ago? 
+## 20:15
+Well, pilot responds, 14 minutes ago, it's now twenty-fifteen, right?
+## Connecting | frameworks of | references
+This what connecting frameworks of reference means -- two different models of what 2001 means are pushed together to provide some humor. Same thing is about synthesizing a solution from some seemingly unrelated areas is what creativity uses all the time.
+
+## 5 steps to | open mode
+So we have those 5 steps -- Space, Time, Time, Confidence and Humor.
+
+## Mixbag of | cheap wins
+## Walking alone {green}
+Proved scientifically by Oppezzo & Schwartz: when walking alone, roughly 60% more ideas generated.
+## Reread and walk away
+When continuously failing with some problem, dont rush through it, but rather tend to read it and leave it for some time.
+## Nap for couple minutes
+Small nap may help for some people, relieving the brain from the stress and providing it a bit of openness.
+
+## Remember | the problem | in the pocket?
+Remember that problem I asked you to put in your front pocket?
+
+## Tired people
+Lots of nice but tired people
+## End of day
+got together in the end of the work day
+## Lots of stupid jokes
+listened to jokes for a while
+## Lots of novelties
+heard something new...
+## You have been hacked {dark green}
+You have been hacked
+## We're open
+At least some of you were in open state for ~15 minutes.
+## You may have answer
+We don't have full hour-and-thirty minutes session today, and I was constantly derailing you from your problem by design, but just be aware, that some of you may get the solution a bit closer later today, or next time when feeling open.
+
+## Creativity | ██ | Productivity {dark}
+
+## THE END
+if we have time click next
+
+## How to stop the creativity | and start working
+Come to my next workshop
+
+## Let's stuck again
+To switch back to close mode 
+## Time box
+timebox your tasks before starting
+## deadlines
+remind yourself of deadlines
+## checklists
+Checklists are creativity killers (and it's great!), so aviation and doctors are using them all the time.
+## Log your previous day
+structures your creativity into history
+
+## THE REAL END {dark green}
+## THANK YOU {green dark}
+
+
+
+ 
+
+
+
+
+</script>
+
+<script>
+const pristineHtml = "<!doctype html>\n" + document.documentElement.outerHTML;
+
+const stage = document.getElementById("stage");
+const word = document.getElementById("word");
+const notesEl = document.getElementById("notes");
+const progressEl = document.getElementById("progress");
+const hintEl = document.getElementById("hint");
+const overviewEl = document.getElementById("overview");
+const editorEl = document.getElementById("editor");
+const mdtext = document.getElementById("mdtext");
+const pstage = document.getElementById("pstage");
+const pword = document.getElementById("pword");
+const plabel = document.getElementById("plabel");
+const pnotes = document.getElementById("pnotes");
+
+const SRC_OPEN = '<script type="text/markdown" id="src">';
+const SRC_CLOSE = "<\/script>";
+
+function unescapeSource(s) { return s.replace(/<\\\/script/gi, "<\/script"); }
+function escapeSource(s) { return s.replace(/<\/script/gi, "<\\/script"); }
+
+let source = unescapeSource(document.getElementById("src").textContent);
+let deck = [];
+let index = 0;
+let draft = [];
+let draftIndex = 0;
+let presenterWin = null;
+let startedAt = null;
+
+function parseHeader(text, divider, line) {
+  const flags = new Set();
+  let auto = null;
+  const match = text.match(/\{([^}]*)\}\s*$/);
+  if (match) {
+    for (const f of match[1].split(/\s+/).filter(Boolean)) {
+      const m = f.match(/^auto(?:=(\d+))?$/);
+      if (m) auto = Number(m[1] ?? 100);
+      else flags.add(f);
+    }
+    text = text.slice(0, match.index);
+  }
+  const img = text.trim().match(/^img:(\S+)$/);
+  return {
+    text: text.trim().split(/\s*\|\s*/).join("\n"),
+    image: img ? img[1] : null,
+    divider,
+    line,
+    dark: flags.has("dark"),
+    accent: flags.has("accent"),
+    green: flags.has("green"),
+    mono: flags.has("mono"),
+    quote: flags.has("quote"),
+    auto,
+    loop: flags.has("loop"),
+    pingpong: flags.has("pingpong"),
+    notes: []
+  };
+}
+
+function parseDeck(md) {
+  const slides = [];
+  let current = null;
+  md.split("\n").forEach((raw, lineNo) => {
+    const line = raw.replace(/\s+$/, "");
+    const h2 = line.match(/^##\s+(.*)$/);
+    const h1 = line.match(/^#\s+(.*)$/);
+    if (h2) { current = parseHeader(h2[1], false, lineNo); slides.push(current); }
+    else if (h1) { current = parseHeader(h1[1], true, lineNo); slides.push(current); }
+    else if (current && line.trim()) current.notes.push(line.trim());
+  });
+  return slides;
+}
+
+function fitText(stageEl, wordEl) {
+  const maxW = stageEl.clientWidth * 0.88;
+  const maxH = stageEl.clientHeight * 0.84;
+  const img = wordEl.querySelector("img");
+  if (img) {
+    img.style.maxWidth = maxW + "px";
+    img.style.maxHeight = maxH + "px";
+    return;
+  }
+  let lo = 14, hi = Math.floor(maxH);
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    wordEl.style.fontSize = mid + "px";
+    const fits = wordEl.scrollWidth <= maxW && wordEl.scrollHeight <= maxH;
+    if (fits) lo = mid; else hi = mid - 1;
+  }
+  wordEl.style.fontSize = lo + "px";
+}
+
+function paint(slide, stageEl, wordEl) {
+  for (const flag of ["dark", "accent", "green", "mono", "divider", "quote"])
+    stageEl.classList.toggle(flag, slide[flag]);
+  renderWord(slide, wordEl);
+  fitText(stageEl, wordEl);
+}
+
+function renderWord(slide, wordEl) {
+  wordEl.textContent = "";
+  if (slide.image) {
+    const img = document.createElement("img");
+    img.src = slide.image;
+    img.alt = slide.image;
+    wordEl.appendChild(img);
+    return;
+  }
+  if (!slide.quote) { wordEl.textContent = slide.text; return; }
+  const lines = slide.text.split("\n");
+  const body = lines.filter(l => !l.startsWith("—"));
+  const cites = lines.filter(l => l.startsWith("—"));
+  wordEl.append("“" + body.join("\n") + "”");
+  for (const c of cites) {
+    const cite = document.createElement("span");
+    cite.className = "cite";
+    cite.textContent = c;
+    wordEl.appendChild(cite);
+  }
+}
+
+function notesHtml(slide) {
+  return slide.notes.map(n => "<p>" + escapeHtml(n) + "</p>").join("");
+}
+
+function render() {
+  const slide = deck[index];
+  if (!slide) { word.textContent = "no slides — press e"; return; }
+  document.body.classList.toggle("dark", slide.dark);
+  paint(slide, stage, word);
+  progressEl.textContent = (index + 1) + " / " + deck.length;
+  notesEl.innerHTML = notesHtml(slide);
+  renderOverviewCursor();
+  updatePresenter();
+}
+
+function renderPreview() {
+  const slide = draft[draftIndex];
+  plabel.textContent = slide ? (draftIndex + 1) + " / " + draft.length : "no slides";
+  if (!slide) { pword.textContent = ""; pnotes.innerHTML = ""; return; }
+  paint(slide, pstage, pword);
+  pnotes.innerHTML = notesHtml(slide);
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+
+function syncHash() { history.replaceState(null, "", "#" + (index + 1)); }
+
+function indexFromHash() {
+  const n = parseInt(location.hash.slice(1), 10);
+  return Number.isFinite(n) ? n - 1 : 0;
+}
+
+let autoTimer = null;
+let autoPaused = false;
+let autoDir = 1;
+
+function autoDelay(i) { return deck[i]?.auto ?? null; }
+
+function runBounds(i) {
+  let start = i, end = i;
+  while (start > 0 && autoDelay(start - 1) !== null) start--;
+  while (end < deck.length - 1 && autoDelay(end + 1) !== null) end++;
+  return [start, end];
+}
+
+function runStart(i) { return deck[runBounds(i)[0]]; }
+
+function cancelAuto() { clearTimeout(autoTimer); autoTimer = null; }
+
+function scheduleAuto() {
+  cancelAuto();
+  if (autoPaused) return;
+  const delay = autoDelay(index);
+  if (delay !== null) autoTimer = setTimeout(stepAuto, delay);
+}
+
+function stepAuto() {
+  const [start, end] = runBounds(index);
+  const next = index + autoDir;
+  if (next >= start && next <= end) return show(next);
+  if (runStart(index).pingpong && end > start) { autoDir = -autoDir; return show(index + autoDir); }
+  if (runStart(index).loop) { autoDir = 1; return show(start); }
+  if (index < deck.length - 1) show(index + 1); else cancelAuto();
+}
+
+function show(i) {
+  index = Math.max(0, Math.min(deck.length - 1, i));
+  if (autoDelay(index) === null) { autoPaused = false; autoDir = 1; }
+  render();
+  syncHash();
+  scheduleAuto();
+}
+
+function skipRun(direction) {
+  cancelAuto();
+  autoDir = 1;
+  const [start, end] = runBounds(index);
+  const target = direction > 0 ? end + 1 : start - 1;
+  autoPaused = target < 0 || target >= deck.length;
+  show(target);
+}
+
+function go(delta) {
+  if (autoTimer) return skipRun(delta);
+  const target = index + delta;
+  if (delta < 0 && !autoPaused && autoDelay(index) === null && autoDelay(target) !== null) {
+    index = Math.max(0, target);
+    return skipRun(-1);
+  }
+  autoDir = 1;
+  show(target);
+}
+
+function goTo(i) {
+  cancelAuto();
+  autoPaused = false;
+  autoDir = 1;
+  show(i);
+}
+
+function toggleAutoPause() {
+  if (autoDelay(index) === null) return;
+  autoPaused = !autoPaused;
+  autoPaused ? cancelAuto() : scheduleAuto();
+}
+
+function reload(md) {
+  source = md;
+  deck = parseDeck(source);
+  cancelAuto();
+  autoPaused = false;
+  autoDir = 1;
+  buildOverview();
+  show(Math.min(index, Math.max(0, deck.length - 1)));
+}
+
+function buildOverview() {
+  overviewEl.innerHTML = "";
+  deck.forEach((slide, i) => {
+    const el = document.createElement("div");
+    el.className = "thumb"
+      + (slide.dark ? " dark" : "")
+      + (slide.accent ? " accent" : "")
+      + (slide.green ? " green" : "")
+      + (slide.auto !== null ? " auto" : "");
+    el.textContent = slide.text;
+    el.addEventListener("click", () => {
+      overviewEl.classList.remove("on");
+      goTo(i);
+    });
+    overviewEl.appendChild(el);
+  });
+}
+
+function renderOverviewCursor() {
+  [...overviewEl.children].forEach((el, i) =>
+    el.classList.toggle("current", i === index));
+}
+
+function toggleNotes() { notesEl.classList.toggle("on"); }
+
+function toggleOverview() {
+  if (!overviewEl.classList.contains("on")) cancelAuto();
+  overviewEl.classList.toggle("on");
+}
+
+function lineOfCursor() {
+  return mdtext.value.slice(0, mdtext.selectionStart).split("\n").length - 1;
+}
+
+function lineStart(text, line) {
+  const before = text.split("\n").slice(0, line);
+  return before.join("\n").length + (line > 0 ? 1 : 0);
+}
+
+function slideIndexAtLine(slides, line) {
+  let found = 0;
+  slides.forEach((s, i) => { if (s.line <= line) found = i; });
+  return found;
+}
+
+function placeCaretAtLine(line) {
+  const pos = lineStart(mdtext.value, line);
+  mdtext.focus();
+  mdtext.setSelectionRange(pos, pos);
+  const lineHeight = parseFloat(getComputedStyle(mdtext).lineHeight);
+  mdtext.scrollTop = Math.max(0, line * lineHeight - mdtext.clientHeight / 3);
+  syncPreviewToCursor();
+}
+
+function syncPreviewToCursor() {
+  draftIndex = slideIndexAtLine(draft, lineOfCursor());
+  renderPreview();
+}
+
+function refreshDraft() {
+  draft = parseDeck(mdtext.value);
+  syncPreviewToCursor();
+}
+
+function stepPreview(delta) {
+  const target = Math.max(0, Math.min(draft.length - 1, draftIndex + delta));
+  if (draft[target]) placeCaretAtLine(draft[target].line);
+}
+
+function isEditing() { return editorEl.classList.contains("on"); }
+
+function openEditor() {
+  cancelAuto();
+  mdtext.value = source;
+  editorEl.classList.add("on");
+  refreshDraft();
+  placeCaretAtLine(deck[index]?.line ?? 0);
+}
+
+function closeEditor() { editorEl.classList.remove("on"); }
+
+function applyEditor() {
+  index = draftIndex;
+  reload(mdtext.value);
+  closeEditor();
+}
+
+function download(name, content, type) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([content], { type }));
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function htmlFileName() {
+  return decodeURIComponent(location.pathname.split("/").pop()) || "talk.html";
+}
+
+function htmlWithSource(md) {
+  const start = pristineHtml.indexOf(SRC_OPEN) + SRC_OPEN.length;
+  const end = pristineHtml.indexOf(SRC_CLOSE, start);
+  return pristineHtml.slice(0, start) + "\n" + escapeSource(md) + "\n" + pristineHtml.slice(end);
+}
+
+function saveHtml() {
+  if (isEditing()) { index = draftIndex; reload(mdtext.value); }
+  download(htmlFileName(), htmlWithSource(source), "text/html");
+}
+
+function openPresenter() {
+  presenterWin = window.open("", "presenter", "width=900,height=600");
+  if (!presenterWin) return;
+  presenterWin.document.write(`<!doctype html><meta charset="utf-8">
+    <title>presenter</title>
+    <style>
+      body { margin: 0; font-family: Helvetica, Arial, sans-serif;
+             background: #181818; color: #eee; display: flex; flex-direction: column;
+             height: 100vh; }
+      #top { display: flex; justify-content: space-between; align-items: baseline;
+             padding: 12px 18px; border-bottom: 1px solid #333; }
+      #cur { font-size: 1.6rem; font-weight: 800; }
+      #clock { font-size: 1.4rem; font-variant-numeric: tabular-nums; color: #aaa; }
+      #pnotes { flex: 1; padding: 18px; font-size: 1.5rem; line-height: 1.55; overflow-y: auto; }
+      #pnotes p { margin: .4em 0; max-width: 60ch; }
+      #next { padding: 12px 18px; border-top: 1px solid #333; color: #888; }
+      #next b { color: #ccc; }
+    </style>
+    <div id="top"><div id="cur"></div><div id="clock">00:00</div></div>
+    <div id="pnotes"></div>
+    <div id="next"></div>`);
+  presenterWin.document.close();
+  if (!startedAt) startedAt = Date.now();
+  updatePresenter();
+}
+
+function updatePresenter() {
+  if (!presenterWin || presenterWin.closed) return;
+  const slide = deck[index];
+  if (!slide) return;
+  const doc = presenterWin.document;
+  const next = deck[index + 1];
+  doc.getElementById("cur").textContent =
+    (index + 1) + "/" + deck.length + "  " + slide.text;
+  doc.getElementById("pnotes").innerHTML =
+    slide.notes.length ? notesHtml(slide) : "<p style='color:#666'>no notes</p>";
+  doc.getElementById("next").innerHTML =
+    next ? "next: <b>" + escapeHtml(next.text) + "</b>" : "last slide";
+}
+
+setInterval(() => {
+  if (!presenterWin || presenterWin.closed || !startedAt) return;
+  const s = Math.floor((Date.now() - startedAt) / 1000);
+  const mm = String(Math.floor(s / 60)).padStart(2, "0");
+  const ss = String(s % 60).padStart(2, "0");
+  presenterWin.document.getElementById("clock").textContent = mm + ":" + ss;
+}, 1000);
+
+document.getElementById("apply").addEventListener("click", applyEditor);
+document.getElementById("savehtml").addEventListener("click", saveHtml);
+document.getElementById("close").addEventListener("click", closeEditor);
+document.getElementById("save").addEventListener("click", () =>
+  download("talk.md", mdtext.value, "text/markdown"));
+document.getElementById("file").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  file.text().then(text => { mdtext.value = text; reload(text); closeEditor(); });
+});
+
+let draftTimer = null;
+mdtext.addEventListener("input", () => {
+  clearTimeout(draftTimer);
+  draftTimer = setTimeout(refreshDraft, 120);
+});
+for (const ev of ["keyup", "click", "select"]) mdtext.addEventListener(ev, syncPreviewToCursor);
+pstage.addEventListener("click", e => stepPreview(e.offsetX > pstage.clientWidth / 2 ? 1 : -1));
+
+document.addEventListener("dragover", e => {
+  e.preventDefault();
+  document.body.classList.add("dropping");
+});
+document.addEventListener("dragleave", () => document.body.classList.remove("dropping"));
+document.addEventListener("drop", e => {
+  e.preventDefault();
+  document.body.classList.remove("dropping");
+  const file = e.dataTransfer.files[0];
+  if (file) file.text().then(text => reload(text));
+});
+
+stage.addEventListener("click", e => {
+  if (isEditing()) return;
+  go(e.clientX > window.innerWidth / 2 ? 1 : -1);
+});
+
+document.addEventListener("keydown", e => {
+  const mod = e.metaKey || e.ctrlKey;
+  if (mod && e.key === "s") { e.preventDefault(); saveHtml(); return; }
+  if (isEditing()) {
+    if (e.key === "Escape") applyEditor();
+    if (mod && e.key === "Enter") applyEditor();
+    return;
+  }
+  const keys = {
+    "ArrowRight": () => go(1), "ArrowDown": () => go(1),
+    " ": () => go(1), "PageDown": () => go(1),
+    "ArrowLeft": () => go(-1), "ArrowUp": () => go(-1), "PageUp": () => go(-1),
+    "Home": () => goTo(0), "End": () => goTo(deck.length - 1),
+    "n": toggleNotes, "o": toggleOverview, "e": openEditor, "p": openPresenter,
+    "f": () => document.documentElement.requestFullscreen?.(),
+    "Escape": () => {
+      if (overviewEl.classList.contains("on") || notesEl.classList.contains("on")) {
+        overviewEl.classList.remove("on");
+        notesEl.classList.remove("on");
+        scheduleAuto();
+      } else toggleAutoPause();
+    }
+  };
+  const action = keys[e.key];
+  if (action) { e.preventDefault(); action(); }
+});
+
+window.addEventListener("hashchange", () => {
+  const i = indexFromHash();
+  if (i !== index) goTo(i);
+});
+
+document.addEventListener("visibilitychange", () =>
+  document.hidden ? cancelAuto() : scheduleAuto());
+
+window.addEventListener("resize", () => {
+  fitText(stage, word);
+  if (isEditing()) renderPreview();
+});
+setTimeout(() => hintEl.style.opacity = "0", 6000);
+
+index = indexFromHash();
+reload(source);
+</script></body></html>
