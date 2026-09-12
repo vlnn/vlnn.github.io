@@ -15,4 +15,12 @@ The method is built on a simple insight: ***when slides contain too much informa
 4. Text only
 5. Speaker matters
 
-[Example presentation in this style](https://vlnn.dev/presentations/takahashi.html)
+[Mine example presentation in this style](https://vlnn.dev/presentations/takahashi.html), [Another one](https://vlnn.dev/presentations/creativity.html)
+
+[Tom McWright](tom-mcwright.md)'s [implementation called Big](https://macwright.com/2011/10/28/big)
+
+## Related
+
+- [Tom McWright](tom-mcwright.md)
+- [Vlnn.dev/presentations/creativity.html](vlnn-dev-presentations-creativity-html.md)
+

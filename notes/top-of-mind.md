@@ -12,9 +12,11 @@ I stole the idea for this one from [this Andy Matuschak's note](https://notes.an
 # General
 * Techniques for [reading efficiently](depth-graded-overviews-method.md) (also [code reviews](code-reviews.md))
 * [Memorization techniques](memorization-techniques.md)
+* [Creativity techniques](https://vlnn.dev/presentations/creativity.html)
 # Programming
 * Estimating and measuring programs resources
 * Improving my [zt: forth for z80](https://github.com/vlnn/zt)
+* Dyalog APL support in Emacs
 # Books
 * Topoi by Robert Goldblatt
 * Aubrey-Maturin series
