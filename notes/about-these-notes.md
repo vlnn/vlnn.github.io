@@ -5,7 +5,7 @@ brain-id: 75aace98-059e-4d9c-b3ad-4280853b1bc4
 tags: [meta]
 ---
 
-Hi! I'm Volodymyr Anokhin ([@vlnn](https://github.com/vlnn)). These are my working notes, all in interlinked disarray. Click any internal link (the "ochre" ones) and it opens as a new pane to the right; the trail you follow lives in the URL, so you can share it.
+Hi! I'm Volodymyr Anokhin ([@vlnn](https://github.com/vlnn)). These are my working notes, all in interlinked disarray. Click any internal link (the "ochre" ones) and it opens as a new pane to the right; the trail you follow lives in the URL, so you can share it. Every "big" articles whatever I feel "big" is published with [rss](https://vlnn.dev/rss.xml) and [atom](https://vlnn.dev/atom.xml), smaller ones are usually just present to glue information together.
 
 Curious about the machinery? See [How this site works](how-this-site-works.md), [How I write these notes](how-i-write-these-notes.md).
 

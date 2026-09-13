@@ -12,11 +12,11 @@ I stole the idea for this one from [this Andy Matuschak's note](https://notes.an
 # General
 * Techniques for [reading efficiently](depth-graded-overviews-method.md) (also [code reviews](code-reviews.md))
 * [Memorization techniques](memorization-techniques.md)
-* [Creativity techniques](https://vlnn.dev/presentations/creativity.html)
+* [Creativity techniques](https://vlnn.dev/presentations/creativity.html) (presentation in [Takahashi style](takahashi-method.md))
 # Programming
 * Estimating and measuring programs resources
 * Improving my [zt: forth for z80](https://github.com/vlnn/zt)
-* Dyalog APL support in Emacs
+* [Dyalog APL support](https://github.com/vlnn/ride-apl) in Emacs (connect to running interpreter like Cider does, debugging as well)
 * [Programming styles](programming-styles.md)
 # Books
 * Topoi by Robert Goldblatt
