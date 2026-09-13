@@ -19,8 +19,8 @@ Not all notes here are evergreen for sure. This is rather spectrum quality that 
 
 ## Related
 
-- [How I write these notes](how-i-write-these-notes.md)
 - [Knowledge work](knowledge-work.md)
+- [How I write these notes](how-i-write-these-notes.md)
 - [Evergreen notes should be concept-oriented](evergreen-notes-should-be-concept-oriented.md)
 - [Evergreen notes should be atomic](evergreen-notes-should-be-atomic.md)
 - [Digital Garden](digital-garden.md)

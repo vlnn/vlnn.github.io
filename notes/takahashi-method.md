@@ -22,5 +22,4 @@ The method is built on a simple insight: ***when slides contain too much informa
 ## Related
 
 - [Tom McWright](tom-mcwright.md)
-- [Vlnn.dev/presentations/creativity.html](vlnn-dev-presentations-creativity-html.md)
 

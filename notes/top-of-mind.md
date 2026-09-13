@@ -17,6 +17,7 @@ I stole the idea for this one from [this Andy Matuschak's note](https://notes.an
 * Estimating and measuring programs resources
 * Improving my [zt: forth for z80](https://github.com/vlnn/zt)
 * Dyalog APL support in Emacs
+* [Programming styles](programming-styles.md)
 # Books
 * Topoi by Robert Goldblatt
 * Aubrey-Maturin series
@@ -26,6 +27,7 @@ I stole the idea for this one from [this Andy Matuschak's note](https://notes.an
 
 ## Related
 
+- [Programming styles](programming-styles.md)
 - [Heavy on the Marsport](heavy-on-the-marsport.md)
 - [Memorization techniques](memorization-techniques.md)
 

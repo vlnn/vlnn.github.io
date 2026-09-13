@@ -21,6 +21,7 @@ I was reading this article as "programmer's view on [The Sapir-Whorf hypothesis]
 
 ## Related
 
+- [Programming styles](programming-styles.md)
 - [The Sapir-Whorf hypothesis](the-sapir-whorf-hypothesis.md)
 - [Constraints define the style](constraints-define-the-style.md)
 
