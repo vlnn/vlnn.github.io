@@ -48,6 +48,12 @@ def extract_md_note_links(text):
     return unique(MD_LINK_RE.findall(text))
 
 
+def is_stub(text):
+    body = FRONTMATTER_RE.sub("", text)
+    body = MD_HEADING_RE.sub("", body, count=1)
+    return not body.strip()
+
+
 def invert_links(graph):
     backlinks = {slug: [] for slug in graph}
     for source, targets in graph.items():
@@ -101,6 +107,7 @@ def parse_note(path):
         "file": path.name,
         "links": extract_md_note_links(text),
         "prompts": extract_md_prompts(text),
+        "stub": is_stub(text),
     }
 
 

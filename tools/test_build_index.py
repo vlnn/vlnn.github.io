@@ -3,6 +3,7 @@ import json
 import pytest
 
 from build_index import (
+    is_stub,
     build_index,
     extract_md_note_links,
     extract_md_prompts,
@@ -88,6 +89,7 @@ def test_build_index_end_to_end(tmp_path):
         "file": "a.md",
         "links": ["b"],
         "prompts": [],
+        "stub": False,
         "backlinks": [],
     }, "build_index should produce complete metadata per note"
     assert index["notes"]["b"]["backlinks"] == ["a"], (
@@ -191,3 +193,27 @@ def test_current_commit_without_git(mocker):
     assert current_commit() == "", (
         "current_commit should degrade to empty when git is unavailable"
     )
+
+
+@pytest.mark.parametrize(
+    "text, expected",
+    [
+        ("---\ntitle: Writing code\ndate: 2026-09-12\n---\n\n", True),
+        ("---\ntitle: Full\n---\n\nSome body.", False),
+        ("# Heading only\n\n", True),
+        ("# Heading\n\nProse under it.", False),
+        ("", True),
+    ],
+)
+def test_is_stub(text, expected):
+    assert is_stub(text) is expected, (
+        "is_stub should be true only when nothing remains after frontmatter and the title heading"
+    )
+
+
+def test_build_index_marks_stubs(tmp_path):
+    (tmp_path / "full.md").write_text("---\ntitle: Full\n---\n\nBody [stub](stub.md).")
+    (tmp_path / "stub.md").write_text("---\ntitle: Stub\n---\n")
+    index = build_index(tmp_path)
+    assert index["notes"]["stub"]["stub"] is True, "build_index should mark frontmatter-only notes as stubs"
+    assert index["notes"]["full"]["stub"] is False, "build_index should not mark notes with a body as stubs"

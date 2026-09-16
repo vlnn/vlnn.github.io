@@ -438,6 +438,11 @@ function renderBacklinks(slug, openFromPane, paneIndex) {
   return section;
 }
 
+export function noteLinkClass(index, slug) {
+  const note = index.notes[slug];
+  return !note || note.stub ? "note-link empty" : "note-link";
+}
+
 function adoptContentLinks(content, openFromPane, paneIndex) {
   content.querySelectorAll("img[src^='file:']").forEach((img) => {
     img.src = img.getAttribute("src").replace(/^file:/, "");
@@ -445,7 +450,7 @@ function adoptContentLinks(content, openFromPane, paneIndex) {
   content.querySelectorAll("a[href]").forEach((anchor) => {
     const slug = slugFromHref(anchor.getAttribute("href"));
     if (slug) {
-      anchor.className = "note-link";
+      anchor.className = noteLinkClass(index, slug);
       anchor.href = stackUrl([slug]);
       anchor.addEventListener("click", (event) => {
         event.preventDefault();
@@ -557,7 +562,7 @@ function renderTimelinePane(paneIndex, openFromPane, closeFromPane, closable, op
       content.append(el("h2", "timeline-year", year));
     }
     const row = el("p", "timeline-entry");
-    const link = el("a", "note-link", entry.title);
+    const link = el("a", noteLinkClass(index, entry.slug), entry.title);
     link.href = stackUrl([entry.slug]);
     link.addEventListener("click", (event) => {
       event.preventDefault();
@@ -580,7 +585,7 @@ function quizButton(label, onClick) {
 }
 
 function noteLinkTo(slug, paneIndex, openFromPane) {
-  const link = el("a", "note-link", metaOf(slug).title || slug);
+  const link = el("a", noteLinkClass(index, slug), metaOf(slug).title || slug);
   link.href = stackUrl([slug]);
   link.addEventListener("click", (event) => {
     event.preventDefault();

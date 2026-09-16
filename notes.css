@@ -221,6 +221,8 @@ body { display: flex; flex-direction: column; }
 .note-content a.tag-link:hover { color: var(--green); text-decoration: underline; text-decoration-thickness: 1px; }
 .note-content a:hover { color: var(--green); text-decoration-thickness: 2px; }
 .note-content a.note-link:hover { text-decoration-thickness: 1px; }
+.note-content a.note-link.empty { color: var(--ink-soft); text-decoration-style: dashed; }
+.timeline-entry a.empty { color: var(--ink-soft); }
 .note-content a:not(.note-link):not(.tag-link):not(:has(img))::after { content: "\2197"; font-size: 0.72em; vertical-align: super; margin-left: 1px; }
 .note-content ol, .note-content ul { padding-left: 1.4em; }
 .note-content li { margin-bottom: 0.35em; }

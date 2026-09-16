@@ -570,3 +570,13 @@ import { revealScrollLeft } from "../app.js";
   });
 }
 console.log("reveal scroll tests passed");
+
+import { noteLinkClass } from "../app.js";
+
+const stubIndex = { notes: { full: { title: "Full", stub: false }, stub: { title: "Stub", stub: true } } };
+[
+  [() => noteLinkClass(stubIndex, "full"), "note-link", "noteLinkClass should keep plain styling for notes with a body"],
+  [() => noteLinkClass(stubIndex, "stub"), "note-link empty", "noteLinkClass should mark stub notes as empty"],
+  [() => noteLinkClass(stubIndex, "missing"), "note-link empty", "noteLinkClass should mark links to notes that do not exist yet as empty"],
+].forEach(([actual, expected, message]) => assert.equal(actual(), expected, message));
+console.log("noteLinkClass tests passed");
