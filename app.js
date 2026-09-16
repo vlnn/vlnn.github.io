@@ -443,6 +443,15 @@ export function noteLinkClass(index, slug) {
   return !note || note.stub ? "note-link empty" : "note-link";
 }
 
+export function isSameSite(href, host) {
+  try {
+    const url = new URL(href, `https://${host}`);
+    return url.protocol.startsWith("http") && url.host === host;
+  } catch {
+    return false;
+  }
+}
+
 function adoptContentLinks(content, openFromPane, paneIndex) {
   content.querySelectorAll("img[src^='file:']").forEach((img) => {
     img.src = img.getAttribute("src").replace(/^file:/, "");
@@ -456,6 +465,8 @@ function adoptContentLinks(content, openFromPane, paneIndex) {
         event.preventDefault();
         openFromPane(paneIndex, slug);
       });
+    } else if (isSameSite(anchor.getAttribute("href"), location.host)) {
+      anchor.className = "site-link";
     } else {
       anchor.target = "_blank";
       anchor.rel = "noopener";

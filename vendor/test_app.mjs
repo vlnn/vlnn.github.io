@@ -580,3 +580,16 @@ const stubIndex = { notes: { full: { title: "Full", stub: false }, stub: { title
   [() => noteLinkClass(stubIndex, "missing"), "note-link empty", "noteLinkClass should mark links to notes that do not exist yet as empty"],
 ].forEach(([actual, expected, message]) => assert.equal(actual(), expected, message));
 console.log("noteLinkClass tests passed");
+
+import { isSameSite } from "../app.js";
+
+[
+  [() => isSameSite("https://vlnn.dev/workout", "vlnn.dev"), true, "isSameSite should accept absolute links to the site's own host"],
+  [() => isSameSite("https://vlnn.dev/presentations/takahashi.html", "vlnn.dev"), true, "isSameSite should accept deep same-host paths"],
+  [() => isSameSite("/workout", "vlnn.dev"), true, "isSameSite should accept root-relative links"],
+  [() => isSameSite("presentations/creativity.html", "vlnn.dev"), true, "isSameSite should accept relative links"],
+  [() => isSameSite("#section", "vlnn.dev"), true, "isSameSite should accept in-page anchors"],
+  [() => isSameSite("https://github.com/vlnn", "vlnn.dev"), false, "isSameSite should reject other hosts"],
+  [() => isSameSite("mailto:me@vlnn.dev", "vlnn.dev"), false, "isSameSite should reject non-http schemes"],
+].forEach(([actual, expected, message]) => assert.equal(actual(), expected, message));
+console.log("isSameSite tests passed");
