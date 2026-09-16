@@ -15,12 +15,13 @@ I stole the idea for this one from [this Andy Matuschak's note](https://notes.an
 * [Creativity techniques](https://vlnn.dev/presentations/creativity.html) (presentation in [Takahashi style](takahashi-method.md))
 # Programming
 * Estimating and measuring programs resources
-* Improving my [zt: forth for z80](https://github.com/vlnn/zt)
+* Improving my [Forth compiler for Z80](forth-compiler-for-z80.md) ([zt: forth for z80](https://github.com/vlnn/zt))
 * [Dyalog APL support](https://github.com/vlnn/ride-apl) in Emacs (connect to running interpreter like Cider does, debugging as well)
 * [Programming styles](programming-styles.md)
 # Books
-* Topoi by Robert Goldblatt
-* Aubrey-Maturin series
+* [Topoi](topoi.md) by Robert Goldblatt
+* [Aubrey-Maturin series](aubrey-maturin-series.md)
+* [The Will of the Many](the-will-of-the-many.md)
 # Games
 * create 80s style self-playing heavy lore game (code name [Heavy on the Marsport](heavy-on-the-marsport.md)), where player can intervene at any moment.
 * FF14 on Switch2
@@ -29,5 +30,8 @@ I stole the idea for this one from [this Andy Matuschak's note](https://notes.an
 
 - [Programming styles](programming-styles.md)
 - [Heavy on the Marsport](heavy-on-the-marsport.md)
+- [Aubrey-Maturin series](aubrey-maturin-series.md)
 - [Memorization techniques](memorization-techniques.md)
+- [Topoi](topoi.md)
+- [Forth compiler for Z80](forth-compiler-for-z80.md)
 
