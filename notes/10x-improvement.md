@@ -14,10 +14,13 @@ Realistic scenarios:
 * eliminating useless steps (second best [Chuck Moore](chuck-moore.md)'s technique: first is not implementing them)
 * administrative decisions: simplier processes, proper reviews etc.
 
+A surprisingly big amount of engineering productivity comes from [small nuggets of knowledge](small-hacks.md).
+
 ## Related
 
 - [10x Engineer](10x-engineer.md)
 - [Memoization](memoization.md)
+- [Small Hacks](small-hacks.md)
 - [Chuck Moore](chuck-moore.md)
 - [Switching from Batch to Streaming](switching-from-batch-to-streaming.md)
 - [Algorithmic Complexity](algorithmic-complexity.md)

@@ -78,14 +78,14 @@ print result  ; => 165
 or should be rewritten in more idiomatic Rebol style with some Forth-like structure:
 ```
 sum copy/part collect [ repeat n 20 [if odd? n [keep n * n ] ] ] 5
-\\== 165
+\\\== 165
 ```
 
 which is not that different from pythonic
 
 ```
 sum([n * n for n in range(1, 21) if n % 2][:5])
-\\== 165
+\\\== 165
 ```
 
 Compare with same approach in APL:
@@ -115,7 +115,7 @@ first5←5∘↑
 remove_non_odd←⊢⌷⍨∘⊂∘⍸2|⊢
 (+/∘first5∘×⍨∘remove_non_odd)⍳20
 ```
- For `first5` it is a bit too obvious, but for anything longer than 3-4 APL glyphs I would prefer to set up a factored-out word, so composition is read easily. Also those words can be a) partially reused and b) partially tested, thus easier understood: 4 is known low boundary of [Working Memory](working-memory.md) size, and I think that [understanding is the main bottleneck of modern programming](speed-of-software-development-mainly-depends-on-velocity-of.md).
+ For `first5` it is a bit too obvious, but for anything longer than 3-4 APL glyphs I would prefer to set up a factored-out word, so composition is read easily. Also those words can be a) partially reused and b) partially tested, thus easier understood: 4 is known low boundary of [Working Memory](working-memory.md) size, and I think that [understanding is the main bottleneck of modern programming](speed-of-software-development-mainly-depends-on-velocity-of.md). Here more on [my APL coding style](my-apl-coding-style.md)
 
 So this is how composition and naming may add some style to the code even when abstraction is not available in the language (similar approach is in creating whole words-based language layer as Q does relatively to K). This is [Factoring](factoring-technique.md) taken to the max. (I also may want to factor out this article later as well!)
 
@@ -127,4 +127,5 @@ So this is how composition and naming may add some style to the code even when a
 - [Syntactic Ceremony](syntactic-ceremony.md)
 - [Working Memory](working-memory.md)
 - [Factoring technique](factoring-technique.md)
+- [my APL coding style](my-apl-coding-style.md)
 

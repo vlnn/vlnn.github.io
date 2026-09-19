@@ -16,7 +16,7 @@ I stole the idea for this one from [this Andy Matuschak's note](https://notes.an
 # Programming
 * Estimating and measuring programs resources
 * Improving my [Forth compiler for Z80](forth-compiler-for-z80.md) ([zt: forth for z80](https://github.com/vlnn/zt))
-* [Dyalog APL support](https://github.com/vlnn/ride-apl) in Emacs (connect to running interpreter like Cider does, debugging as well)
+* [Dyalog APL support ](dyalog-apl-support-in-emacs.md)in Emacs via [ride-apl](https://github.com/vlnn/ride-apl) (connect to running interpreter like Cider does, debugging as well)
 * [Programming styles](programming-styles.md)
 # Books
 * [Topoi](topoi.md) by Robert Goldblatt
@@ -30,6 +30,7 @@ I stole the idea for this one from [this Andy Matuschak's note](https://notes.an
 
 - [Programming styles](programming-styles.md)
 - [Heavy on the Marsport](heavy-on-the-marsport.md)
+- [Dyalog APL support in Emacs](dyalog-apl-support-in-emacs.md)
 - [Aubrey-Maturin series](aubrey-maturin-series.md)
 - [Memorization techniques](memorization-techniques.md)
 - [Topoi](topoi.md)
