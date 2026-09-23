@@ -13,6 +13,7 @@ test:
 test-js: index.json
 	node vendor/test_app.mjs
 	node vendor/test_feed.mjs
+	node --test vendor/test_workout.mjs
 
 bundle:
 	cd vendor && npm install && npx esbuild entry.mjs --bundle --format=esm --minify --alias:decode-named-character-reference=./node_modules/decode-named-character-reference/index.js --outfile=org.js

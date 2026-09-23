@@ -143,6 +143,32 @@ button, summary, input[type="range"] { -webkit-tap-highlight-color: transparent;
 .moves li:last-child { border-bottom: none; }
 .move-name { font-size: 16px; }
 .move-note { display: block; font-size: 12.5px; color: var(--ink-soft); margin-top: 3px; }
+.move-adjust {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+.move-adjust button {
+  width: 22px;
+  height: 20px;
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1;
+  color: var(--ink-soft);
+  background: var(--modeline);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .move-adjust button:hover { color: var(--accent); }
+}
+.move-adjust .offset { color: var(--accent-warm); }
 .scheme {
   font-family: var(--mono);
   font-size: 14px;
@@ -240,12 +266,13 @@ details p { font-size: 14.5px; line-height: 1.6; padding: 8px 0 4px; }
   </div>
   <details id="warmup-box">
     <summary>warm-up · 8 min</summary>
-    <p>Walk or march 3–5 min · hip circles and small leg swings ×10 · shoulder circles ×10 · bodyweight glute bridge ×10 slow · RDL with the 12 ×5 as a rehearsal.</p>
-    <p>Optional quad experiment after warm-up: sit-to-stand from a high chair, 2 × 5, slow. Zero pain during and next day, or shelve it for two weeks. Painless for two weeks — lower the seat an inch.</p>
+    <p>Walk or march 3–5 min · hip circles and small leg swings ×10 · shoulder circles ×10 · bodyweight glute bridge ×10 slow · single-leg stand 30 s /side, fingertip on a wall if needed · RDL with the 12 ×5 as a rehearsal.</p>
+    <p>Knee moves — wall sit, step-up, sit-to-stand — start high and shallow on purpose. Mild discomfort during is fine if it's gone by next morning. Worse next day: raise the seat, shorten the hold, or press − on that row.</p>
   </details>
   <div id="content"></div>
   <div class="rules">
     <strong>Never grind, never hold your breath.</strong> 2–3 reps in the tank, exhale on effort, rest until conversation-pace.<br>
+    <strong>Up fast, down slow.</strong> Move the weight up with intent, lower it under control; end the set when speed drops.<br>
     <strong>Knees set the range, pain sets the load.</strong> Sharp pain or worse-next-day means drop back or skip.
   </div>
 </div>
@@ -403,14 +430,74 @@ const MOVES = {
       { scheme: "2 × 3 /side", load: 32, note: "to the hand" },
       { scheme: "1 × 1 /side", load: 12, note: "full get-up — only if knees allow" }
     ]
+  },
+  swing: {
+    name: "Swing",
+    steps: [
+      { scheme: "3 × 5", load: 12, note: "dead-stop: hike, snap, park" },
+      { scheme: "3 × 8", load: 12, note: "hips snap, arms just hold" },
+      { scheme: "4 × 10", load: 12 },
+      { scheme: "5 × 10", load: 12 },
+      { scheme: "3 × 5", load: 24, note: "dead-stop again at the new bell" },
+      { scheme: "4 × 6", load: 24 },
+      { scheme: "5 × 8", load: 24 },
+      { scheme: "5 × 10", load: 24 },
+      { scheme: "5 × 5", load: 32, note: "dead-stop" },
+      { scheme: "5 × 8", load: 32 }
+    ]
+  },
+  wallsit: {
+    name: "Wall sit",
+    steps: [
+      { scheme: "4 × 20 s", load: "bw", note: "slide ~20 cm down the wall, keep breathing" },
+      { scheme: "4 × 30 s", load: "bw", note: "~20 cm down" },
+      { scheme: "4 × 45 s", load: "bw", note: "~20 cm down" },
+      { scheme: "4 × 60 s", load: "bw", note: "~20 cm down" },
+      { scheme: "4 × 90 s", load: "bw", note: "~20 cm down" },
+      { scheme: "4 × 2 min", load: "bw", note: "~20 cm down" },
+      { scheme: "4 × 60 s", load: "bw", note: "~30 cm down" },
+      { scheme: "4 × 2 min", load: "bw", note: "~30 cm down" },
+      { scheme: "4 × 60 s", load: "bw", note: "~40 cm down — no deeper" },
+      { scheme: "4 × 2 min", load: "bw", note: "~40 cm down" }
+    ]
+  },
+  stepup: {
+    name: "Step-up",
+    steps: [
+      { scheme: "2 × 5 /side", load: "bw", note: "10 cm step, hand on the wall" },
+      { scheme: "2 × 8 /side", load: "bw", note: "10 cm step" },
+      { scheme: "2 × 8 /side", load: "bw", note: "15 cm step" },
+      { scheme: "3 × 8 /side", load: "bw", note: "15 cm step" },
+      { scheme: "2 × 8 /side", load: "bw", note: "20 cm step, lower slowly" },
+      { scheme: "3 × 8 /side", load: "bw", note: "20 cm step" },
+      { scheme: "2 × 8 /side", load: 12, note: "20 cm, bell at chest" },
+      { scheme: "3 × 8 /side", load: 12, note: "20 cm, bell at chest" },
+      { scheme: "3 × 10 /side", load: 12, note: "20 cm, 3 s lowering" },
+      { scheme: "2 × 8 /side", load: 24, note: "20 cm, bell at chest" }
+    ]
+  },
+  sitstand: {
+    name: "Sit-to-stand",
+    steps: [
+      { scheme: "2 × 5", load: "bw", note: "high chair, hands on thighs ok" },
+      { scheme: "3 × 5", load: "bw", note: "high chair, no hands" },
+      { scheme: "3 × 8", load: "bw", note: "high chair" },
+      { scheme: "2 × 5", load: "bw", note: "seat an inch lower" },
+      { scheme: "3 × 8", load: "bw", note: "seat an inch lower" },
+      { scheme: "3 × 8", load: "bw", note: "regular chair" },
+      { scheme: "3 × 8", load: 12, note: "regular chair, bell at chest" },
+      { scheme: "3 × 10", load: 12, note: "regular chair, stand up fast" },
+      { scheme: "3 × 8", load: 24, note: "regular chair, bell at chest" },
+      { scheme: "3 × 8", load: 24, note: "3 s lowering, stand up fast" }
+    ]
   }
 };
 
 const SESSIONS = {
-  A: { name: "Push · Hinge · Pull", moves: ["pushup", "rdl", "row", "carry", "deadbug"] },
-  B: { name: "Pull · Hinge · Press", moves: ["board", "rdl", "press", "bridge", "carry"] },
-  C: { name: "Press · Hinge · Pull", moves: ["press", "staggered", "pushup", "getup", "row"] },
-  REST: { name: "5k steps and rest" }
+  A: { name: "Push · Swing · Pull", moves: ["pushup", "swing", "wallsit", "row", "carry", "deadbug"] },
+  B: { name: "Pull · Hinge · Press", moves: ["board", "rdl", "stepup", "press", "bridge", "carry"] },
+  C: { name: "Press · Hinge · Pull", moves: ["press", "staggered", "sitstand", "pushup", "getup", "row"] },
+  REST: { name: "walk and rest" }
 };
 
 const WEEKDAY_PLAN = ["REST", "A", "REST", "B", "REST", "C", "REST"];
@@ -418,11 +505,50 @@ const WEEKDAY_PLAN = ["REST", "A", "REST", "B", "REST", "C", "REST"];
 const state = {
   day: new Date().getDay(),
   session: WEEKDAY_PLAN[new Date().getDay()],
-  level: clampLevel(Number(localStorage.getItem("kb-level")) || 1)
+  level: clampLevel(Number(localStorage.getItem("kb-level")) || 1),
+  offsets: loadOffsets()
 };
 
 function clampLevel(n) {
   return Math.min(MAX_LEVEL, Math.max(1, n));
+}
+
+function loadOffsets() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem("kb-offsets"));
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveOffsets() {
+  localStorage.setItem("kb-offsets", JSON.stringify(state.offsets));
+}
+
+function effectiveLevel(dial, offset) {
+  return clampLevel(dial + offset);
+}
+
+function offsetFor(key) {
+  return Number(state.offsets[key]) || 0;
+}
+
+function levelFor(key) {
+  return effectiveLevel(state.level, offsetFor(key));
+}
+
+function adjustMove(key, delta) {
+  const target = clampLevel(levelFor(key) + delta);
+  state.offsets[key] = target - state.level;
+  if (state.offsets[key] === 0) delete state.offsets[key];
+  saveOffsets();
+  render();
+}
+
+function formatOffset(offset) {
+  if (offset === 0) return "";
+  return offset > 0 ? `+${offset}` : `−${-offset}`;
 }
 
 function isTrainingDay() {
@@ -451,12 +577,21 @@ function chipLabel(load) {
   return load === "bw" ? "BW" : `${load}kg`;
 }
 
+function adjustControls(key) {
+  const offset = formatOffset(offsetFor(key));
+  return `<span class="move-adjust">
+    <button data-adjust="-1" aria-label="easier">−</button>
+    <span>lvl ${levelFor(key)}${offset ? ` <span class="offset">${offset}</span>` : ""}</span>
+    <button data-adjust="1" aria-label="harder">+</button>
+  </span>`;
+}
+
 function moveRow(key) {
   const move = MOVES[key];
-  const step = move.steps[state.level - 1];
+  const step = move.steps[levelFor(key) - 1];
   const note = step.note ? `<span class="move-note">${step.note}</span>` : "";
-  return `<li>
-    <span><span class="move-name">${move.name}</span>${note}</span>
+  return `<li data-move="${key}">
+    <span><span class="move-name">${move.name}</span>${note}${adjustControls(key)}</span>
     <span class="scheme">${step.scheme}<span class="chip ${chipClass(step.load)}">${chipLabel(step.load)}</span></span>
   </li>`;
 }
@@ -473,18 +608,24 @@ function restCard() {
   const next = nextSession();
   const when = next.date.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "short" });
   return `<div class="rest-card guide">
-    <div class="big">5k steps and rest</div>
+    <div class="big">${SESSIONS.REST.name}</div>
     <p class="next">next session: ${next.key} · ${when}</p>
     ${guideSection("the walk",
-      "30–45 minutes or ~5,000 steps, flat ground, easy pace — you should be able to talk, or breathe through the nose, the whole way. Progress by adding minutes, never speed. This walk is the day's training; walks on session days are an optional easy bonus. If knees grumble, trim walk minutes before touching sessions.", true)}
+      "30–45 minutes, flat ground, easy pace — you should be able to talk, or breathe through the nose, the whole way. Start around 5,000 steps and, over months, add minutes (never speed) toward 7–8k. One longer walk a week is a bonus. This walk is the day's training; walks on session days are an optional easy bonus. If knees grumble, trim walk minutes before touching sessions.", true)}
     ${guideSection("the program",
-      "Three short sessions a week on non-consecutive days. Each is five slots — push, hinge, pull, carry, core — a few easy sets each, ~30 min with warm-up. Every set ends with 2–3 clean reps left. Miss days freely; nothing is ruined, just do the next letter.")}
+      "Three short sessions a week on non-consecutive days. Each is six slots — push, hinge, pull, legs, carry, core — a few easy sets each, ~35 min with warm-up. Every set ends with 2–3 clean reps left. Miss days freely; nothing is ruined, just do the next letter.")}
     ${guideSection("the dial",
-      "One dial moves the whole program. Go up one level when the last two sessions both felt silly-light — last rep like the first, breathing calm. Go down after a break, a rough week, or cranky knees. The dial has no pride and no schedule.")}
+      "One dial moves the whole program. Go up one level when the last two sessions both felt silly-light — last rep like the first, breathing calm. Go down after a break, a rough week, or cranky knees. If one move lags — knees, a shoulder — nudge just that row with its − / +; it stays that far from the dial as the dial moves. The dial has no pride and no schedule.")}
     ${guideSection("progress",
       "Progress lives in the dial, not the calendar. Level 1 is deliberately too easy; level 10 is everything the bells and the board allow. Months per level is the plan working, not stalling. Sessions feeling easy is correct — the loads creep up underneath.")}
     ${guideSection("when stale",
       "Every 6–8 weeks, or whenever training feels like a chore, drop two levels for a week. Feeling like taking it easy is a valid trigger, not a failure.")}
+    ${guideSection("check-ins",
+      "Every three months, after a warm-up: dead hang on the board (seconds), single-leg stand with eyes open (aim for 30 s per side), 5× chair stand from a regular chair, timed — only if knees allow. Write them down next to the dial level. The trend matters, not the number.")}
+    ${guideSection("past level 10",
+      "Out of levels means out of bells, not out of progress: add reps up to 15–20 with 1–2 left, slow the lowering, go single-leg. A 16 and a 20 kg bell smooth the 12 → 24 jump; a second 24 opens double-bell work.")}
+    ${guideSection("fuel",
+      "About 30–40 g of protein at each main meal, and 3–5 g of creatine daily. Training is the signal; food is the material.", true)}
   </div>`;
 }
 
@@ -570,6 +711,10 @@ document.getElementById("picker").addEventListener("click", e => {
 document.getElementById("week").addEventListener("click", e => {
   const button = e.target.closest("button[data-day]");
   if (button) setDay(Number(button.dataset.day));
+});
+document.getElementById("content").addEventListener("click", e => {
+  const button = e.target.closest("button[data-adjust]");
+  if (button) adjustMove(button.closest("li[data-move]").dataset.move, Number(button.dataset.adjust));
 });
 document.getElementById("lvl-slider").addEventListener("input", e => {
   setLevel(Number(e.target.value));
