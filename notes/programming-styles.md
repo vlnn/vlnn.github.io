@@ -78,14 +78,14 @@ print result  ; => 165
 or should be rewritten in more idiomatic Rebol style with some Forth-like structure:
 ```
 sum copy/part collect [ repeat n 20 [if odd? n [keep n * n ] ] ] 5
-\\\== 165
+\\\\== 165
 ```
 
 which is not that different from pythonic
 
 ```
 sum([n * n for n in range(1, 21) if n % 2][:5])
-\\\== 165
+\\\\== 165
 ```
 
 Compare with same approach in APL:
@@ -122,10 +122,11 @@ So this is how composition and naming may add some style to the code even when a
 ## Related
 
 - [Cognitive Load](cognitive-load.md)
+- [Clay style](clay-style.md)
 - [Writing code](writing-code.md)
 - [Reading code](reading-code.md)
 - [Syntactic Ceremony](syntactic-ceremony.md)
+- [my APL coding style](my-apl-coding-style.md)
 - [Working Memory](working-memory.md)
 - [Factoring technique](factoring-technique.md)
-- [my APL coding style](my-apl-coding-style.md)
 

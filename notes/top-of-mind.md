@@ -18,6 +18,7 @@ I stole the idea for this one from [this Andy Matuschak's note](https://notes.an
 * Improving my [Forth compiler for Z80](forth-compiler-for-z80.md) ([zt: forth for z80](https://github.com/vlnn/zt))
 * [Dyalog APL support ](dyalog-apl-support-in-emacs.md)in Emacs via [ride-apl](https://github.com/vlnn/ride-apl) (connect to running interpreter like Cider does, debugging as well)
 * [Programming styles](programming-styles.md)
+* [Clay style](clay-style.md)
 # Books
 * [Topoi](topoi.md) by Robert Goldblatt
 * [Aubrey-Maturin series](aubrey-maturin-series.md)
@@ -29,6 +30,7 @@ I stole the idea for this one from [this Andy Matuschak's note](https://notes.an
 ## Related
 
 - [Programming styles](programming-styles.md)
+- [Clay style](clay-style.md)
 - [Heavy on the Marsport](heavy-on-the-marsport.md)
 - [Dyalog APL support in Emacs](dyalog-apl-support-in-emacs.md)
 - [Aubrey-Maturin series](aubrey-maturin-series.md)
