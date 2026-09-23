@@ -5,4 +5,4 @@ brain-id: 434a9c2c-b475-452f-8cb1-0106d78113bd
 tags: [data-structure, programming]
 ---
 
-
+# Data outlives code

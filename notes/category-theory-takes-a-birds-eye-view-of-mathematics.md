@@ -5,4 +5,4 @@ brain-id: f8096d85-432e-46f1-b7f3-58af08697eaf
 tags: [math, meta]
 ---
 
-
+# Category theory takes a bird’s eye view of mathematics.
