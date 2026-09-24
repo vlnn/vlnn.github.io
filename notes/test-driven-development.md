@@ -2,7 +2,7 @@
 title: Test-driven Development
 date: 2026-09-16
 brain-id: b43c4746-1e79-4972-bbd2-ca972bfbeca5
-tags: [tbd]
+tags: [methods, programming]
 ---
 
 Test-driven development is a programming paradigm popularized by [Kent Beck](kent-beck.md). The idea is to decrease [feedback time](feedback.md) of each task using formalized process of 
