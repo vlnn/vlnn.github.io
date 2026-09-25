@@ -11,7 +11,7 @@ b) will add some ideas to the boiling pool, while it still boils.
 The year in the list is the year when I copied the book to my reader. I'm sure some of them will never be read from cover to cover, but it's not the reason not to add them to the list: this is wishful reading overall.
 ### 2026
 * [The Will of the Many](the-will-of-the-many.md) by [James Islington](james-islington.md)
-* [I, Claudius](i-claudius.md) by [Rober Graves](rober-graves.md)
+* [I, Claudius](i-claudius.md) by Rober Graves
 * [Hild](hild.md) by [Nicola Griffith](nicola-griffith.md)
 * [Erebus: The Story of a Ship](erebus-the-story-of-a-ship.md) by [Michael Palin](michael-palin.md)
 * [The King Must Die](the-king-must-die.md) by [Mary Renault](mary-renault.md)
@@ -20,6 +20,7 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 * [Айфельгайм](aifelhaim.md) by [Michael Flynn](michael-flynn.md)
 * [Ґарґантюа і Пантаґрюель](gargantiua-i-pantagriuel.md) by [Франсуа Рабле](fransua-rable.md)
 * [Do It Tomorrow](do-it-tomorrow.md) by [Mark Forster](mark-forster.md)
+* [Soldier of the Mist](soldier-of-the-mist.md)  by [Gene Wolfe](gene-wolfe.md)
 
 ## Related
 
@@ -27,10 +28,9 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 - [Ґарґантюа і Пантаґрюель](gargantiua-i-pantagriuel.md)
 - [Nicola Griffith](nicola-griffith.md)
 - [Brian Aldiss](brian-aldiss.md)
+- [I, Claudius](i-claudius.md)
 - [James Islington](james-islington.md)
 - [The Will of the Many](the-will-of-the-many.md)
-- [Rober Graves](rober-graves.md)
-- [I, Claudius](i-claudius.md)
 - [Hild](hild.md)
 - [Mary Renault](mary-renault.md)
 - [The King Must Die](the-king-must-die.md)
@@ -44,4 +44,6 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 - [Франсуа Рабле](fransua-rable.md)
 - [Mark Forster](mark-forster.md)
 - [Do It Tomorrow](do-it-tomorrow.md)
+- [Gene Wolfe](gene-wolfe.md)
+- [Soldier of the Mist](soldier-of-the-mist.md)
 
