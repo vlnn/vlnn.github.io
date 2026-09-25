@@ -27,6 +27,6 @@ Similar to [Cider](https://cider.mx), `ride-apl` is layer that connects the plai
 
 ## Related
 
-- [Exploratory Programming](exploratory-programming.md)
 - [Test-driven Development](test-driven-development.md)
+- [Exploratory Programming](exploratory-programming.md)
 

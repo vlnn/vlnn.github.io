@@ -122,11 +122,11 @@ So this is how composition and naming may add some style to the code even when a
 ## Related
 
 - [Cognitive Load](cognitive-load.md)
-- [Clay style](clay-style.md)
-- [Writing code](writing-code.md)
 - [Reading code](reading-code.md)
+- [Writing code](writing-code.md)
 - [Syntactic Ceremony](syntactic-ceremony.md)
-- [my APL coding style](my-apl-coding-style.md)
 - [Working Memory](working-memory.md)
 - [Factoring technique](factoring-technique.md)
+- [my APL coding style](my-apl-coding-style.md)
+- [Clay style](clay-style.md)
 
