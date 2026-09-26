@@ -122,8 +122,8 @@ So this is how composition and naming may add some style to the code even when a
 ## Related
 
 - [Cognitive Load](cognitive-load.md)
-- [Reading code](reading-code.md)
 - [Writing code](writing-code.md)
+- [Reading code](reading-code.md)
 - [Syntactic Ceremony](syntactic-ceremony.md)
 - [Working Memory](working-memory.md)
 - [Factoring technique](factoring-technique.md)

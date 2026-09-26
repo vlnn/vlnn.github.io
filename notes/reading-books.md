@@ -44,6 +44,6 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 - [Франсуа Рабле](fransua-rable.md)
 - [Mark Forster](mark-forster.md)
 - [Do It Tomorrow](do-it-tomorrow.md)
-- [Gene Wolfe](gene-wolfe.md)
 - [Soldier of the Mist](soldier-of-the-mist.md)
+- [Gene Wolfe](gene-wolfe.md)
 

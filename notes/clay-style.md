@@ -4,8 +4,9 @@ date: 2026-09-20
 brain-id: 5537e859-e058-4194-a634-2343c7501353
 ---
 
-This is [programming style](programming-styles.md) I'm working on right now. It is independent from the programming language with which it is being practices, even though it is easier to use it with some than with others. Main idea is to arrange the code in such way that it is 1) easy to [read](reading-code.md) and [understand](speed-of-software-development-mainly-depends-on-velocity-of.md), 2) easy to [write](writing-code.md) and [maintain](maintaining-legacy.md). This should be done via adhering to several laws of Clay:
+This is [programming style](programming-styles.md) I'm working on right now. It is independent from the programming language with which it is being practices, even though it is easier to use it with some than with others. Main idea is to arrange the code in such way that it is 1) easy to [read](reading-code.md) and [understand](speed-of-software-development-mainly-depends-on-velocity-of.md), 2) easy to [write](writing-code.md) and [maintain](maintaining-legacy.md). 
 
+I think order of interpretation or compilation is different from the default order of understanding (in programming as well as, e.g. in geometry). Instead of reading the theorem as a detective, gathering seemingly unrelated cues until a revelatory   Q.E.D. is maybe how analysis worked when generating stuff, but now how my brain works when understanding ideas.
 ### Laws of Clay
 1. Program in Clay is written strictly top to down in both abstraction and physical way. E.g. in Python Clay style structure looks like this:
 
@@ -36,8 +37,8 @@ Example-noun: 42
 
 double-example: [[x] [x * 2]
     docs: ["Double the x value."]
-    examples: [double-example 4 \== 8]
-              [double-example 0 \== 0]]
+    examples: [double-example 4 \\== 8]
+              [double-example 0 \\== 0]]
 
 save-example!: [x] [ save-to-txt "example.txt" x ]
 ```
