@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+  <clipPath id="disc"><circle cx="10.0" cy="10.0" r="10.0"/></clipPath>
+  <circle cx="10.0" cy="10.0" r="10.0" fill="#598C3F"/>
+  <g clip-path="url(#disc)" shape-rendering="crispEdges">
+    <rect x="2.92" y="2.92" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="7.64" y="2.92" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="2.92" y="4.1" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="7.64" y="4.1" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="2.92" y="5.28" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="7.64" y="5.28" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="4.1" y="6.46" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="6.46" y="6.46" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="5.28" y="7.64" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="11.18" y="2.92" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="11.18" y="4.1" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="11.18" y="5.28" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="11.18" y="6.46" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="11.18" y="7.64" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="12.36" y="7.64" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="13.54" y="7.64" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="14.72" y="7.64" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="15.9" y="7.64" width="1.18" height="1.18" fill="#FFD700"/>
+    <rect x="2.92" y="11.18" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="7.64" y="11.18" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="2.92" y="12.36" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="4.1" y="12.36" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="7.64" y="12.36" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="2.92" y="13.54" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="5.28" y="13.54" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="7.64" y="13.54" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="2.92" y="14.72" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="6.46" y="14.72" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="7.64" y="14.72" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="2.92" y="15.9" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="7.64" y="15.9" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="11.18" y="11.18" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="15.9" y="11.18" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="11.18" y="12.36" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="12.36" y="12.36" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="15.9" y="12.36" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="11.18" y="13.54" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="13.54" y="13.54" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="15.9" y="13.54" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="11.18" y="14.72" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="14.72" y="14.72" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="15.9" y="14.72" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="11.18" y="15.9" width="1.18" height="1.18" fill="#0057B7"/>
+    <rect x="15.9" y="15.9" width="1.18" height="1.18" fill="#0057B7"/>
+  </g>
+</svg>
