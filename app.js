@@ -52,9 +52,13 @@ export function trailOf(stack, narrow) {
   return narrow ? stack.slice(0, -1) : [];
 }
 
+function onTimeline(note) {
+  return Boolean(note.date) && !note.stub;
+}
+
 export function timelineEntries(index) {
   return Object.entries(index.notes)
-    .filter(([, note]) => note.date)
+    .filter(([, note]) => onTimeline(note))
     .map(([slug, note]) => ({ slug, title: note.title, date: note.date, year: note.date.slice(0, 4) }))
     .sort((a, b) => b.date.localeCompare(a.date));
 }

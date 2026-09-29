@@ -114,13 +114,14 @@ const sampleIndex = {
     fresh: { title: "Fresh", date: "2024-06-01" },
     undated: { title: "Undated", date: "" },
     mid: { title: "Mid", date: "2023-03-03" },
+    stub: { title: "Stub", date: "2023-09-09", stub: true },
   },
 };
 
 assert.deepEqual(
   timelineEntries(sampleIndex).map((entry) => entry.slug),
   ["fresh", "mid", "old"],
-  "timelineEntries should sort dated notes newest first and exclude undated ones"
+  "timelineEntries should sort dated notes newest first and exclude undated and stub ones"
 );
 assert.deepEqual(
   timelineEntries(sampleIndex)[0],
