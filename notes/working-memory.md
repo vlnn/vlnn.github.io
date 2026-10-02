@@ -4,7 +4,7 @@ date: 2026-09-12
 brain-id: acd779d1-1d8f-4f30-8b4d-e93ecf5a2526
 ---
 
-The cognitive system with a limited capacity but quick response: classic 7±2 (later 4) items that humans can [chunk bigger quantity of information](chunking.md)  into and switch between.
+The cognitive system with a limited capacity but quick response: classic 7±2 (later 4) items that humans can [chunk bigger quantity of information](chunking.md)  into, manipulate and switch between. [Short-term memory](short-term-memory.md) is pretty much the same minus manipulation.
 
 Working memory is limited, and its capacity is roughly fixed at birth. 
 
@@ -15,4 +15,5 @@ Relates to [cognitive load](cognitive-load.md).
 ## Related
 
 - [Chunking](chunking.md)
+- [Short-term memory](short-term-memory.md)
 

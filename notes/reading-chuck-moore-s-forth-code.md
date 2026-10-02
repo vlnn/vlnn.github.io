@@ -35,6 +35,6 @@ The tick prefix means pointer  (`'menu`, `'color`, `'twos`), the tick suffix dis
 ## Related
 
 - [Example of Chuck Moore's FORTH code](example-of-chuck-moore-s-forth-code.md)
-- [Whitney's Incunabulum](whitney-s-incunabulum.md)
 - [Arthur Whitney](arthur-whitney.md)
+- [Whitney's Incunabulum](whitney-s-incunabulum.md)
 
