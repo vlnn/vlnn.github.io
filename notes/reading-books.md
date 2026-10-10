@@ -4,9 +4,9 @@ date: 2026-09-16
 brain-id: 3737fa11-b35d-4934-abdc-fa7271fdf864
 ---
 
-I read books either on my Kobo Libra Colour (\~80% reading), or listening fiction in [Абук](https://abuk.com.ua)/[Audible](https://audible.com) (15%), or re-reading printed stuff. Ukrainian publishing houses are great lately, but it's only this amount of books I can fit in my flat.
+I read books either on one of my ereaders with [custom koreader setup](my-koreader-setup.md) (\~80% reading), or listening fiction in [Абук](https://abuk.com.ua)/[Audible](https://audible.com) (15%), or re-reading printed stuff. Ukrainian publishing houses are great lately, but it's only this amount of books I can fit in my flat.
 
-Having lots paper books is burdensome, but at least you can have a quick glance over it. Electronic books on the other hand tend to become a huge unruly heap of books that are easier to re-download than to find. Poor interfaces of existing eink-readers and primitive OPDS navigation add even more problems with quick opening of the book from the library. Thus, I've created [vlnn/kobo-alfred](https://github.com/vlnn/kobo-alfred): set of [Alfred](alfred-hitchcock.md)-based entrypoints to govern the ebooks.
+Having lots paper books is burdensome, but at least you can have a quick glance over it. Electronic books on the other hand tend to become a huge unruly heap of books that are easier to re-download than to find. Poor interfaces of existing eink-readers and primitive OPDS navigation add even more problems with quick opening of the book from the library. Thus, I've created [vlnn/kobol](https://github.com/vlnn/kobold)d[:](https://github.com/vlnn/kobold:) set of [Alfred](alfred-hitchcock.md)-based entrypoints to govern the ebooks.
 ## Reading notes
 
 I hope keeping the reading notes publicly will 
@@ -27,6 +27,7 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 * [Ґарґантюа і Пантаґрюель](gargantiua-i-pantagriuel.md) by [Франсуа Рабле](fransua-rable.md)
 * [Do It Tomorrow](do-it-tomorrow.md) by [Mark Forster](mark-forster.md)
 * [Soldier of the Mist](soldier-of-the-mist.md)  by [Gene Wolfe](gene-wolfe.md)
+* [Dauntless \[Lost Fleet #1\]](brain://api.thebrain.com/GqWNUaKbOUuESIkjdGH-kw/_RhM05aq-E6LBo5vEdxMmA/DauntlessLostFleet1) by [Jack Campbell](jack-campbell.md)
 
 ## Related
 
@@ -52,4 +53,7 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 - [Do It Tomorrow](do-it-tomorrow.md)
 - [Gene Wolfe](gene-wolfe.md)
 - [Soldier of the Mist](soldier-of-the-mist.md)
+- [Jack Campbell](jack-campbell.md)
+- [Dauntless [Lost Fleet #1]](dauntless-lost-fleet-1.md)
+- [My Koreader Setup](my-koreader-setup.md)
 
