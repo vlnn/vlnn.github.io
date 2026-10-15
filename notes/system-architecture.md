@@ -17,5 +17,6 @@ System Architecture can described by [C4 model](c4-model.md), bundles of Archite
 
 ## Related
 
+- [Deep Vs Shallow Modules](deep-vs-shallow-modules.md)
 - [C4 model](c4-model.md)
 
