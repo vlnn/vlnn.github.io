@@ -16,18 +16,18 @@ c) will be useful for someone else
 
 The year in the list is the year when I copied the book to my reader. I'm sure some of them will never be read from cover to cover, but it's not the reason not to add them to the list: this is wishful reading overall.
 ### 2026
-* [The Will of the Many](the-will-of-the-many.md) by [James Islington](james-islington.md)
-* [I, Claudius](i-claudius.md) by Rober Graves
-* [Hild](hild.md) by [Nicola Griffith](nicola-griffith.md)
-* [Erebus: The Story of a Ship](erebus-the-story-of-a-ship.md) by [Michael Palin](michael-palin.md)
-* [The King Must Die](the-king-must-die.md) by [Mary Renault](mary-renault.md)
-* [СОЛпік](solpik.md) by [Олена Красносельська](olena-krasnoselska.md)
-* [Теплиця](teplytsia.md) by [Brian Aldiss](brian-aldiss.md)
-* [Айфельгайм](aifelhaim.md) by [Michael Flynn](michael-flynn.md)
-* [Ґарґантюа і Пантаґрюель](gargantiua-i-pantagriuel.md) by [Франсуа Рабле](fransua-rable.md)
-* [Do It Tomorrow](do-it-tomorrow.md) by [Mark Forster](mark-forster.md)
-* [Soldier of the Mist](soldier-of-the-mist.md)  by [Gene Wolfe](gene-wolfe.md)
-* [Dauntless \[Lost Fleet #1\]](brain://api.thebrain.com/GqWNUaKbOUuESIkjdGH-kw/_RhM05aq-E6LBo5vEdxMmA/DauntlessLostFleet1) by [Jack Campbell](jack-campbell.md)
+- [The Will of the Many](the-will-of-the-many.md) by [James Islington](james-islington.md)
+- [I, Claudius](i-claudius.md) by Rober Graves
+- [Hild](hild.md) by [Nicola Griffith](nicola-griffith.md)
+- [Erebus: The Story of a Ship](erebus-the-story-of-a-ship.md) by [Michael Palin](michael-palin.md)
+- [The King Must Die](the-king-must-die.md) by [Mary Renault](mary-renault.md)
+- [СОЛпік](solpik.md) by [Олена Красносельська](olena-krasnoselska.md)
+- [Теплиця](teplytsia.md) by [Brian Aldiss](brian-aldiss.md)
+- [Айфельгайм](aifelhaim.md) by [Michael Flynn](michael-flynn.md)
+- [Ґарґантюа і Пантаґрюель](gargantiua-i-pantagriuel.md) by [Франсуа Рабле](fransua-rable.md)
+- [Do It Tomorrow](do-it-tomorrow.md) by [Mark Forster](mark-forster.md)
++ [Soldier of the Mist](soldier-of-the-mist.md)  by [Gene Wolfe](gene-wolfe.md)  (October 2026)
+- [Dauntless \[Lost Fleet #1\]](brain://api.thebrain.com/GqWNUaKbOUuESIkjdGH-kw/_RhM05aq-E6LBo5vEdxMmA/DauntlessLostFleet1) by [Jack Campbell](jack-campbell.md)
 
 ## Related
 
