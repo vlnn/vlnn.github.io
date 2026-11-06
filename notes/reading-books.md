@@ -4,7 +4,7 @@ date: 2026-09-16
 brain-id: 3737fa11-b35d-4934-abdc-fa7271fdf864
 ---
 
-I read books either on one of my ereaders with [custom koreader setup](my-koreader-setup.md) (\~80% reading), or listening fiction in [Абук](https://abuk.com.ua)/[Audible](https://audible.com) (15%), or re-reading printed stuff. Ukrainian publishing houses are great lately, but it's only this amount of books I can fit in my flat.
+I read books either on one of my ereaders with [custom koreader setup](my-koreader-setup.md) (\~80% reading), or listening fiction in [Абук](https://abuk.com.ua)/[Audible](https://audible.com) (15%), or re-reading printed stuff. Ukrainian publishing houses are great lately, but it's only this amount of books I can fit in my flat. Of fiction I prefer [scifi](scifi.md) genre, but lately binge eating so-called [competency porn](competency-porn.md) that seems genre-independent.
 
 Having lots paper books is burdensome, but at least you can have a quick glance over it. Electronic books on the other hand tend to become a huge unruly heap of books that are easier to re-download than to find. Poor interfaces of existing eink-readers and primitive OPDS navigation add even more problems with quick opening of the book from the library. Thus, I've created [vlnn/kobol](https://github.com/vlnn/kobold)d[:](https://github.com/vlnn/kobold:) set of [Alfred](alfred-hitchcock.md)-based entrypoints to govern the ebooks.
 ## Reading notes
@@ -28,9 +28,11 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 - [Do It Tomorrow](do-it-tomorrow.md) by [Mark Forster](mark-forster.md)
 + [Soldier of the Mist](soldier-of-the-mist.md)  by [Gene Wolfe](gene-wolfe.md)  (October 2026)
 - [Dauntless \[Lost Fleet #1\]](brain://api.thebrain.com/GqWNUaKbOUuESIkjdGH-kw/_RhM05aq-E6LBo5vEdxMmA/DauntlessLostFleet1) by [Jack Campbell](jack-campbell.md)
+- [The Complete Rammer](the-complete-rammer.md) by [Larry Niven](larry-niven.md)
 
 ## Related
 
+- [Larry Niven](larry-niven.md)
 - [Robert Graves](robert-graves.md)
 - [Ґарґантюа і Пантаґрюель](gargantiua-i-pantagriuel.md)
 - [Nicola Griffith](nicola-griffith.md)
@@ -56,4 +58,8 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 - [Jack Campbell](jack-campbell.md)
 - [Dauntless [Lost Fleet #1]](dauntless-lost-fleet-1.md)
 - [My Koreader Setup](my-koreader-setup.md)
+- [The Complete Rammer](the-complete-rammer.md)
+- [reading with LLM](reading-with-llm.md)
+- [Competency Porn](competency-porn.md)
+- [Scifi](scifi.md)
 

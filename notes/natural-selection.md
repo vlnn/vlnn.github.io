@@ -6,3 +6,8 @@ tags: [evolution]
 ---
 
 Key law of evolution: heritable variations that increase an organism's reproductive success become more frequent in a population over generations, because their carriers leave more descendants.
+
+## Related
+
+- [Natural selection stops when species begin to use tools](natural-selection-stops-when-species-begin-to-use-tools.md)
+

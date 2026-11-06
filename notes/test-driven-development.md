@@ -33,4 +33,5 @@ Structuring of usually rather chaotic [Exploratory Programming](exploratory-prog
 - [Productivity](productivity.md)
 - [Technical Debt](technical-debt.md)
 - [Safe Environment](safe-environment.md)
+- [Kluever Maneuver](kluever-maneuver.md)
 

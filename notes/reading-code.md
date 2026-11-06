@@ -13,4 +13,5 @@ Two modes of reading:
 ## Related
 
 - [Static analysis](static-analysis.md)
+- [reading with LLM](reading-with-llm.md)
 

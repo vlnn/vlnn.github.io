@@ -14,6 +14,7 @@ In a way, choosing the [Working methods](working-methods.md) is **environment se
 
 ## Related
 
+- [Natural selection stops when species begin to use tools](natural-selection-stops-when-species-begin-to-use-tools.md)
 - [Niche construction](niche-construction.md)
 - [Working methods](working-methods.md)
 - [Habitat selection](habitat-selection.md)

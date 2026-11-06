@@ -8,3 +8,8 @@ tags: [evolution]
 Organisms *modify* environments: beavers building dams, earthworms restructuring soil, humans inventing dairy farming (which then selected for lactase persistence).
 
 The organism alters the fitness landscape that subsequently selects on it and its descendants.
+
+## Related
+
+- [Natural selection stops when species begin to use tools](natural-selection-stops-when-species-begin-to-use-tools.md)
+

@@ -9,5 +9,6 @@ brain-id: 409bd927-2673-44c9-90d0-e57a9d2e5ee7
 
 ## Related
 
+- [Visualization is not the problem](visualization-is-not-the-problem.md)
 - [Takahashi method](takahashi-method.md)
 
