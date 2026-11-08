@@ -24,8 +24,8 @@ Clojure has an extremely simple syntax, but is hard to learn. The reason is conc
 ## Because it is [immutable by default](immutability.md)
 
 1. Clojure encourages composing pure functions that transform [immutable data](immutability.md): "changing" a map returns a new map and leaves the old one intact, so a function can be understood from its arguments alone (see also [Reusability](reusable-programs.md)).
-2. Top-level "variables" are actually constants: a `def` names a value and the program never writes to it again.
-3. Loops are unusual, because [immutable](immutability.md) [collections](collection.md) leave nothing to mutate inside the loop body; `loop` and `for`  exist, they aren't that ubiquitous -- instead you pass the per-element logic to [sequence functions](sequence-functions.md). 
+2. Top-level "variables" are actually constants: a `def` names a value and the program never changes its value (and rarely re-references to another).
+3. Loops are unusual, because [immutable](immutability.md) [collections](collection.md) leave nothing to mutate inside the loop body; `loop`  exists, they isn't that ubiquitous -- instead you pass the per-element logic to [sequence functions](sequence-functions.md). 
 4. The [sequence functions](sequence-functions.md) (`map`, `filter`, `range`) return [lazy sequences](lazy-sequences.md), whose elements are computed only when consumed. Laziness is safe only because the source data cannot change between the moment the sequence is created and the moment it is consumed.
 5. Shared mutable state has to be asked for by name. It is supported through [atoms](atoms.md) for independent updates to a single identity or STM-backed [refs](refs.md) for coordinated updates across several identities within one transaction. Either way the value inside stays immutable; only the reference moves from one value to the next.
 6. Because data is plain maps and vectors rather than objects with accessors, [destructuring](destructuring.md) is used to declaratively access values in data structures, both in `let` bindings and in function parameters.
