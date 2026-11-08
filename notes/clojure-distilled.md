@@ -1,12 +1,12 @@
 ---
-title: Clojure distilled
+title: Clojure re-Distilled
 date: 2026-11-07
 tags: [clojure, tbd]
 brain-id: 555c8330-3806-4824-810d-2ef284722507
 ---
 
 > [!warning]
-> This is a rewrite of[ Clojure Distilled](https://yogthos.net/ClojureDistilled.html) , and all errors in it should be treated as mine.
+> This is a rewrite of[ Clojure Distilled](https://yogthos.net/ClojureDistilled.html) , and all errors in it should be treated as mine. I write to understand, and sometimes to misunderstand.
 
 Clojure has an extremely simple syntax, but is hard to learn. The reason is conceptual differences from other, more popular languages, which forms the baseline of most professional programmers. There are only two design decisions that explain most of those differences:
 1. [Clojure is a Lisp](clojure-is-a-lisp.md)
