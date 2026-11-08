@@ -5,7 +5,9 @@ brain-id: 4902c707-e0fd-4588-b158-1a2f9d1febb1
 tags: [clojure, data-structure, design, tbd]
 ---
 
-**Immutability by default** means mutating state only when there’s a good reason to, and focusing instead on creating and transforming immutable data structures. It’s enforced by both the language (e.g. in Clojure) and the practice. You can add an entry to a map, but what you get back is a new map; the old one is untouched. You can append to a Java array in place, but you’d need a good reason to do it.
+In most programming languages data is mutable by default, and constructions like  `const`  are used for explicitly stating its immutablitily. Clojure is different, though:
+
+**Immutability by default** means mutating state only when there’s a good reason to, and focusing instead on creating and transforming immutable data structures. It’s enforced by both the language and the practice. You can add an entry to a map, but what you get back is a new map; the old one is untouched. You can append to a Java array in place, but you’d need a good reason to do it.
 
 Mutable data can either be passed around by value or by reference. Passing by value is safe but slow. Passing by reference is fast but not safe: anyone holding the reference can change the data under you, so you have to know every place it’s referenced to reason about it.
 
