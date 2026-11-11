@@ -14,6 +14,6 @@ In [behaviorism](behaviorism.md) context: studying only observable [Stimuli](sti
 ## Related
 
 - [Objective Reality](objective-reality.md)
-- [Stimuli](stimuli.md)
 - [Scientific Method](scientific-method.md)
+- [Stimuli](stimuli.md)
 

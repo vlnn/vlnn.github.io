@@ -17,6 +17,7 @@ c) will be useful for someone else
 The year in the list is the year when I copied the book to my reader. I'm sure some of them will never be read from cover to cover, but it's not the reason not to add them to the list: this is wishful reading overall.
 ### 2026
 - [The Will of the Many](the-will-of-the-many.md) by [James Islington](james-islington.md)
+- [Семіозіс](semiozis.md)/ by Sue Burke
 - [I, Claudius](i-claudius.md) by Rober Graves
 - [Hild](hild.md) by [Nicola Griffith](nicola-griffith.md)
 - [Erebus: The Story of a Ship](erebus-the-story-of-a-ship.md) by [Michael Palin](michael-palin.md)
@@ -37,6 +38,7 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 - [Ґарґантюа і Пантаґрюель](gargantiua-i-pantagriuel.md)
 - [Nicola Griffith](nicola-griffith.md)
 - [Brian Aldiss](brian-aldiss.md)
+- [Семіозіс](semiozis.md)
 - [James Islington](james-islington.md)
 - [The Will of the Many](the-will-of-the-many.md)
 - [I, Claudius](i-claudius.md)
