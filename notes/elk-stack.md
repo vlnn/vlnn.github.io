@@ -9,6 +9,6 @@ Combines the powerful search (Elasticsearch), data ingestion and transformation 
 
 ## Related
 
-- [Kibana](kibana.md)
 - [Logstash](logstash.md)
+- [Kibana](kibana.md)
 

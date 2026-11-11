@@ -2,6 +2,7 @@
 title: The Complete Rammer
 date: 2026-10-18
 brain-id: 8073396a-9a16-47fd-b4d1-fda3d1a21b7b
+tags: [book]
 ---
 
 ![](../static/brain/the-complete-rammer/8d53edcc-6ec6-4b0e-a0e8-280df0dd067a.png)
