@@ -5,7 +5,7 @@ date: 2026-08-08
 tags: [learning, writing]
 ---
 
-Andy Matuschak introduces [Evergreen notes](https://notes.andymatuschak.org/z5E5QawiXCMbtNtupvxeoEX) as a specific format of [knowledge work](knowledge-work.md) (and also as fundamental unit of such work).
+[Andy Matuschak](andy-matuschak.md) introduces [Evergreen notes](https://notes.andymatuschak.org/z5E5QawiXCMbtNtupvxeoEX) as a specific format of [knowledge work](knowledge-work.md) (and also as fundamental unit of such work).
 
 * [Evergreen notes should be atomic](evergreen-notes-should-be-atomic.md)
 * [Evergreen notes should be concept-oriented](evergreen-notes-should-be-concept-oriented.md)

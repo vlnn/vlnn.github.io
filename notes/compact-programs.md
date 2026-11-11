@@ -5,7 +5,7 @@ tags: [programming]
 brain-id: e94f60e0-4df8-45b5-90ca-4d7a1ced7e92
 ---
 
-The need to write the Compact programs is twofold: this is either technical  (e.g. for restricted hardware  or for slow networks if programs are being transmitted) or cognitive (e.g. APL was created as concise way to write math — also think math as Kenneth Iverson mentioned in  [Notation as a Tool of Thought](notation-as-a-tool-of-thought.md)). Sometimes programmer's [cognitive load](cognitive-load.md) increases due to too laconic representation of the solution, but usually vice versa: it's much easier to lose the idea in long unstructured source code that in cryptic but well-structured program.
+The need to write the Compact programs is twofold: this is either technical  (e.g. for restricted hardware  or for slow networks if programs are being transmitted) or cognitive (e.g. APL was created as concise way to write math — also think math as [Kenneth Iverson](ken-iverson.md) mentioned in  [Notation as a Tool of Thought](notation-as-a-tool-of-thought.md)). Sometimes programmer's [cognitive load](cognitive-load.md) increases due to too laconic representation of the solution, but usually vice versa: it's much easier to lose the idea in long unstructured source code that in cryptic but well-structured program.
 
 
 * [Data outlives code](data-outlives-code.md), so [prefer tables to logic](prefer-tables-to-logic.md).

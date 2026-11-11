@@ -4,7 +4,7 @@ date: 2026-11-02
 brain-id: a4414c24-0e9e-43a1-b16e-51cd22b2afa5
 ---
 
-This is the most [credible](https://www.ycombinator.com/blog/ycs-essential-startup-advice/) list of ycombinator advices I could find (network is full of self-help lists directed at wannabe founders):
+This is the most [credible](https://www.ycombinator.com/blog/ycs-essential-startup-advice/) list of [ycombinator](ycombinator.md) advices I could find (network is full of self-help lists directed at wannabe founders):
 
 * [Launch now](launch-now.md)
 * Build something people want

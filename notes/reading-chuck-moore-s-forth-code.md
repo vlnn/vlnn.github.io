@@ -6,7 +6,7 @@ brain-id: 198182fd-c134-4086-98ab-cdaba680dceb
 
 Related to the [Example of Chuck Moore's FORTH code](example-of-chuck-moore-s-forth-code.md):
 
-This is a 1993–95 MuP21 cross-assembler plus the "OK" video/menu program, written in a 16-bit DOS Forth (F-PC) co-authored by Chuck Moore , C.H. Ting and Jeff Fox. 
+This is a 1993–95 MuP21 cross-assembler plus the "OK" video/menu program, written in a 16-bit DOS Forth (F-PC) co-authored by [Chuck Moore](chuck-moore.md) , [C.H. Ting](c-h-ting.md) and [Jeff Fox](jeff-fox.md). 
 ### What the file actually is
 Three layers live in one file, and knowing which layer a word belongs to is half the battle:
 
@@ -37,4 +37,6 @@ The tick prefix means pointer  (`'menu`, `'color`, `'twos`), the tick suffix dis
 - [Example of Chuck Moore's FORTH code](example-of-chuck-moore-s-forth-code.md)
 - [Arthur Whitney](arthur-whitney.md)
 - [Whitney's Incunabulum](whitney-s-incunabulum.md)
+- [C.H. Ting](c-h-ting.md)
+- [Jeff Fox](jeff-fox.md)
 

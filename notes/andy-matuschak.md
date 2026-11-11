@@ -5,7 +5,7 @@ brain-id: ecc3bd46-e0d1-4ed9-b935-30c8ffe66e84
 date: 2026-08-08
 ---
 
-The author of [Andy Matuschak site](https://andymatuschak.org). The [notes.andymatuschak.org](https://notes.andymatuschak.org) inspired how this site works in 2026.
+The author of [Andy Matuschak site](https://andymatuschak.org). The [notes.andymatuschak.org](https://notes.andymatuschak.org) inspired [how this site works](how-i-write-these-notes.md) in 2026.
 
 ## Related
 
