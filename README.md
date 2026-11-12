@@ -33,7 +33,7 @@ Each pane's modeline carries a `×` that closes exactly that pane — last, midd
 
 ## Plex, timeline and RSS
 
-On desktop a TheBrain-style plex runs along the bottom, centred on the rightmost real note: parents above, children below, jumps to the left, siblings to the right. Clicking a chip opens that note as a new pane; notes already in the stack are highlighted blue. Rows hide whatever doesn't fit behind a `+N` chip that expands the row in place. Hidden on mobile.
+On desktop a TheBrain-style plex runs along the bottom, centred on the rightmost real note: "mentioned in" (parents) above, "mentions" (children) below, "related" (jumps) to the left, siblings to the right. Clicking a chip opens that note as a new pane; notes already in the stack are highlighted blue. Rows hide whatever doesn't fit behind a `+N` chip that expands the row in place. Hidden on mobile.
 
 The plex is inferred at build time by `tools/build_index.py` from where links sit in the markdown, so nothing extra comes from TheBrain:
 

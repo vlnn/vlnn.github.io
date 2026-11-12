@@ -539,6 +539,7 @@ function renderTestPane(slug, stack, paneIndex, openFromPane, closeFromPane, clo
 }
 
 const PLEX_LIMITS = { parents: 4, jumps: 8, siblings: 12, children: 16 };
+const PLEX_LABELS = { parents: "mentioned in", jumps: "related", siblings: "siblings", children: "mentions" };
 
 function plexChip(slug, stack, openFromPane) {
   const chip = el("a", "plex-chip", metaOf(slug).title || slug);
@@ -592,7 +593,7 @@ function plexRow(relation, slugs, stack, openFromPane) {
   const row = el("div", `plex-row plex-${relation}`);
   if (!slugs.length) return row;
   const { shown, hidden } = rowSplit(slugs, PLEX_LIMITS[relation]);
-  row.append(el("span", "plex-label", relation));
+  row.append(el("span", "plex-label", PLEX_LABELS[relation]));
   row.append(...shown.map((slug) => plexChip(slug, stack, openFromPane)));
   row.append(...hidden.map((slug) => overflowChip(slug, stack, openFromPane)));
   return row;
