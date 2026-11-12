@@ -110,18 +110,20 @@ console.log("markdown pipeline tests passed");
 
 const sampleIndex = {
   notes: {
-    old: { title: "Old", date: "2022-01-01" },
-    fresh: { title: "Fresh", date: "2024-06-01" },
-    undated: { title: "Undated", date: "" },
-    mid: { title: "Mid", date: "2023-03-03" },
-    stub: { title: "Stub", date: "2023-09-09", stub: true },
+    old: { title: "Old", date: "2022-01-01", words: 250 },
+    fresh: { title: "Fresh", date: "2024-06-01", words: 900 },
+    undated: { title: "Undated", date: "", words: 900 },
+    mid: { title: "Mid", date: "2023-03-03", words: 400 },
+    stub: { title: "Stub", date: "2023-09-09", stub: true, words: 900 },
+    glue: { title: "Glue", date: "2024-07-01", words: 249 },
+    unknown: { title: "Unknown", date: "2024-07-02" },
   },
 };
 
 assert.deepEqual(
   timelineEntries(sampleIndex).map((entry) => entry.slug),
   ["fresh", "mid", "old"],
-  "timelineEntries should sort dated notes newest first and exclude undated and stub ones"
+  "timelineEntries should list dated essays newest first, leaving out undated, stub and short glue notes"
 );
 assert.deepEqual(
   timelineEntries(sampleIndex)[0],
@@ -446,3 +448,15 @@ const splitCases = [
 ];
 for (const [items, limit, expected, message] of splitCases) assert.deepEqual(rowSplit(items, limit), expected, message);
 console.log("plex tests passed");
+
+import { isEssay } from "../app.js";
+
+const essayCases = [
+  [{ date: "2026-01-01", words: 250 }, true, "isEssay should accept a dated note at exactly the word threshold"],
+  [{ date: "2026-01-01", words: 249 }, false, "isEssay should reject a dated note just under the threshold"],
+  [{ date: "", words: 900 }, false, "isEssay should reject undated notes however long"],
+  [{ date: "2026-01-01" }, false, "isEssay should reject notes without a word count"],
+  [{ date: "2026-01-01", words: 900, stub: true }, false, "isEssay should reject stubs"],
+];
+for (const [note, expected, message] of essayCases) assert.equal(isEssay(note), expected, message);
+console.log("essay tests passed");

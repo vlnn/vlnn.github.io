@@ -11,6 +11,7 @@ MD_TEST_RE = re.compile(r"^```test\s*\n(.*?)^```", re.DOTALL | re.MULTILINE)
 SECTION_RE = re.compile(r"^#{1,2}\s+(.*?)\s*$")
 LIST_ITEM_RE = re.compile(r"^\s*(?:[*+-]|\d+\.)\s")
 STRUCTURAL = {"list", "related"}
+LINK_TEXT_RE = re.compile(r"!?\[([^]]*)\]\([^)]*\)")
 
 
 def split_words(raw):
@@ -107,6 +108,11 @@ def plex_of(graph):
     }
 
 
+def count_words(text):
+    visible = LINK_TEXT_RE.sub(r"\1", FRONTMATTER_RE.sub("", text))
+    return len(visible.split())
+
+
 def is_stub(text):
     body = FRONTMATTER_RE.sub("", text)
     body = MD_HEADING_RE.sub("", body, count=1)
@@ -168,6 +174,7 @@ def parse_note(path):
         "links": extract_md_note_links(text),
         "prompts": extract_md_prompts(text),
         "stub": is_stub(text),
+        "words": count_words(text),
     }
 
 

@@ -16,7 +16,7 @@ Open http://localhost:8000/?stackedNotes=about-these-notes
 
 ```sh
 make test             # pytest for the index builder (python only)
-make test-js          # stack/url/timeline/feed logic (needs node; CI always runs it)
+make test-js          # stack/url/plex/timeline/feed logic (needs node; CI always runs it)
 ```
 
 ## Writing notes
@@ -31,11 +31,19 @@ Clicking such a link opens the target as a new pane; the trail is encoded compac
 
 Each pane's modeline carries a `×` that closes exactly that pane — last, middle, or first — leaving the rest of the stack intact; the control is disabled on the only remaining pane. `q` closes the last pane from the keyboard (Emacs kill-buffer vibes).
 
-## Timeline and RSS
+## Plex, timeline and RSS
 
-On desktop a time arrow runs along the bottom: every dated note is a dot on a density-aware axis (60% linear time, 40% rank order — clusters decompress, empty years stay visibly empty, chronology stays monotone). Dots in the current stack are highlighted blue, hover shows date and title, click opens the note as a new pane. Same-day notes stack onto up to three lanes. Hidden on mobile.
+On desktop a TheBrain-style plex runs along the bottom, centred on the rightmost real note: parents above, children below, jumps to the left, siblings to the right. Clicking a chip opens that note as a new pane; notes already in the stack are highlighted blue. Rows hide whatever doesn't fit behind a `+N` chip that expands the row in place. Hidden on mobile.
 
-The timeline pane is a synthetic note (open `?stackedNotes=timeline` or the header link) rendered client-side from `index.json` — chronological, grouped by year, zero extra build artifacts. The RSS feed at `rss.xml` is generated in CI on every deploy.
+The plex is inferred at build time by `tools/build_index.py` from where links sit in the markdown, so nothing extra comes from TheBrain:
+
+- a one-way link in a list item or under `## Related` makes the linking note a parent of the target;
+- a link in running prose, or any pair of notes linking each other, is a jump;
+- siblings are the other children of a note's parents, most specific parent first (computed client-side).
+
+`index.json` carries `parents` (biggest hub first), `children`, `jumps` and `words` per note.
+
+The timeline pane (`?stack=timeline` or the header link) lists essays only — dated, non-stub notes of at least 250 words — grouped by year. The RSS/Atom feeds publish exactly the same set (`isEssay` in `app.js`), generated in CI on every deploy.
 
 ## Type scale
 

@@ -1,18 +1,25 @@
 import assert from "node:assert/strict";
-import { escapeXml, rfc822, rfc3339, countWords, feedItems, buildFeed, buildAtom } from "../tools/build_feed.mjs";
+import { escapeXml, rfc822, rfc3339, feedItems, buildFeed, buildAtom } from "../tools/build_feed.mjs";
 
 assert.equal(escapeXml('a<b>&"c"'), "a&lt;b&gt;&amp;&quot;c&quot;", "escapeXml should escape all xml-significant characters");
 assert.equal(rfc822("2024-05-20"), "Mon, 20 May 2024 00:00:00 GMT", "rfc822 should format note dates as RFC-822 pubDates at midnight UTC");
 
-// Test word counting function
-assert.equal(countWords(""), 0, "countWords should return 0 for empty string");
-assert.equal(countWords("<p>hello</p>"), 1, "countWords should count words in simple HTML");
-assert.equal(countWords("<p>hello world</p>"), 2, "countWords should count multiple words");
-assert.equal(countWords("<p>  hello   world  </p>"), 2, "countWords should handle extra whitespace");
-assert.equal(countWords("<p>hello<br/>world</p>"), 2, "countWords should handle HTML tags");
-assert.equal(countWords("<p>hello</p><p>world</p>"), 2, "countWords should count words across multiple tags");
-assert.equal(countWords("<p>hello <strong>world</strong></p>"), 2, "countWords should count around nested tags");
-
-// Test that the key functionality works - ensure we can properly test our filtering logic
-console.log("Word counting tests passed");
+const feedIndex = {
+  notes: {
+    essay: { title: "Essay", date: "2026-02-01", words: 300 },
+    older: { title: "Older", date: "2026-01-01", words: 1000 },
+    glue: { title: "Glue", date: "2026-03-01", words: 40 },
+    undated: { title: "Undated", date: "", words: 1000 },
+  },
+};
+assert.deepEqual(
+  feedItems("https://x.dev", feedIndex, { essay: "<p>e</p>", older: "<p>o</p>" }).map((item) => item.slug),
+  ["essay", "older"],
+  "feedItems should publish exactly the essays the timeline shows, newest first"
+);
+assert.equal(
+  feedItems("https://x.dev", feedIndex, { essay: '<img src="file:static/a.png">' })[0].html,
+  '<img src="https://x.dev/static/a.png">',
+  "feedItems should absolutize file: urls in the rendered html"
+);
 console.log("feed tests passed");

@@ -396,7 +396,7 @@ body { display: flex; flex-direction: column; }
 .toast {
   position: fixed;
   left: 22px;
-  bottom: 74px;
+  bottom: 116px;
   padding: 7px 13px;
   background: var(--ink);
   color: var(--pane);

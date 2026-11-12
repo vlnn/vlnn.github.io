@@ -52,13 +52,15 @@ export function trailOf(stack, narrow) {
   return narrow ? stack.slice(0, -1) : [];
 }
 
-function onTimeline(note) {
-  return Boolean(note.date) && !note.stub;
+const ESSAY_WORDS = 250;
+
+export function isEssay(note) {
+  return Boolean(note.date) && !note.stub && (note.words ?? 0) >= ESSAY_WORDS;
 }
 
 export function timelineEntries(index) {
   return Object.entries(index.notes)
-    .filter(([, note]) => onTimeline(note))
+    .filter(([, note]) => isEssay(note))
     .map(([slug, note]) => ({ slug, title: note.title, date: note.date, year: note.date.slice(0, 4) }))
     .sort((a, b) => b.date.localeCompare(a.date));
 }

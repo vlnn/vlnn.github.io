@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { mdToHtml } from "../vendor/org.js";
+import { isEssay } from "../app.js";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -29,16 +30,9 @@ export function absolutizeFileUrls(site, html) {
   return html?.replaceAll('"file:', `"${site}/`);
 }
 
-export function countWords(html) {
-  if (!html) return 0;
-  // Extract text from HTML and count words
-  const text = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-  return text.split(' ').filter(Boolean).length;
-}
-
 export function feedItems(site, index, rendered) {
   return Object.entries(index.notes)
-    .filter(([, note]) => note.date)
+    .filter(([, note]) => isEssay(note))
     .sort(([, a], [, b]) => b.date.localeCompare(a.date))
     .map(([slug, note]) => ({
       slug,
@@ -46,8 +40,7 @@ export function feedItems(site, index, rendered) {
       date: note.date,
       link: `${site}/?stack=${slug}`,
       html: absolutizeFileUrls(site, rendered[slug]),
-    }))
-    .filter(item => countWords(item.html) >= 250);
+    }));
 }
 
 function itemXml(item) {

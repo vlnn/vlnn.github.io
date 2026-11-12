@@ -5,6 +5,7 @@ import pytest
 from build_index import (
     is_stub,
     build_index,
+    count_words,
     extract_md_note_links,
     extract_md_prompts,
     invert_links,
@@ -96,6 +97,7 @@ def test_build_index_end_to_end(tmp_path):
         "parents": [],
         "children": [],
         "jumps": ["b"],
+        "words": 3,
     }, "build_index should produce complete metadata per note"
     assert index["notes"]["b"]["backlinks"] == ["a"], (
         "build_index should record incoming backlinks"
@@ -321,3 +323,21 @@ def test_build_index_infers_plex(tmp_path):
     assert notes["hub"]["children"] == ["leaf"], "build_index should record listed notes as children"
     assert notes["leaf"]["jumps"] == ["other"], "build_index should record prose links as jumps"
     assert notes["other"]["jumps"] == ["leaf"], "build_index should record jumps on both ends"
+
+
+@pytest.mark.parametrize(
+    "text, expected",
+    [
+        ("", 0),
+        ("one two three", 3),
+        ("---\ntitle: Many words in the title\ndate: 2026-01-01\n---\n\nbody only", 2),
+        ("see [the other note](other-note.md) now", 5),
+        ("![a picture](static/pic.png) caption", 3),
+        ("[](empty.md) alone", 1),
+        ("spread\n\nover   lines\n- and lists", 6),
+    ],
+)
+def test_count_words(text, expected):
+    assert count_words(text) == expected, (
+        "count_words should count visible words: no frontmatter, link text kept, link targets dropped"
+    )
