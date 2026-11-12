@@ -8,6 +8,9 @@ FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
 MD_HEADING_RE = re.compile(r"^#\s+(.*)$", re.MULTILINE)
 MD_LINK_RE = re.compile(r"(?<!!)\[[^]]*\]\(([^)/:]+)\.md\)")
 MD_TEST_RE = re.compile(r"^```test\s*\n(.*?)^```", re.DOTALL | re.MULTILINE)
+SECTION_RE = re.compile(r"^#{1,2}\s+(.*?)\s*$")
+LIST_ITEM_RE = re.compile(r"^\s*(?:[*+-]|\d+\.)\s")
+STRUCTURAL = {"list", "related"}
 
 
 def split_words(raw):
@@ -46,6 +49,62 @@ def unique(items):
 
 def extract_md_note_links(text):
     return unique(MD_LINK_RE.findall(text))
+
+
+def line_kind(line, in_related):
+    if in_related:
+        return "related"
+    return "list" if LIST_ITEM_RE.match(line) else "prose"
+
+
+def link_kinds(text):
+    kinds = {}
+    in_related = False
+    for line in FRONTMATTER_RE.sub("", text).splitlines():
+        section = SECTION_RE.match(line)
+        if section:
+            in_related = section.group(1) == "Related"
+        for target in MD_LINK_RE.findall(line):
+            kinds.setdefault(target, set()).add(line_kind(line, in_related))
+    return kinds
+
+
+def known_edges(graph):
+    return {
+        (source, target, frozenset(kinds))
+        for source, targets in graph.items()
+        for target, kinds in targets.items()
+        if target in graph and target != source
+    }
+
+
+def is_hierarchical(graph, source, target, kinds):
+    return bool(kinds & STRUCTURAL) and source not in graph[target]
+
+
+def by_hub_size(parents, children):
+    return sorted(parents, key=lambda parent: (-len(children[parent]), parent))
+
+
+def plex_of(graph):
+    parents = {slug: set() for slug in graph}
+    children = {slug: set() for slug in graph}
+    jumps = {slug: set() for slug in graph}
+    for source, target, kinds in known_edges(graph):
+        if is_hierarchical(graph, source, target, kinds):
+            children[source].add(target)
+            parents[target].add(source)
+        else:
+            jumps[source].add(target)
+            jumps[target].add(source)
+    return {
+        slug: {
+            "parents": by_hub_size(parents[slug], children),
+            "children": sorted(children[slug]),
+            "jumps": sorted(jumps[slug]),
+        }
+        for slug in graph
+    }
 
 
 def is_stub(text):
@@ -103,6 +162,7 @@ def note_files(notes_dir):
 def parse_note(path):
     text = path.read_text()
     return {
+        "kinds": link_kinds(text),
         **parse_md_metadata(text),
         "file": path.name,
         "links": extract_md_note_links(text),
@@ -116,9 +176,11 @@ def build_index(notes_dir):
     for note in notes.values():
         note["links"] = [slug for slug in note["links"] if slug in notes]
     backlinks = invert_links({slug: note["links"] for slug, note in notes.items()})
+    plex = plex_of({slug: note.pop("kinds") for slug, note in notes.items()})
     return {
         "notes": {
-            slug: {**note, "backlinks": backlinks[slug]} for slug, note in notes.items()
+            slug: {**note, "backlinks": backlinks[slug], **plex[slug]}
+            for slug, note in notes.items()
         }
     }
 

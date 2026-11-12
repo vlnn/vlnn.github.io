@@ -8,7 +8,9 @@ from build_index import (
     extract_md_note_links,
     extract_md_prompts,
     invert_links,
+    link_kinds,
     parse_md_metadata,
+    plex_of,
     parse_prompt_pairs,
     slug_of,
 )
@@ -91,6 +93,9 @@ def test_build_index_end_to_end(tmp_path):
         "prompts": [],
         "stub": False,
         "backlinks": [],
+        "parents": [],
+        "children": [],
+        "jumps": ["b"],
     }, "build_index should produce complete metadata per note"
     assert index["notes"]["b"]["backlinks"] == ["a"], (
         "build_index should record incoming backlinks"
@@ -217,3 +222,102 @@ def test_build_index_marks_stubs(tmp_path):
     index = build_index(tmp_path)
     assert index["notes"]["stub"]["stub"] is True, "build_index should mark frontmatter-only notes as stubs"
     assert index["notes"]["full"]["stub"] is False, "build_index should not mark notes with a body as stubs"
+
+
+@pytest.mark.parametrize(
+    "text, expected",
+    [
+        ("See [b](b.md) here.", {"b": {"prose"}}),
+        ("* [b](b.md)", {"b": {"list"}}),
+        ("- [b](b.md)", {"b": {"list"}}),
+        ("1. [b](b.md)", {"b": {"list"}}),
+        ("  + nested [b](b.md)", {"b": {"list"}}),
+        ("Body.\n\n## Related\n\n- [b](b.md)\n", {"b": {"related"}}),
+        ("Mentions [b](b.md).\n\n## Related\n\n- [b](b.md)\n", {"b": {"prose", "related"}}),
+        ("## Related\n\n- [b](b.md)\n\n## Later\n\n- [c](c.md)", {"b": {"related"}, "c": {"list"}}),
+        ("# Related\n\n- [b](b.md)", {"b": {"related"}}),
+        ("![pic](b.md)", {}),
+        ("---\ntitle: T\n---\n\nSee [b](b.md).", {"b": {"prose"}}),
+    ],
+)
+def test_link_kinds(text, expected):
+    assert link_kinds(text) == expected, (
+        "link_kinds should tag each target by where it appears: prose, list item, or the Related section"
+    )
+
+
+def plex(parents=(), children=(), jumps=()):
+    return {"parents": list(parents), "children": list(children), "jumps": list(jumps)}
+
+
+@pytest.mark.parametrize(
+    "graph, expected",
+    [
+        (
+            {"a": {"b": {"list"}}, "b": {}},
+            {"a": plex(children=["b"]), "b": plex(parents=["a"])},
+        ),
+        (
+            {"a": {"b": {"related"}}, "b": {}},
+            {"a": plex(children=["b"]), "b": plex(parents=["a"])},
+        ),
+        (
+            {"a": {"b": {"prose"}}, "b": {}},
+            {"a": plex(jumps=["b"]), "b": plex(jumps=["a"])},
+        ),
+        (
+            {"a": {"b": {"prose", "related"}}, "b": {}},
+            {"a": plex(children=["b"]), "b": plex(parents=["a"])},
+        ),
+        (
+            {"a": {"b": {"related"}}, "b": {"a": {"related"}}},
+            {"a": plex(jumps=["b"]), "b": plex(jumps=["a"])},
+        ),
+        (
+            {"a": {"b": {"list"}}, "b": {"a": {"prose"}}},
+            {"a": plex(jumps=["b"]), "b": plex(jumps=["a"])},
+        ),
+        (
+            {"a": {"a": {"list"}, "ghost": {"list"}}},
+            {"a": plex()},
+        ),
+    ],
+)
+def test_plex_of(graph, expected):
+    assert plex_of(graph) == expected, (
+        "plex_of should turn one-way list/Related links into parent->child and everything else into jumps"
+    )
+
+
+def test_plex_of_orders_parents_by_hub_size():
+    graph = {
+        "small": {"x": {"list"}},
+        "hub": {"x": {"list"}, "y": {"list"}, "z": {"list"}},
+        "mid": {"x": {"list"}, "y": {"list"}},
+        "x": {},
+        "y": {},
+        "z": {},
+    }
+    assert plex_of(graph)["x"]["parents"] == ["hub", "mid", "small"], (
+        "plex_of should list a note's parents biggest hub first so the likeliest real parent leads"
+    )
+
+
+def test_plex_of_breaks_hub_ties_by_slug():
+    graph = {"b": {"x": {"list"}}, "a": {"x": {"list"}}, "x": {}}
+    assert plex_of(graph)["x"]["parents"] == ["a", "b"], (
+        "plex_of should order equally sized parents alphabetically for stable output"
+    )
+
+
+def test_build_index_infers_plex(tmp_path):
+    (tmp_path / "hub.md").write_text("---\ntitle: Hub\n---\n\n* [Leaf](leaf.md)\n")
+    (tmp_path / "leaf.md").write_text("---\ntitle: Leaf\n---\n\nSee [other](other.md).\n")
+    (tmp_path / "other.md").write_text("---\ntitle: Other\n---\n")
+
+    notes = build_index(tmp_path)["notes"]
+
+    assert notes["leaf"]["parents"] == ["hub"], "build_index should record list-linking notes as parents"
+    assert notes["hub"]["children"] == ["leaf"], "build_index should record listed notes as children"
+    assert notes["leaf"]["jumps"] == ["other"], "build_index should record prose links as jumps"
+    assert notes["other"]["jumps"] == ["leaf"], "build_index should record jumps on both ends"
