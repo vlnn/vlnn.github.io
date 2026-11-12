@@ -539,7 +539,7 @@ function renderTestPane(slug, stack, paneIndex, openFromPane, closeFromPane, clo
 }
 
 const PLEX_LIMITS = { parents: 4, jumps: 8, siblings: 12, children: 16 };
-const PLEX_LABELS = { parents: "mentioned in", jumps: "related", siblings: "siblings", children: "mentions" };
+const PLEX_LABELS = { parents: "part of", jumps: "related", siblings: "siblings", children: "mentions" };
 
 function plexChip(slug, stack, openFromPane) {
   const chip = el("a", "plex-chip", metaOf(slug).title || slug);
