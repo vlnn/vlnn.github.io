@@ -63,166 +63,34 @@ export function timelineEntries(index) {
     .sort((a, b) => b.date.localeCompare(a.date));
 }
 
-const RANK_BLEND = 0.4;
-const BLEND_STEP = 0.05;
+const PLEX_RELATIONS = ["parents", "children", "jumps"];
 
-function dateSpan(entries) {
-  const times = entries.map((entry) => Date.parse(entry.date));
-  return { min: Math.min(...times), span: Math.max(...times) - Math.min(...times) };
+function knownRelations(index, slug, relation) {
+  return ((index.notes[slug] || {})[relation] || []).filter((other) => Object.hasOwn(index.notes, other));
 }
 
-function linearX(time, min, span) {
-  return span ? (time - min) / span : 0.5;
+export function plexFocus(stack, index) {
+  return [...stack].reverse().find((slug) => !isSynthetic(slug) && Object.hasOwn(index.notes, slug)) ?? null;
 }
 
-function fractionalRank(times, time) {
-  const upper = times.findIndex((t) => t > time);
-  if (upper < 0) return times.length - 1;
-  if (upper === 0) return 0;
-  return upper - 1 + (time - times[upper - 1]) / (times[upper] - times[upper - 1]);
+function mostSpecificFirst(index, parents) {
+  const breadth = (parent) => knownRelations(index, parent, "children").length;
+  return [...parents].sort((a, b) => breadth(a) - breadth(b));
 }
 
-function blendedX(times, min, span, blend) {
-  const steps = Math.max(times.length - 1, 1);
-  return (time, rank) =>
-    (1 - blend) * linearX(time, min, span) +
-    blend * (rank ?? fractionalRank(times, time)) / steps;
+function siblingsOf(index, slug, plex) {
+  const shown = new Set([slug, ...plex.parents, ...plex.children, ...plex.jumps]);
+  const candidates = mostSpecificFirst(index, plex.parents).flatMap((parent) => knownRelations(index, parent, "children"));
+  return [...new Set(candidates)].filter((other) => !shown.has(other));
 }
 
-function assignLane(lastAt, x, minGap) {
-  const free = lastAt.findIndex((last) => x - last >= minGap);
-  return free >= 0 ? free : lastAt.indexOf(Math.min(...lastAt));
+export function plexOf(index, slug) {
+  const plex = Object.fromEntries(PLEX_RELATIONS.map((relation) => [relation, knownRelations(index, slug, relation)]));
+  return { ...plex, siblings: siblingsOf(index, slug, plex) };
 }
 
-function layoutWithBlend(entries, minGap, blend) {
-  const ordered = [...entries].sort(
-    (a, b) => a.date.localeCompare(b.date) || (a.slug ?? a.id ?? "").localeCompare(b.slug ?? b.id ?? "")
-  );
-  if (ordered.length === 1) return [{ ...ordered[0], x: 0.5, lane: 0 }];
-  const { min, span } = dateSpan(ordered);
-  const scale = blendedX(ordered.map((entry) => Date.parse(entry.date)), min, span, blend);
-  const lastAt = [-Infinity, -Infinity, -Infinity];
-  return ordered.map((entry, rank) => {
-    const x = scale(Date.parse(entry.date), rank);
-    const lane = assignLane(lastAt, x, minGap);
-    lastAt[lane] = x;
-    return { ...entry, x, lane };
-  });
-}
-
-export function minLaneGap(layout) {
-  const lastAt = new Map();
-  let gap = Infinity;
-  [...layout]
-    .sort((a, b) => a.x - b.x)
-    .forEach(({ x, lane }) => {
-      if (lastAt.has(lane)) gap = Math.min(gap, x - lastAt.get(lane));
-      lastAt.set(lane, x);
-    });
-  return gap;
-}
-
-function blendCandidates() {
-  const candidates = [];
-  for (let blend = RANK_BLEND; blend < 1; blend += BLEND_STEP) candidates.push(Math.round(blend * 100) / 100);
-  return [...candidates, 1];
-}
-
-export function feasibleBlend(entries, minGap) {
-  return (
-    blendCandidates().find((blend) => minLaneGap(layoutWithBlend(entries, minGap, blend)) >= minGap) ?? 1
-  );
-}
-
-export function timeArrowLayout(entries, minGap, blend = feasibleBlend(entries, minGap)) {
-  return layoutWithBlend(entries, minGap, blend);
-}
-
-export function arcPairs(index, layout) {
-  const dotOf = new Map(layout.map((entry) => [entry.slug, entry]));
-  const seen = new Set();
-  const pairs = [];
-  layout.forEach(({ slug }) => {
-    ((index.notes[slug] || {}).links || []).forEach((target) => {
-      if (target === slug || !dotOf.has(target)) return;
-      const [from, to] = dotOf.get(slug).x <= dotOf.get(target).x ? [slug, target] : [target, slug];
-      const key = `${from}→${to}`;
-      if (seen.has(key)) return;
-      seen.add(key);
-      pairs.push({
-        from,
-        to,
-        fromX: dotOf.get(from).x,
-        toX: dotOf.get(to).x,
-        fromLane: dotOf.get(from).lane,
-        toLane: dotOf.get(to).lane,
-      });
-    });
-  });
-  return pairs;
-}
-
-const ARC_MIN = 6;
-const ARC_MAX = 44;
-
-export function arcHeight(span) {
-  return Math.min(ARC_MIN + span * 90, ARC_MAX);
-}
-
-const DOT_MIN = 9;
-const DOT_MAX = 17;
-
-export function dotScale(degree, maxDegree) {
-  if (!maxDegree) return DOT_MIN;
-  return DOT_MIN + (DOT_MAX - DOT_MIN) * Math.sqrt(degree / maxDegree);
-}
-
-export function fisheyeX(x, focus, distortion) {
-  if (!distortion || x === focus) return x;
-  const bound = x < focus ? 0 : 1;
-  const t = (x - focus) / (bound - focus);
-  const magnified = ((distortion + 1) * t) / (distortion * t + 1);
-  return focus + magnified * (bound - focus);
-}
-
-export function yearTicks(entries, blend = RANK_BLEND) {
-  const { min, span } = dateSpan(entries);
-  if (!span) return [];
-  const times = entries.map((entry) => Date.parse(entry.date)).sort((a, b) => a - b);
-  const scale = blendedX(times, min, span, blend);
-  const ticks = [];
-  const firstYear = new Date(min).getUTCFullYear() + 1;
-  for (let year = firstYear; ; year++) {
-    const time = Date.parse(`${year}-01-01`);
-    if (linearX(time, min, span) >= 1) break;
-    if (time > min) ticks.push({ year: String(year), x: scale(time) });
-  }
-  return ticks;
-}
-
-const MONTH_LABELS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
-
-export function monthTicks(entries, blend = RANK_BLEND) {
-  const { min, span } = dateSpan(entries);
-  if (!span) return [];
-  const times = entries.map((entry) => Date.parse(entry.date)).sort((a, b) => a - b);
-  const scale = blendedX(times, min, span, blend);
-  const ticks = [];
-  const start = new Date(min);
-  for (let months = start.getUTCFullYear() * 12 + start.getUTCMonth() + 1; ; months++) {
-    const time = Date.UTC(Math.floor(months / 12), months % 12, 1);
-    if (linearX(time, min, span) >= 1) break;
-    if (months % 12 !== 0 && time > min) ticks.push({ label: MONTH_LABELS[months % 12], x: scale(time) });
-  }
-  return ticks;
-}
-
-export function thinTicks(ticks, minGap) {
-  const kept = [];
-  ticks.forEach((tick) => {
-    if (kept.every((other) => Math.abs(other.x - tick.x) >= minGap - 1e-9)) kept.push(tick);
-  });
-  return kept;
+export function rowSplit(items, limit) {
+  return { shown: items.slice(0, limit), hidden: items.slice(limit) };
 }
 
 export function slugsForTag(index, tag) {
@@ -668,149 +536,78 @@ function renderTestPane(slug, stack, paneIndex, openFromPane, closeFromPane, clo
   return pane;
 }
 
-function degreeOf(slug) {
-  const note = index.notes[slug] || {};
-  return (note.links || []).length + (note.backlinks || []).length;
-}
+const PLEX_LIMITS = { parents: 4, jumps: 8, siblings: 12, children: 16 };
 
-function timeArrowDot(entry, stack, openFromPane, maxDegree) {
-  const dot = el("button", "arrow-dot", "");
-  dot.style.left = trackPosition(entry.x);
-  const size = dotScale(degreeOf(entry.slug), maxDegree);
-  dot.style.width = `${size}px`;
-  dot.style.height = `${size}px`;
-  dot.dataset.slug = entry.slug;
-  dot.dataset.lane = entry.lane;
-  dot.dataset.label = `${entry.date} · ${entry.title}`;
-  dot.setAttribute("aria-label", `${entry.title} (${entry.date})`);
-  if (stack.includes(entry.slug)) dot.classList.add("in-stack");
-  dot.addEventListener("click", () => openFromPane(stack.length - 1, entry.slug));
-  return dot;
-}
-
-const TRACK_PAD_LEFT = 6;
-const TRACK_PAD_RIGHT = 26;
-
-export function trackPosition(x) {
-  return `calc(${TRACK_PAD_LEFT}px + ${x} * (100% - ${TRACK_PAD_LEFT + TRACK_PAD_RIGHT}px))`;
-}
-
-const ARC_VIEW_WIDTH = 1000;
-const DOT_BASELINE = 72.5;
-const LANE_STEP = 11;
-
-export function arcEndY(lane) {
-  return DOT_BASELINE - LANE_STEP * (lane || 0);
-}
-
-function arcPath(pair) {
-  const x1 = pair.fromX * ARC_VIEW_WIDTH;
-  const x2 = pair.toX * ARC_VIEW_WIDTH;
-  const y1 = arcEndY(pair.fromLane);
-  const y2 = arcEndY(pair.toLane);
-  const peak = Math.min(y1, y2) - 2 * arcHeight(pair.toX - pair.fromX);
-  return `M ${x1} ${y1} Q ${(x1 + x2) / 2} ${peak} ${x2} ${y2}`;
-}
-
-function renderArcs(bar, layout) {
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("class", "arrow-arcs");
-  svg.setAttribute("viewBox", `0 0 ${ARC_VIEW_WIDTH} 96`);
-  svg.setAttribute("preserveAspectRatio", "none");
-  const arcs = arcPairs(index, layout).map((pair) => {
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path.setAttribute("d", arcPath(pair));
-    path.setAttribute("vector-effect", "non-scaling-stroke");
-    path.dataset.from = pair.from;
-    path.dataset.to = pair.to;
-    svg.append(path);
-    return { path, pair };
+function plexChip(slug, stack, openFromPane) {
+  const chip = el("a", "plex-chip", metaOf(slug).title || slug);
+  chip.href = stackUrl(appendPane(stack, slug));
+  chip.title = chip.textContent;
+  if (stack.includes(slug)) chip.classList.add("in-stack");
+  chip.addEventListener("click", (event) => {
+    event.preventDefault();
+    openFromPane(stack.length - 1, slug);
   });
-  bar.append(svg);
-  return { svg, arcs };
+  return chip;
 }
 
-function highlightArcs(svg, slug) {
-  svg.querySelectorAll("path").forEach((path) => {
-    const touches = slug && (path.dataset.from === slug || path.dataset.to === slug);
-    path.classList.toggle("lit", Boolean(touches));
-    path.classList.toggle("dim", Boolean(slug) && !touches);
+function overflowChip(slug, stack, openFromPane) {
+  const chip = plexChip(slug, stack, openFromPane);
+  chip.classList.add("overflow");
+  return chip;
+}
+
+function overflowing(row) {
+  const first = row.firstElementChild.getBoundingClientRect();
+  const last = row.lastElementChild.getBoundingClientRect();
+  return last.right - first.left > row.clientWidth;
+}
+
+function shownChips(row) {
+  return [...row.querySelectorAll(".plex-chip:not(.overflow)")];
+}
+
+function moreButton(row) {
+  const button = el("button", "plex-more", "+99");
+  button.addEventListener("click", () => {
+    row.classList.add("expanded");
+    button.remove();
   });
+  return button;
 }
 
-const ARROW_MIN_GAP = 0.018;
-const LENS_DISTORTION = 3;
-const TICK_MIN_GAP = 0.02;
-
-export function trackFraction(width, offset) {
-  const along = (offset - TRACK_PAD_LEFT) / (width - TRACK_PAD_LEFT - TRACK_PAD_RIGHT);
-  return Math.min(Math.max(along, 0), 1);
+function fitRow(row) {
+  if (!row.children.length) return;
+  const button = moreButton(row);
+  row.append(button);
+  while (overflowing(row) && shownChips(row).length > 1) shownChips(row).at(-1).classList.add("overflow");
+  const hidden = row.querySelectorAll(".overflow").length;
+  if (!hidden) return button.remove();
+  button.textContent = `+${hidden}`;
+  button.setAttribute("aria-label", `show ${hidden} more`);
 }
 
-function lensX(x, focus) {
-  return focus == null ? x : fisheyeX(x, focus, LENS_DISTORTION);
+function plexRow(relation, slugs, stack, openFromPane) {
+  const row = el("div", `plex-row plex-${relation}`);
+  if (!slugs.length) return row;
+  const { shown, hidden } = rowSplit(slugs, PLEX_LIMITS[relation]);
+  row.append(el("span", "plex-label", relation));
+  row.append(...shown.map((slug) => plexChip(slug, stack, openFromPane)));
+  row.append(...hidden.map((slug) => overflowChip(slug, stack, openFromPane)));
+  return row;
 }
 
-function refocusArrow(dots, ticks, arcs, focus) {
-  dots.forEach(({ dot, x }) => (dot.style.left = trackPosition(lensX(x, focus))));
-  ticks.forEach(({ label, x }) => (label.style.left = trackPosition(lensX(x, focus))));
-  arcs.forEach(({ path, pair }) =>
-    path.setAttribute(
-      "d",
-      arcPath({ ...pair, fromX: lensX(pair.fromX, focus), toX: lensX(pair.toX, focus) })
-    )
-  );
-}
-
-function wireLens(bar, dots, ticks, arcs) {
-  let frame = null;
-  const schedule = (focus) => {
-    if (frame) cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(() => refocusArrow(dots, ticks, arcs, focus));
-  };
-  bar.addEventListener("mousemove", (event) => {
-    const rect = bar.getBoundingClientRect();
-    schedule(trackFraction(rect.width, event.clientX - rect.left));
-  });
-  bar.addEventListener("mouseleave", () => schedule(null));
-}
-
-function renderTimeArrow(stack, openFromPane) {
-  const bar = document.getElementById("timearrow");
+function renderPlex(stack, openFromPane) {
+  const bar = document.getElementById("plex");
   bar.replaceChildren();
-  if (narrowScreen.matches) return;
-  const entries = timelineEntries(index);
-  if (entries.length < 2) return;
-  const blend = feasibleBlend(entries, ARROW_MIN_GAP);
-  const layout = timeArrowLayout(entries, ARROW_MIN_GAP, blend);
-  const { svg, arcs } = renderArcs(bar, layout);
-  const marks = thinTicks(
-    [
-      ...yearTicks(entries, blend).map((tick) => ({ label: tick.year, x: tick.x, style: "arrow-year" })),
-      ...monthTicks(entries, blend).map((tick) => ({ ...tick, style: "arrow-month" })),
-    ],
-    TICK_MIN_GAP
+  const focus = plexFocus(stack, index);
+  if (narrowScreen.matches || !focus) return;
+  const plex = plexOf(index, focus);
+  const rows = ["parents", "jumps", "siblings", "children"].map((relation) =>
+    plexRow(relation, plex[relation], stack, openFromPane)
   );
-  const ticks = marks.map((mark) => {
-    const label = el("span", mark.style, mark.label);
-    label.style.left = trackPosition(mark.x);
-    bar.append(label);
-    return { label, x: mark.x };
-  });
-  const maxDegree = Math.max(...entries.map((entry) => degreeOf(entry.slug)));
-  const dots = layout.map((entry) => {
-    const dot = timeArrowDot(entry, stack, openFromPane, maxDegree);
-    bar.append(dot);
-    return { dot, x: entry.x };
-  });
-  wireLens(bar, dots, ticks, arcs);
-  bar.addEventListener("mouseover", (event) => {
-    const dot = event.target.closest(".arrow-dot");
-    if (dot) highlightArcs(svg, dot.dataset.slug);
-  });
-  bar.addEventListener("mouseout", (event) => {
-    if (event.target.closest(".arrow-dot")) highlightArcs(svg, null);
-  });
+  const [parents, jumps, siblings, children] = rows;
+  bar.append(parents, jumps, el("span", "plex-focus", metaOf(focus).title || focus), siblings, children);
+  rows.forEach(fitRow);
 }
 
 function renderErrorPane(slug, paneIndex) {
@@ -884,7 +681,7 @@ async function renderStack(stack, openFromPane, openTrail, closeFromPane, openTa
     )
   );
   reconcilePanes(container, panes);
-  renderTimeArrow(stack, openFromPane);
+  renderPlex(stack, openFromPane);
   document.title = `${metaOf(stack[stack.length - 1]).title} — @vlnn`;
   revealLastPane(panes);
 }
@@ -1031,6 +828,7 @@ function start() {
   const searchInput = wireSearch(openAtEnd);
   window.addEventListener("popstate", rerender);
   narrowScreen.addEventListener("change", rerender);
+  window.addEventListener("resize", debounce(() => renderPlex(parseStack(location.search), openFromPane), 150));
   window.addEventListener("keydown", (event) => {
     if (event.metaKey || event.ctrlKey || event.altKey) return;
     if (event.target.closest("input, textarea")) return;

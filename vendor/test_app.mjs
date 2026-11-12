@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { parseStack, stackUrl, stackAfter, slugFromHref, visiblePanes, trailOf, timelineEntries, timeArrowLayout, yearTicks, trailAsMd, paneKey } from "../app.js";
+import { parseStack, stackUrl, stackAfter, slugFromHref, visiblePanes, trailOf, timelineEntries, trailAsMd, paneKey } from "../app.js";
 
 assert.equal(paneKey("a", 0, true), paneKey("a", 0, true), "paneKey should be stable for an unchanged pane");
 assert.notEqual(paneKey("a", 0, true), paneKey("a", 1, true), "paneKey should change when the pane moves to another position");
@@ -130,56 +130,6 @@ assert.deepEqual(
 );
 console.log("timeline tests passed");
 
-const spread = [
-  { slug: "first", date: "2022-01-01" },
-  { slug: "middle", date: "2023-01-01" },
-  { slug: "last", date: "2024-01-01" },
-];
-const layout = timeArrowLayout(spread, 0.02);
-
-assert.equal(layout[0].x, 0, "timeArrowLayout should place the earliest note at 0");
-assert.equal(layout[2].x, 1, "timeArrowLayout should place the latest note at 1");
-assert.ok(Math.abs(layout[1].x - 0.5) < 0.01, "timeArrowLayout should place notes proportionally between the extremes");
-assert.deepEqual(layout.map((d) => d.lane), [0, 0, 0], "timeArrowLayout should keep well-separated notes on the base lane");
-
-assert.deepEqual(
-  timeArrowLayout([{ slug: "only", date: "2024-01-01" }], 0.02),
-  [{ slug: "only", date: "2024-01-01", x: 0.5, lane: 0 }],
-  "timeArrowLayout should center a single note"
-);
-
-const cluster = timeArrowLayout(
-  [
-    { slug: "a", date: "2022-10-11" },
-    { slug: "b", date: "2022-10-12" },
-    { slug: "c", date: "2022-10-13" },
-    { slug: "far", date: "2024-10-12" },
-  ],
-  0.02
-);
-assert.ok(cluster[2].x > 0.15, "timeArrowLayout should decompress date clusters via the rank blend");
-assert.ok(cluster.every((d, i) => i === 0 || d.x > cluster[i - 1].x), "timeArrowLayout should keep the blended scale strictly chronological");
-
-const crowded = timeArrowLayout(
-  [
-    { slug: "a", date: "2021-01-01" },
-    { slug: "b", date: "2022-01-01" },
-    { slug: "c", date: "2023-01-01" },
-    { slug: "d", date: "2024-01-01" },
-  ],
-  0.5
-);
-assert.deepEqual(crowded.map((d) => d.lane), [0, 1, 0, 1], "timeArrowLayout should alternate lanes when neighbors sit closer than the minimum gap");
-
-const ticks = yearTicks([
-  { date: "2022-07-01" },
-  { date: "2024-07-01" },
-]);
-assert.deepEqual(ticks.map((t) => t.year), ["2023", "2024"], "yearTicks should mark each January 1st inside the range");
-assert.ok(ticks.every((t) => t.x > 0 && t.x < 1), "yearTicks should position ticks strictly inside the axis");
-assert.deepEqual(yearTicks([{ date: "2024-03-01" }, { date: "2024-06-01" }]), [], "yearTicks should be empty when no year boundary is crossed");
-console.log("time arrow tests passed");
-
 const trailNotes = {
   "about-these-notes": { title: "About these notes", file: "about-these-notes.md" },
   "how-this-site-works": { title: "How this site works", file: "how-this-site-works.md" },
@@ -221,67 +171,6 @@ const tagCases = [
 ];
 for (const [run, expected, message] of tagCases) assert.deepEqual(run(), expected, message);
 console.log("tag link tests passed");
-
-import { dotScale } from "../app.js";
-
-const scaleCases = [
-  [() => dotScale(0, 10), 9, "dotScale should give the minimum radius for a disconnected note"],
-  [() => dotScale(10, 10), 17, "dotScale should give the maximum radius for the best-connected note"],
-  [() => dotScale(3, 0), 9, "dotScale should stay at minimum when the graph has no links at all"],
-];
-for (const [run, expected, message] of scaleCases) assert.deepEqual(run(), expected, message);
-assert.ok(
-  dotScale(2, 10) < dotScale(5, 10) && dotScale(5, 10) < dotScale(9, 10),
-  "dotScale should grow monotonically with degree"
-);
-assert.ok(
-  dotScale(5, 10) - dotScale(1, 10) > dotScale(9, 10) - dotScale(5, 10),
-  "dotScale should compress differences at the high end via the sqrt curve"
-);
-console.log("dot scale tests passed");
-
-import { arcPairs, arcHeight } from "../app.js";
-
-const arcIndex = {
-  notes: {
-    a: { date: "2022-01-01", links: ["b", "a", "ghost"], backlinks: [] },
-    b: { date: "2023-01-01", links: ["a"], backlinks: ["a"] },
-    c: { date: "2024-01-01", links: [], backlinks: [] },
-    undated: { date: "", links: ["a"], backlinks: [] },
-  },
-};
-const arcLayout = [
-  { slug: "a", x: 0, lane: 0 },
-  { slug: "b", x: 0.5, lane: 2 },
-  { slug: "c", x: 1, lane: 0 },
-];
-
-assert.deepEqual(
-  arcPairs(arcIndex, arcLayout),
-  [{ from: "a", to: "b", fromX: 0, toX: 0.5, fromLane: 0, toLane: 2 }],
-  "arcPairs should dedupe mutual links into one chronological arc, dropping self-links and slugs missing from the layout"
-);
-assert.deepEqual(arcPairs({ notes: {} }, []), [], "arcPairs should be empty for an empty graph");
-
-import { arcEndY } from "../app.js";
-assert.equal(arcEndY(0), 72.5, "arcEndY should sit on the base lane's dot center");
-assert.equal(arcEndY(1), 61.5, "arcEndY should climb one lane step per lane");
-assert.equal(arcEndY(2), 50.5, "arcEndY should reach the top lane's dot center");
-
-assert.ok(arcHeight(0.1) < arcHeight(0.5), "arcHeight should grow with the horizontal span");
-assert.equal(arcHeight(1), arcHeight(0.9), "arcHeight should cap so wide arcs stay inside the bar");
-assert.ok(arcHeight(0.01) > 0, "arcHeight should keep even the shortest arc visible");
-console.log("arc diagram tests passed");
-
-import { trackPosition } from "../app.js";
-
-const trackCases = [
-  [() => trackPosition(0), "calc(6px + 0 * (100% - 32px))", "trackPosition should start the track just inside the axis line"],
-  [() => trackPosition(1), "calc(6px + 1 * (100% - 32px))", "trackPosition should end the track before the arrowhead"],
-  [() => trackPosition(0.5), "calc(6px + 0.5 * (100% - 32px))", "trackPosition should map intermediate x linearly into the padded track"],
-];
-for (const [run, expected, message] of trackCases) assert.deepEqual(run(), expected, message);
-console.log("track position tests passed");
 
 const slugSafetyCases = [
   [() => parseStack("?stack=good,%3Cimg%20src%3Dx%3E"), ["good"], "parseStack should drop slugs containing characters outside letters digits dash underscore"],
@@ -449,106 +338,6 @@ assert.equal(siteTitleText(""), "vlnn.dev / notes", "siteTitleText should fall b
 assert.equal(siteTitleText(undefined), "vlnn.dev / notes", "siteTitleText should fall back when the index predates the commit field");
 console.log("site title tests passed");
 
-import { minLaneGap, feasibleBlend, fisheyeX, trackFraction } from "../app.js";
-
-assert.equal(
-  minLaneGap([{ x: 0, lane: 0 }, { x: 0.35, lane: 1 }, { x: 0.3, lane: 0 }]),
-  0.3,
-  "minLaneGap should report the smallest x-gap between neighbours sharing a lane"
-);
-assert.equal(minLaneGap([{ x: 0.5, lane: 0 }]), Infinity, "minLaneGap should be infinite when no lane holds two dots");
-
-function burstNotes(count, startDay) {
-  return Array.from({ length: count }, (_, at) => ({
-    slug: `n${String(at).padStart(2, "0")}`,
-    date: `2026-08-${String(startDay + (at % 8)).padStart(2, "0")}`,
-  }));
-}
-const bursty = [{ slug: "old", date: "2022-01-01" }, { slug: "older", date: "2023-01-01" }, ...burstNotes(30, 1)];
-
-assert.equal(
-  feasibleBlend([{ slug: "a", date: "2022-01-01" }, { slug: "b", date: "2023-01-01" }, { slug: "c", date: "2024-01-01" }], 0.02),
-  0.4,
-  "feasibleBlend should keep the base blend when it already satisfies the gap"
-);
-assert.ok(feasibleBlend(bursty, 0.05) > 0.4, "feasibleBlend should raise the blend for a burst the base blend cannot decompress");
-assert.equal(feasibleBlend(burstNotes(8, 1), 0.5), 1, "feasibleBlend should cap at pure rank when no blend can satisfy the gap");
-
-const adaptive = timeArrowLayout(bursty, 0.05);
-assert.ok(minLaneGap(adaptive) >= 0.05, "timeArrowLayout should pick a blend that keeps every same-lane gap above the minimum when feasible");
-assert.ok(
-  adaptive.every((dot, at) => at === 0 || dot.x >= adaptive[at - 1].x),
-  "timeArrowLayout should stay chronological under an adaptive blend"
-);
-assert.deepEqual(
-  timeArrowLayout(bursty, 0.05).map((dot) => dot.x),
-  timeArrowLayout(bursty, 0.05, feasibleBlend(bursty, 0.05)).map((dot) => dot.x),
-  "timeArrowLayout should default to the feasible blend so callers can share it with yearTicks"
-);
-console.log("adaptive blend tests passed");
-
-assert.equal(fisheyeX(0.3, 0.3, 3), 0.3, "fisheyeX should keep the focus point fixed");
-assert.equal(fisheyeX(0, 0.3, 3), 0, "fisheyeX should pin the left edge of the axis");
-assert.equal(fisheyeX(1, 0.3, 3), 1, "fisheyeX should pin the right edge of the axis");
-assert.equal(fisheyeX(0.7, 0.3, 0), 0.7, "fisheyeX should be the identity at zero distortion");
-
-const nearGap = fisheyeX(0.32, 0.3, 3) - fisheyeX(0.3, 0.3, 3);
-assert.ok(nearGap > 0.02, "fisheyeX should magnify spacing next to the focus");
-
-const farGap = fisheyeX(0.95, 0.1, 3) - fisheyeX(0.9, 0.1, 3);
-assert.ok(farGap < 0.05, "fisheyeX should compress spacing far from the focus");
-
-const grid = Array.from({ length: 101 }, (_, at) => at / 100);
-assert.ok(
-  grid.every((x, at) => at === 0 || fisheyeX(x, 0.37, 3) > fisheyeX(grid[at - 1], 0.37, 3)),
-  "fisheyeX should stay strictly monotone so chronology never reorders under the lens"
-);
-
-assert.equal(trackFraction(1006, 6), 0, "trackFraction should map the left track edge to 0");
-assert.equal(trackFraction(1032, 1006), 1, "trackFraction should map the right track edge to 1");
-assert.equal(trackFraction(1032, 506), 0.5, "trackFraction should map the track midpoint to 0.5");
-assert.equal(trackFraction(1032, 0), 0, "trackFraction should clamp positions left of the track");
-assert.equal(trackFraction(1032, 2000), 1, "trackFraction should clamp positions right of the track");
-console.log("fisheye tests passed");
-
-import { monthTicks, thinTicks } from "../app.js";
-
-const spring = monthTicks([{ date: "2024-02-15" }, { date: "2024-05-10" }]);
-assert.deepEqual(
-  spring.map((tick) => tick.label),
-  ["mar", "apr", "may"],
-  "monthTicks should mark each first-of-month inside the range"
-);
-assert.ok(spring.every((tick) => tick.x > 0 && tick.x < 1), "monthTicks should position ticks strictly inside the axis");
-
-assert.deepEqual(
-  monthTicks([{ date: "2023-11-15" }, { date: "2024-02-10" }]).map((tick) => tick.label),
-  ["dec", "feb"],
-  "monthTicks should leave January to the year tick"
-);
-assert.deepEqual(monthTicks([{ date: "2024-03-01" }, { date: "2024-03-20" }]), [], "monthTicks should be empty when no month boundary is crossed");
-assert.deepEqual(monthTicks([{ date: "2024-03-05" }]), [], "monthTicks should be empty for a zero span");
-
-const crowdedTicks = thinTicks(
-  [
-    { label: "2026", x: 0.5 },
-    { label: "aug", x: 0.505 },
-    { label: "sep", x: 0.6 },
-  ],
-  0.02
-);
-assert.deepEqual(
-  crowdedTicks.map((tick) => tick.label),
-  ["2026", "sep"],
-  "thinTicks should drop a later tick crowding an earlier-priority one"
-);
-assert.deepEqual(
-  thinTicks([{ label: "a", x: 0.1 }, { label: "b", x: 0.12 }], 0.02).map((tick) => tick.label),
-  ["a", "b"],
-  "thinTicks should keep ticks separated by exactly the minimum gap"
-);
-console.log("month tick tests passed");
-
 import { revealScrollLeft } from "../app.js";
 
 {
@@ -594,3 +383,66 @@ import { isSameSite } from "../app.js";
   [() => isSameSite("mailto:me@vlnn.dev", "vlnn.dev"), false, "isSameSite should reject non-http schemes"],
 ].forEach(([actual, expected, message]) => assert.equal(actual(), expected, message));
 console.log("isSameSite tests passed");
+
+import { plexFocus, plexOf, rowSplit } from "../app.js";
+
+const plexIndex = {
+  notes: {
+    hub: { title: "Hub", parents: [], children: ["me", "sib", "other"], jumps: [] },
+    small: { title: "Small", parents: [], children: ["me", "close"], jumps: [] },
+    me: { title: "Me", parents: ["hub", "small"], children: ["kid"], jumps: ["pal", "other"] },
+    sib: { title: "Sib", parents: ["hub"], children: [], jumps: [] },
+    close: { title: "Close", parents: ["small"], children: [], jumps: [] },
+    other: { title: "Other", parents: ["hub"], children: [], jumps: ["me"] },
+    kid: { title: "Kid", parents: ["me"], children: [], jumps: [] },
+    pal: { title: "Pal", parents: [], children: [], jumps: ["me"] },
+    bare: { title: "Bare" },
+  },
+};
+
+const focusCases = [
+  [["hub", "me"], "me", "plexFocus should centre the plex on the rightmost note"],
+  [["me", "timeline"], "me", "plexFocus should skip synthetic panes to the last real note"],
+  [["me", "test:me"], "me", "plexFocus should skip per-note quiz panes too"],
+  [["tags"], null, "plexFocus should have no focus when only synthetic panes are open"],
+  [["ghost"], null, "plexFocus should ignore slugs missing from the index"],
+];
+for (const [stack, expected, message] of focusCases) assert.equal(plexFocus(stack, plexIndex), expected, message);
+
+const mePlex = plexOf(plexIndex, "me");
+assert.deepEqual(mePlex.parents, ["hub", "small"], "plexOf should keep the index's parent order");
+assert.deepEqual(mePlex.children, ["kid"], "plexOf should expose children");
+assert.deepEqual(mePlex.jumps, ["pal", "other"], "plexOf should expose jumps");
+assert.deepEqual(
+  mePlex.siblings,
+  ["close", "sib"],
+  "plexOf should list siblings from the most specific parent first, without self or notes already shown as jumps"
+);
+assert.deepEqual(
+  plexOf(plexIndex, "bare"),
+  { parents: [], children: [], jumps: [], siblings: [] },
+  "plexOf should treat notes without plex fields as unconnected"
+);
+assert.deepEqual(
+  plexOf({ notes: { a: { parents: ["p"], children: [], jumps: [] }, p: { children: ["a", "a"] } } }, "a").siblings,
+  [],
+  "plexOf should never list a note as its own sibling"
+);
+assert.deepEqual(
+  plexOf({ notes: { a: { parents: ["p", "q"] }, p: { children: ["a", "x"] }, q: { children: ["a", "x", "y"] }, x: {}, y: {} } }, "a").siblings,
+  ["x", "y"],
+  "plexOf should dedupe siblings shared by several parents"
+);
+assert.deepEqual(
+  plexOf({ notes: { a: { parents: ["ghost"] } } }, "a"),
+  { parents: [], children: [], jumps: [], siblings: [] },
+  "plexOf should drop relations to notes missing from the index"
+);
+
+const splitCases = [
+  [["a", "b", "c"], 5, { shown: ["a", "b", "c"], hidden: [] }, "rowSplit should show everything that fits"],
+  [["a", "b", "c", "d"], 2, { shown: ["a", "b"], hidden: ["c", "d"] }, "rowSplit should hide the overflow beyond the limit"],
+  [[], 3, { shown: [], hidden: [] }, "rowSplit should handle an empty row"],
+];
+for (const [items, limit, expected, message] of splitCases) assert.deepEqual(rowSplit(items, limit), expected, message);
+console.log("plex tests passed");
