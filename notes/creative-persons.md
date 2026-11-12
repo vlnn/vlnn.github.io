@@ -20,8 +20,8 @@ Musical creativity is not that different — composer keeps balance between free
 
 ## Related
 
-- [Open mode of operating](open-mode-of-operating.md)
 - [Creative people aren't much smarter than their competent peers](creative-persons-are-not-smarter-than-others.md)
 - [Alfred Hitchcock](alfred-hitchcock.md)
+- [Open mode of operating](open-mode-of-operating.md)
 - [Creativity Is only Possible in the Open Mode](creativity-is-only-possible-in-the-open-mode.md)
 

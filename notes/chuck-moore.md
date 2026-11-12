@@ -18,7 +18,7 @@ His main technique is:
 - [Reading Chuck Moore's FORTH code](reading-chuck-moore-s-forth-code.md)
 - [Forth Is Universal Language](forth-is-universal-language.md)
 - [Example of Chuck Moore's FORTH code](example-of-chuck-moore-s-forth-code.md)
+- [FORTH (Programming language)](forth-programming-language.md)
 - [Tree shaking](tree-shaking.md)
 - [Example of ColorForth code](example-of-colorforth-code.md)
-- [FORTH (Programming language)](forth-programming-language.md)
 

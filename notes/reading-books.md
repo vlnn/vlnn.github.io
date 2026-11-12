@@ -17,7 +17,7 @@ c) will be useful for someone else
 The year in the list is the year when I copied the book to my reader. I'm sure some of them will never be read from cover to cover, but it's not the reason not to add them to the list: this is wishful reading overall.
 ### 2026
 - [The Will of the Many](the-will-of-the-many.md) by [James Islington](james-islington.md)
-- [Семіозіс](semiozis.md)/ by Sue Burke
+- [Семіозіс](semiozis.md) by [Sue Burke](sue-burke.md)
 - [I, Claudius](i-claudius.md) by Rober Graves
 - [Hild](hild.md) by [Nicola Griffith](nicola-griffith.md)
 - [Erebus: The Story of a Ship](erebus-the-story-of-a-ship.md) by [Michael Palin](michael-palin.md)
@@ -30,6 +30,7 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 + [Soldier of the Mist](soldier-of-the-mist.md)  by [Gene Wolfe](gene-wolfe.md)  (October 2026)
 - [Dauntless \[Lost Fleet #1\]](brain://api.thebrain.com/GqWNUaKbOUuESIkjdGH-kw/_RhM05aq-E6LBo5vEdxMmA/DauntlessLostFleet1) by [Jack Campbell](jack-campbell.md)
 - [The Complete Rammer](the-complete-rammer.md) by [Larry Niven](larry-niven.md)
++ [Місто в колодязі](misto-v-kolodiazi.md) by [Льов Ян](lov-yan.md)
 
 ## Related
 
@@ -38,7 +39,6 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 - [Ґарґантюа і Пантаґрюель](gargantiua-i-pantagriuel.md)
 - [Nicola Griffith](nicola-griffith.md)
 - [Brian Aldiss](brian-aldiss.md)
-- [Soldier of the Mist](soldier-of-the-mist.md)
 - [James Islington](james-islington.md)
 - [The Will of the Many](the-will-of-the-many.md)
 - [I, Claudius](i-claudius.md)
@@ -56,6 +56,7 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 - [Mark Forster](mark-forster-bab8920c.md)
 - [Do It Tomorrow](do-it-tomorrow.md)
 - [Gene Wolfe](gene-wolfe.md)
+- [Soldier of the Mist](soldier-of-the-mist.md)
 - [Jack Campbell](jack-campbell.md)
 - [Dauntless [Lost Fleet #1]](dauntless-lost-fleet-1.md)
 - [My Koreader Setup](my-koreader-setup.md)
@@ -64,4 +65,5 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 - [Competency Porn](competency-porn.md)
 - [Scifi](scifi.md)
 - [Семіозіс](semiozis.md)
+- [Sue Burke](sue-burke.md)
 

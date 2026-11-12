@@ -11,7 +11,7 @@ In short, [behaviorism](behaviorism.md) uses [positivist methodology](positivist
 
 ## Related
 
-- [Operant Conditioning](operant-conditioning.md)
 - [Positivist Methodology](positivist-methodology.md)
+- [Operant Conditioning](operant-conditioning.md)
 - [Behavioral Evolution](behavioral-evolution-b0e26f96.md)
 
