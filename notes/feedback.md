@@ -14,6 +14,6 @@ Feedback is the return to the input of a part of the output of a machine, system
 
 - [Generative music](generative-music.md)
 - [Amplifier](amplifier.md)
-- [Adaptive music / Adaptive sound](adaptive-music-adaptive-sound.md)
 - [Generator](generator.md)
+- [Adaptive music / Adaptive sound](adaptive-music-adaptive-sound.md)
 

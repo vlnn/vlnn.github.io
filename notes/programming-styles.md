@@ -123,11 +123,11 @@ So this is how composition and naming may add some style to the code even when a
 
 - [Cognitive Load](cognitive-load.md)
 - [Functional Programming](functional-programming.md)
-- [Factoring technique](factoring-technique.md)
-- [my APL coding style](my-apl-coding-style.md)
 - [Writing code](writing-code.md)
 - [Reading code](reading-code.md)
 - [Syntactic Ceremony](syntactic-ceremony.md)
 - [Working Memory](working-memory.md)
+- [Factoring technique](factoring-technique.md)
+- [my APL coding style](my-apl-coding-style.md)
 - [Clay style](clay-style.md)
 
