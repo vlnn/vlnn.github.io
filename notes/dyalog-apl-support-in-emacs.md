@@ -1,7 +1,7 @@
 ---
 title: Dyalog APL support in Emacs
 date: 2026-09-16
-tags: [emacs, todo]
+tags: [apl, emacs, todo]
 brain-id: 5a94c054-29b3-43db-97fd-b337035ada64
 ---
 
