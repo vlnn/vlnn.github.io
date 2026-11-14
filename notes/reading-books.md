@@ -9,7 +9,7 @@ I read books either on one of my ereaders with [custom koreader setup](my-koread
 Having lots paper books is burdensome, but at least you can have a quick glance over it. Electronic books on the other hand tend to become a huge unruly heap of books that are easier to re-download than to find. Poor interfaces of existing eink-readers and primitive OPDS navigation add even more problems with quick opening of the book from the library. Thus, I've created [vlnn/kobol](https://github.com/vlnn/kobold)d[:](https://github.com/vlnn/kobold:) set of [Alfred](alfred-hitchcock.md)-based entrypoints to govern the ebooks.
 ## Reading notes
 
-I hope keeping the reading notes publicly will 
+I hope keeping the reading notes publicly will
 a) will fill the Persons tag with writers,
 b) will add some ideas to the boiling pool, while it still boils,
 c) will be useful for someone else
@@ -28,7 +28,7 @@ The year in the list is the year when I copied the book to my reader. I'm sure s
 - [Ґарґантюа і Пантаґрюель](gargantiua-i-pantagriuel.md) by [Франсуа Рабле](fransua-rable.md)
 - [Do It Tomorrow](do-it-tomorrow.md) by [Mark Forster](mark-forster-bab8920c.md)
 + [Soldier of the Mist](soldier-of-the-mist.md)  by [Gene Wolfe](gene-wolfe.md)  (October 2026)
-- [Dauntless \[Lost Fleet #1\]](brain://api.thebrain.com/GqWNUaKbOUuESIkjdGH-kw/_RhM05aq-E6LBo5vEdxMmA/DauntlessLostFleet1) by [Jack Campbell](jack-campbell.md)
+- [Dauntless [Lost Fleet #1]](brain://api.thebrain.com/GqWNUaKbOUuESIkjdGH-kw/\_RhM05aq-E6LBo5vEdxMmA/DauntlessLostFleet1) by [Jack Campbell](jack-campbell.md)
 - [The Complete Rammer](the-complete-rammer.md) by [Larry Niven](larry-niven.md)
 + [Місто в колодязі](misto-v-kolodiazi.md) by [Льов Ян](lov-yan.md)
 

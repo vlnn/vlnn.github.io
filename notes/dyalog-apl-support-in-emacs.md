@@ -6,7 +6,7 @@ brain-id: 5a94c054-29b3-43db-97fd-b337035ada64
 ---
 
 ## Why
-Starting programming in Dyalog APL pretty much everyone see two technical problems: 
+Starting programming in Dyalog APL pretty much everyone see two technical problems:
 1. APL glyph input and storage (problematic to the point of moving to bare ASCII in J and K);
 2. Sub-optimal Dyalog APL IDE with its quirks.
 

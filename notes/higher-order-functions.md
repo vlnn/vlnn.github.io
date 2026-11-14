@@ -4,7 +4,7 @@ date: 2026-11-07
 brain-id: 14c35a96-d5ff-4a24-8bf3-245732dc6664
 ---
 
-Functions that take other functions as parameters are called higher-order functions (or simply hof). 
+Functions that take other functions as parameters are called higher-order functions (or simply hof).
 
 ```
 (map #(* % %) [1 2 3 4 5]) 

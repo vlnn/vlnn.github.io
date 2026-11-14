@@ -5,8 +5,8 @@ brain-id: 3a436f1a-8bf5-4b5f-854a-0ce7a7ac3050
 ---
 
 ### Reusability in programming
-Composition in OOP is based on objects. Each object stores a fixed data shape, mutable state and a set of operations over them. Thus object are domain bound by definition, so it needs adapters or wrappers to even partially reuse object in different domain. 
-Clojure separates this machinery into three: 
+Composition in OOP is based on objects. Each object stores a fixed data shape, mutable state and a set of operations over them. Thus object are domain bound by definition, so it needs adapters or wrappers to even partially reuse object in different domain.
+Clojure separates this machinery into three:
 * Data is maps (or records),
 * Functions accept any map with the right keys, 
 * State lives outside of data, in few explicit references (atoms, refs).

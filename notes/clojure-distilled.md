@@ -11,7 +11,7 @@ brain-id: 555c8330-3806-4824-810d-2ef284722507
 Clojure has an extremely simple syntax, but is hard to learn. The reason is conceptual differences from other, more popular languages, which forms the baseline of most professional programmers. There are only two design decisions that explain most of those differences:
 1. [Clojure is a Lisp](clojure-is-a-lisp.md)
 2. Clojure is [immutable by default](immutability.md)
-## Because [Clojure is a Lisp](clojure-is-a-lisp.md) 
+## Because [Clojure is a Lisp](clojure-is-a-lisp.md)
 
 1. Syntax is very simple and the core [semantics](semantics.md) are built upon a small amount of [special forms](special-forms.md).
 2. Clojure provides a small set of [standard data types](literal-data-types.md) — numbers, strings, keywords, symbols, booleans, `nil` — and four [common collection types](collection.md): lists, vectors, maps and sets. Clojure code is itself written in these data structures, so the same functions you use to process data can process code (upping [Reusability](reusable-programs.md)). This is what makes [metaprogramming](metaprogramming.md) much easier than in other languages.

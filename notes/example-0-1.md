@@ -7,7 +7,7 @@ brain-id: 88e93d48-4400-4819-8a49-ef28297af02f
 
 Let **1** denote a set with one element. (It does not matter what this element is called.) Then **1** has the following property:
 
-for all sets **X**, there exists a unique map from **X** to **1**. 
+for all sets **X**, there exists a unique map from **X** to **1**.
 
 *(In this context, the words ‘map’, ‘mapping’ and ‘function’ all mean the same thing.)*
 

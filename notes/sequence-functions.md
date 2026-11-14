@@ -12,7 +12,7 @@ They fall into a few groups:
 * **Selectors**: `take`, `drop`, `take-while`, `drop-while`, `nth`, `some`, `first`, `rest`
 * **Consuming**: `reduce`, `into`, `count`, `apply`, `doseq`, `run!`
 
-Producers, transformers and selectors return [lazy sequences](lazy-sequences.md), whose elements are computed only when consumed; consumers are eager and realize whatever they are given. 
+Producers, transformers and selectors return [lazy sequences](lazy-sequences.md), whose elements are computed only when consumed; consumers are eager and realize whatever they are given.
 
 Sequence functions never modify their argument — they return a new sequence — and most take the collection as the **last** argument, which is why they compose naturally with `->>`.
 

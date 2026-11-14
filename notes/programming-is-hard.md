@@ -5,10 +5,10 @@ tags: [design, programming]
 brain-id: 070e6b56-4fb6-44c4-85ca-67ca441b551a
 ---
 
-Interestingly enough, [Fred Brooks](fred-brooks.md)' claim is broken in 4 parts, of which only 1 is about "hardness" 
+Interestingly enough, [Fred Brooks](fred-brooks.md)' claim is broken in 4 parts, of which only 1 is about "hardness"
 
 * [software is complex](software-is-complex.md)
-* [software should be conformed](software-should-be-conformed.md)  
+* [software should be conformed](software-should-be-conformed.md)<br>
 * [software is everchanging](software-is-everchanging.md)
 * [software is invisible](software-is-invisible.md)
 

@@ -33,15 +33,14 @@ Control, sensory feedback, intention, intimacy, continuous direction, expertise 
 
 * **automation** - (of a device or process) working by itself with little or no direct human control.
 
-A drive-thru is not a tool for cooking, it is automation for avoiding cooking. LLMs are not tools with which you write code - they are automation with which you avoid [writing code](writing-code.md), to which you abdicate [writing code](writing-code.md). 
+A drive-thru is not a tool for cooking, it is automation for avoiding cooking. LLMs are not tools with which you write code - they are automation with which you avoid [writing code](writing-code.md), to which you abdicate [writing code](writing-code.md).
 
 You don't direct the action of an LLM - you make requests and it acts on its own, without your energy or continuous direction. This request/automation cycle is not wielding, it's not control, it's not continuous, it's without feedback.
 
 What you are doing while using automation, instead of learning real-world truths, is attempting to divine the details du jour of some automaton. And striving to game them - e.g. ordering a custom burger (no onions) in order to get a freshly made one. Or filling **voodoo.md** with just the right incantations. You are only a software update from everything you've 'learned' being rendered obsolete by the latest algorithm. (A soggy cold burger from which the onions have been removed) You have traded working with the world to working for a capricious robot.
-It is a mistake to be haphazard about "tools" being equivalent to utility, e.g. saying - "the LLM didn't write my paper, I just used it as a tool to read and summarize some research papers". But you didn't *wield* it to read those papers (as you might a Kindle). It read the papers, not you. 
+It is a mistake to be haphazard about "tools" being equivalent to utility, e.g. saying - "the LLM didn't write my paper, I just used it as a tool to read and summarize some research papers". But you didn't *wield* it to read those papers (as you might a Kindle). It read the papers, not you.
 What do you miss by abdicating doing the reading? Pretty much everything. First and foremost, you miss learning how to write from those who can. You miss learning how to formulate an argument. You miss noticing things. You miss loading your background mind with fodder for novel ideas. You miss building trust in some authors and suspicion of others. You miss all the jokes. You miss all of the edges. You miss learning how to think.
 
 Tools don't get "misaligned", they don't "go rogue", they don't "escape containment", "conspire" etc.
 
 LLMs are not tools. I know many people use the phrase "just tools" simply to indicate "they are what you make of them". ***Except that's not true***. Automation has intrinsic properties and differences from tools that you ignore at your peril.
-<br>

@@ -7,11 +7,11 @@ tags: [book, design, psy, writing]
 
 [Richard Gabriel](richard-gabriel.md)'s 1991 essay ([part of "Lisp: Good News, Bad News, How to Win Big"](https://www.dreamsongs.com/RiseOfWorseIsBetter.html))
 
-## First layer: 
+## First layer:
 The software designed with simplicity of implementation as the highest priority — even at the cost of correctness, consistency, and completeness — tends to spread and survive better than software designed to be "the right thing.
 
 ## Second layer:
-Two design philosophies: 
+Two design philosophies:
 1. [MIT approach aka the Right Thing](right-thing-mit-approach.md), exemplified by LISP
 2. [New Jersey approach aka Worse is Better](worse-is-better-new-jersey-approach.md), exemplified by Unix and C 
 

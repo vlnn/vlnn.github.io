@@ -5,7 +5,7 @@ tags: [til]
 brain-id: 0c6ec715-8dea-4137-bb64-147ba6d5a81d
 ---
 
-I was very surprised when knew that one of the key roles in Fight Club movie was played by Meat Loaf: he played "Man with titties" Robert "Bob" Paulson. 
+I was very surprised when knew that one of the key roles in Fight Club movie was played by Meat Loaf: he played "Man with titties" Robert "Bob" Paulson.
 
 You perhaps remember the frame where he hugs The Narrator:
 ![](../static/brain/meat-loaf-had-a-role-in-fight-club/edd50dce-0ec2-4b2d-82d2-bcdc3096eff2.png)

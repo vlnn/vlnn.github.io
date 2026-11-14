@@ -5,7 +5,7 @@ tags: [electronics, history, til]
 brain-id: 48b23d05-f2ad-4f8a-b739-a8d00fb9f1b5
 ---
 
-Original: [A Story About \`Magic'](https://users.cs.utah.edu/~elb/folklore/magic.html)
+Original: [A Story About `Magic'](https://users.cs.utah.edu/~elb/folklore/magic.html)
 
 Some years ago, I was snooping around in the cabinets that housed the [MIT AI Lab](mit-ai-lab.md)'s PDP-10, and noticed a little switch glued to the frame of one cabinet. It was obviously a homebrew job, added by one of the lab's hardware hackers (no one knows who).
 
@@ -15,7 +15,7 @@ I called another hacker over to look at it. He had never seen the switch before 
 
 It was clear that this switch was someone's idea of a silly joke. Convinced by our reasoning that the switch was inoperative, we flipped it. The computer instantly crashed.
 
-Imagine our utter astonishment. We wrote it off as coincidence, but nevertheless restored the switch to the \`more magic' position before reviving the computer.
+Imagine our utter astonishment. We wrote it off as coincidence, but nevertheless restored the switch to the `more magic' position before reviving the computer.
 
 A year later, I told this story to yet another hacker, [David Moon](david-a-moon.md) as I recall. He clearly doubted my sanity, or suspected me of a supernatural belief in the power of this switch, or perhaps thought I was fooling him with a bogus saga. To prove it to him, I showed him the very switch, still glued to the cabinet frame with only one wire connected to it, still in the `more magic` position. We scrutinized the switch and its lone connection, and found that the other end of the wire, though connected to the computer wiring, was connected to a ground pin. That clearly made the switch doubly useless: not only was it electrically nonoperative, but it was connected to a place that couldn't affect anything anyway. So we flipped the switch.
 

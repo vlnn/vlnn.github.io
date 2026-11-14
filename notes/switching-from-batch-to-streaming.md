@@ -11,4 +11,4 @@ Streaming wins when the bottleneck is:
 * staleness, 
 * recomputation of unchanged history.
 
- If your bottleneck is raw per-record throughput on data you were going to process anyway, batch often still wins.
+	If your bottleneck is raw per-record throughput on data you were going to process anyway, batch often still wins.

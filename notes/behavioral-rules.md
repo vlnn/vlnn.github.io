@@ -19,9 +19,9 @@ In the context of the **Attitude Note (태도정리노트)** and **Behavioral Gu
 
 ### Those rules can be just rules of thumb for any area:
 #### **Math**
-*Trigger:* Identifying a complex matrix problem on a test sheet 
--> 
-*Action: “First action: Look for linear combinations immediately”* 
+*Trigger:* Identifying a complex matrix problem on a test sheet
+->
+*Action: “First action: Look for linear combinations immediately”*
 
 #### Law
 *Trigger:* You are asked if a worker has a "duty to pay damages" due to violating a non-compete clause

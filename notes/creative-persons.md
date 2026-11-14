@@ -6,7 +6,7 @@ brain-id: 241d519c-4bd4-4e72-8708-10a14548aee1
 
 * *[Creative people aren't much smarter than their competent peers](creative-persons-are-not-smarter-than-others.md)*
 
-They rather manipulate themselves into special state of mind where they able to play with the ideas without practical purpose, but rather for enjoyment to find a solution, and then go back to the focused closed mode to achieve the goal. \[[John Cleese](https://www.youtube.com/watch?v=nvKeu46jgwo)\]
+They rather manipulate themselves into special state of mind where they able to play with the ideas without practical purpose, but rather for enjoyment to find a solution, and then go back to the focused closed mode to achieve the goal. \[[John Cleese](https://www.youtube.com/watch?v=nvKeu46jgwo)]
 
 Switching between the modes of function:
 * [Open mode](open-mode-of-operating.md): relaxed, expansive, curious and playful mood

@@ -23,5 +23,3 @@ But positional destructuring requires a sequential value; on anything else it th
 Execution error (UnsupportedOperationException) at user/eval7009 (REPL:1).
 nth not supported on this type: PersistentArrayMap
 ```
- 
-<br>

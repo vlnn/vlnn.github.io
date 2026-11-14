@@ -6,7 +6,7 @@ tags: [math]
 ---
 
 Category is a system of objects, such as '[groups](groups.md)' or '[topological spaces](topological-spaces.md)' and [maps](morphism.md) between them.
-[Maps](morphism.md) between [groups](groups.md) called '[homomorphism](homomorphism.md)'; 
+[Maps](morphism.md) between [groups](groups.md) called '[homomorphism](homomorphism.md)';
 [maps](morphism.md) between [topological spaces](topological-spaces.md) called  '[continuous map](continuous-map.md)'.
 
 Categories are *themselves* mathematical objects. Maps between categories called [functors](functors.md).

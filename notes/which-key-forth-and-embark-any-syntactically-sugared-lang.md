@@ -9,11 +9,11 @@ At some point Emacs control scheme using key sequences to run exact command beca
 
 _{[![./img/which-key-minibuffer.png](../static/brain/which-key-forth-and-embark-any-syntactically-sugared-lang/cb476c07-6783-47dc-8cbf-2fc07c9fa063.png)](https://github.com/justbur/emacs-which-key/blob/master/img/which-key-minibuffer.png)}_
 
-So now they can e.g. press `DEL`  without internal fear that it is does something different than `backward-kill-sentence` . 
+So now they can e.g. press `DEL`  without internal fear that it is does something different than `backward-kill-sentence` .
 
-This approach works very well for me (and not only me —it was included into official Emacs package for a reason!), but some  [like a different approach more](https://www.matem.unam.mx/~omar/apropos-emacs.html#the-case-against-which-key-a-polemic). I'll call it `embark`  or `kakoune`  approach: you need to present a scope for a command (e.g. a previous sentence) and family of commands (e.g. deletion), and then computer will decide what existing command to run to achieve requested result. 
+This approach works very well for me (and not only me —it was included into official Emacs package for a reason!), but some  [like a different approach more](https://www.matem.unam.mx/~omar/apropos-emacs.html#the-case-against-which-key-a-polemic). I'll call it `embark`  or `kakoune`  approach: you need to present a scope for a command (e.g. a previous sentence) and family of commands (e.g. deletion), and then computer will decide what existing command to run to achieve requested result.
 
-It reminded me one of key distinction between old-school language like FORTH and modern stuff like Python or Ruby; `+` in FORTH means `add two last numbers on stack and put sum back on stack`. `+` in Python means whatever you make it support, e.g. `concatenate strings` or \`merge objects\`. 
+It reminded me one of key distinction between old-school language like FORTH and modern stuff like Python or Ruby; `+` in FORTH means `add two last numbers on stack and put sum back on stack`. `+` in Python means whatever you make it support, e.g. `concatenate strings` or \`merge objects\`.
 
 FORTH requests a strict name for each action, Python is chilling and let you make your general terms that mean too much or nothing at all:  `dwim` is one of examples. Thus `which-key` (and previous state of controlling Emacs with the keyboard) is isomorphic to FORTH; and `embark`  is our new reality of [Do What I Mean.](do-what-i-mean.md)
 

@@ -6,7 +6,7 @@ brain-id: 198182fd-c134-4086-98ab-cdaba680dceb
 
 Related to the [Example of Chuck Moore's FORTH code](example-of-chuck-moore-s-forth-code.md):
 
-This is a 1993–95 MuP21 cross-assembler plus the "OK" video/menu program, written in a 16-bit DOS Forth (F-PC) co-authored by [Chuck Moore](chuck-moore.md) , [C.H. Ting](c-h-ting.md) and [Jeff Fox](jeff-fox.md). 
+This is a 1993–95 MuP21 cross-assembler plus the "OK" video/menu program, written in a 16-bit DOS Forth (F-PC) co-authored by [Chuck Moore](chuck-moore.md) , [C.H. Ting](c-h-ting.md) and [Jeff Fox](jeff-fox.md).
 ### What the file actually is
 Three layers live in one file, and knowing which layer a word belongs to is half the battle:
 
@@ -15,7 +15,7 @@ Three layers live in one file, and knowing which layer a word belongs to is half
 3. **The target program** — everything after `': byte`, written by *executing* host words that compile target code (`':` defines a `CONSTANT` whose `DOES>` compiles a `call`; `:KEY`compiles the address as a literal for menu tables).
 
 ### [Programming Style](programming-styles.md)
-**Naming is deliberately local, not general.** 
+**Naming is deliberately local, not general.**
 Single-letter target words (`H`, `E`, `V`, `J`, `p`), symbolic ones (`;'`, `-;'`, `!!+`, `dup!!+`, `'OK'`), and a loose convention that lowercase is machine instruction (`dup`, `nop`, `a!`), uppercase is a composed word. Reminds me of [Arthur Whitney](arthur-whitney.md)'s [style](whitney-s-incunabulum.md).
 
 The tick prefix means pointer  (`'menu`, `'color`, `'twos`), the tick suffix distinguishes target from host (`;'`, `word'`). The `-` prefix, though, is overloaded four ways: negation (`-#`, `-p`), inverted condition (`-if`, `-until`), tail-jump (`-;'`), and "exclusive" (`-or`).
@@ -24,7 +24,7 @@ The tick prefix means pointer  (`'menu`, `'color`, `'twos`), the tick suffix dis
 
 **Shadowing of standard words is the sharpest edge.** `R@` is redefined as "fetch a 20-bit target cell", and `then` uses it that way alongside real `>R`/`R>`.
 
-`CR` is redefined globally as a debug breakpoint (`.s`, wait for a key, abort on Enter), which is why bare `CR` lines are sprinkled between definitions — they're step points, not formatting. 
+`CR` is redefined globally as a debug breakpoint (`.s`, wait for a key, abort on Enter), which is why bare `CR` lines are sprinkled between definitions — they're step points, not formatting.
 
 `VARIABLE H` (the dictionary pointer) is later shadowed by `': H` (horizontal video line); it only works because the assembler words were compiled first.
 

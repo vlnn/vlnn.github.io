@@ -6,7 +6,7 @@ brain-id: 9676d026-c5c0-443d-b06f-b21fdbdefe88
 
 Anonymous functions are  functions that aren't bound to a name (usually a one-off computations that you don't care to reference anywhere else):
 
-`(fn [arg] (println arg))` 
+`(fn [arg] (println arg))`
 
 The function is defined by using the `fn` form followed by the vector containing its arguments and the body. We could call the above function by setting it as a first item in a list and its argument as the second:
 

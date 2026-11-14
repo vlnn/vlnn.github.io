@@ -109,7 +109,7 @@ Reading right to left:
 * `+/` — *sum it all*: fold plus across the list.
 
 
-I would prefer blasphemous for APL'ers 
+I would prefer blasphemous for APL'ers
 ```
 first5←5∘↑
 remove_non_odd←⊢⌷⍨∘⊂∘⍸2|⊢
