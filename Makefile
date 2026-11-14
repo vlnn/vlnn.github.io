@@ -17,5 +17,6 @@ test-js: index.json
 
 bundle:
 	cd vendor && npm install && npx esbuild entry.mjs --bundle --format=esm --minify --alias:decode-named-character-reference=./node_modules/decode-named-character-reference/index.js --outfile=org.js
+	cd vendor && rm -rf mermaid && npx esbuild mermaid-entry.mjs --bundle --format=esm --minify --splitting --entry-names=index --chunk-names=[hash] --outdir=mermaid
 
 .PHONY: serve test test-js bundle

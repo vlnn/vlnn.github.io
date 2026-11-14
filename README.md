@@ -27,6 +27,10 @@ Add `notes/my-note.md` (YAML frontmatter with `title`, `date`, `tags`; falls bac
 See [the other note](other-note.md) and [that one](md-note.md).
 ```
 
+Footnotes are GFM (`[^1]` in the text, `[^1]: …` anywhere below) and collect at the end of the note; hovering a reference shows the footnote, clicking jumps to it inside the pane. Labels may contain spaces (`[^a longer label]`) as long as a definition with the same label exists.
+
+A fenced `mermaid` block renders as a diagram. Mermaid is self-hosted in `vendor/mermaid/` (code-split, rebuilt by `make bundle`) and fetched only by notes that contain a diagram; a block mermaid cannot parse stays visible as source.
+
 Clicking such a link opens the target as a new pane; the trail is encoded compactly in `?stack=slug,slug,...` so any view is shareable (the older `?stackedNotes=a&stackedNotes=b` form still parses, so old links and feed permalinks keep working).
 
 Each pane's modeline carries a `×` that closes exactly that pane — last, middle, or first — leaving the rest of the stack intact; the control is disabled on the only remaining pane. `q` closes the last pane from the keyboard (Emacs kill-buffer vibes).

@@ -108,6 +108,51 @@ assert.ok(mdToHtml("> [!note]\n> nb").includes("callout-note"), "mdToHtml should
 assert.ok(!mdToHtml("> plain quote").includes("callout"), "mdToHtml should leave plain blockquotes untouched");
 console.log("markdown pipeline tests passed");
 
+const footnoted = mdToHtml("claim[^1] and aside[^a spaced label]\n\n[^1]: first note\n\n[^a spaced label]: second note");
+assert.equal((footnoted.match(/data-footnote-ref/g) || []).length, 2, "mdToHtml should turn every footnote reference into a link, spaced labels included");
+assert.ok(footnoted.includes('<section data-footnotes class="footnotes">'), "mdToHtml should collect footnote definitions into a footnotes section");
+assert.ok(/<li id="[^"]+">\s*<p>second note/.test(footnoted), "mdToHtml should render the definition of a spaced footnote label as a footnote");
+assert.ok(!footnoted.includes("[^"), "mdToHtml should leave no raw footnote syntax behind");
+
+const footnoteCases = [
+  ["`[^a b]` matches neither", "[^a b]", "mdToHtml should keep regex-like brackets that have no footnote definition"],
+  ["no such note[^missing one]", "[^missing one]", "mdToHtml should keep an undefined spaced reference as plain text"],
+];
+for (const [markdown, kept, message] of footnoteCases) assert.ok(mdToHtml(markdown).includes(kept), message);
+
+const diagramHtml = mdToHtml("```mermaid\nsankey-beta\nSalary,Rent,1200\n```");
+assert.ok(diagramHtml.includes('<pre><code class="language-mermaid">sankey-beta\nSalary,Rent,1200\n</code></pre>'), "mdToHtml should hand mermaid fences to the app as untouched language-mermaid blocks");
+console.log("footnote and diagram markdown tests passed");
+
+import { fragmentOf, footnoteHint, diagramSvg } from "../app.js";
+
+const fragmentCases = [
+  ["#user-content-fn-1", "user-content-fn-1", "fragmentOf should read the target id of an in-note anchor"],
+  ["#caf%C3%A9", "café", "fragmentOf should decode percent-encoded ids"],
+  ["#", null, "fragmentOf should ignore an empty fragment"],
+  ["other.md", null, "fragmentOf should ignore note links"],
+  ["https://x.com/#top", null, "fragmentOf should ignore fragments of external urls"],
+];
+for (const [href, expected, message] of fragmentCases) assert.equal(fragmentOf(href), expected, message);
+
+const hintCases = [
+  ["\nnothing works first time ↩\n", "nothing works first time", "footnoteHint should drop the backreference arrow"],
+  ["two\n  lines ↩ ↩2", "two lines", "footnoteHint should collapse whitespace and drop repeated backreferences"],
+  ["plain", "plain", "footnoteHint should keep text without a backreference as is"],
+];
+for (const [text, expected, message] of hintCases) assert.equal(footnoteHint(text), expected, message);
+
+const drawn = [];
+const fakeMermaid = { render: async (id, source) => (drawn.push(id), { svg: `<svg id="${id}">${source}</svg>` }) };
+assert.equal(await diagramSvg(fakeMermaid, "graph TD"), `<svg id="${drawn[0]}">graph TD</svg>`, "diagramSvg should return the svg mermaid renders for the source");
+await diagramSvg(fakeMermaid, "graph LR");
+assert.notEqual(drawn[0], drawn[1], "diagramSvg should give every diagram its own element id");
+console.log("footnote and diagram app tests passed");
+
+const { default: mermaid } = await import("./mermaid/index.js");
+assert.equal(typeof mermaid.render, "function", "the committed mermaid bundle should expose render");
+console.log("mermaid bundle tests passed");
+
 const sampleIndex = {
   notes: {
     old: { title: "Old", date: "2022-01-01", words: 250 },

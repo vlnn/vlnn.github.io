@@ -326,13 +326,92 @@ export function isSameSite(href, host) {
   }
 }
 
+export function fragmentOf(href) {
+  return href.length > 1 && href.startsWith("#") ? decodeURIComponent(href.slice(1)) : null;
+}
+
+function verticalScroller(node) {
+  return narrowScreen.matches ? document.scrollingElement : node.closest(".pane-body");
+}
+
+function flash(node) {
+  node.classList.add("flash");
+  node.addEventListener("animationend", () => node.classList.remove("flash"), { once: true });
+}
+
+// scrolled explicitly for the same sticky-pane reason as revealPane
+function revealInPane(target) {
+  const scroller = verticalScroller(target);
+  const visibleTop = narrowScreen.matches ? 0 : scroller.getBoundingClientRect().top;
+  scroller.scrollBy({ top: target.getBoundingClientRect().top - visibleTop - scroller.clientHeight / 3 });
+  flash(target);
+}
+
+// ids repeat across panes showing footnotes, so the target is looked up inside the anchor's own note
+function fragmentTarget(content, fragment) {
+  return content.querySelector(`[id="${CSS.escape(fragment)}"]`);
+}
+
+function adoptFragmentLink(anchor, content, fragment) {
+  anchor.className = "fragment-link";
+  anchor.addEventListener("click", (event) => {
+    event.preventDefault();
+    const target = fragmentTarget(content, fragment);
+    if (target) revealInPane(target);
+  });
+}
+
+export function footnoteHint(text) {
+  return text.replace(/(\s*↩\d*)+\s*$/, "").replace(/\s+/g, " ").trim();
+}
+
+function hintFootnoteRefs(content) {
+  content.querySelectorAll("a[data-footnote-ref]").forEach((ref) => {
+    const footnote = fragmentTarget(content, fragmentOf(ref.getAttribute("href")));
+    if (footnote) ref.title = footnoteHint(footnote.textContent);
+  });
+}
+
+const MERMAID_BLOCKS = "pre > code.language-mermaid";
+const MERMAID_SETTINGS = { startOnLoad: false, theme: "neutral", suppressErrorRendering: true };
+
+let mermaidLoading = null;
+let diagramsDrawn = 0;
+
+function loadMermaid() {
+  mermaidLoading ??= import("./vendor/mermaid/index.js").then(({ default: mermaid }) => {
+    mermaid.initialize({ ...MERMAID_SETTINGS, fontFamily: getComputedStyle(document.body).fontFamily });
+    return mermaid;
+  });
+  return mermaidLoading;
+}
+
+export async function diagramSvg(mermaid, source) {
+  diagramsDrawn += 1;
+  const { svg } = await mermaid.render(`diagram-${diagramsDrawn}`, source);
+  return svg;
+}
+
+async function drawDiagram(code) {
+  const figure = el("figure", "diagram");
+  figure.innerHTML = await diagramSvg(await loadMermaid(), code.textContent);
+  code.parentElement.replaceWith(figure);
+}
+
+function drawDiagrams(content) {
+  content.querySelectorAll(MERMAID_BLOCKS).forEach((code) => drawDiagram(code).catch(console.warn));
+}
+
 function adoptContentLinks(content, openFromPane, paneIndex) {
   content.querySelectorAll("img[src^='file:']").forEach((img) => {
     img.src = img.getAttribute("src").replace(/^file:/, "");
   });
   content.querySelectorAll("a[href]").forEach((anchor) => {
     const slug = slugFromHref(anchor.getAttribute("href"));
-    if (slug) {
+    const fragment = fragmentOf(anchor.getAttribute("href"));
+    if (fragment) {
+      adoptFragmentLink(anchor, content, fragment);
+    } else if (slug) {
       anchor.className = noteLinkClass(index, slug);
       anchor.href = stackUrl([slug]);
       anchor.addEventListener("click", (event) => {
@@ -402,6 +481,8 @@ function renderPane(slug, paneIndex, noteText, openFromPane, closeFromPane, clos
   content.querySelectorAll(".block-test").forEach((block) => block.remove());
   content.querySelectorAll("code.language-test").forEach((code) => (code.closest("pre") || code).remove());
   adoptContentLinks(content, openFromPane, paneIndex);
+  hintFootnoteRefs(content);
+  drawDiagrams(content);
   body.append(content, renderTestLink(slug, openFromPane, paneIndex), renderBacklinks(slug, openFromPane, paneIndex));
 
   pane.append(spine, body, renderModeline(slug, paneIndex, closeFromPane, closable, openTag));

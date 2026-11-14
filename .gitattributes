@@ -1,1 +1,2 @@
 vendor/org.js -whitespace linguist-generated
+vendor/mermaid/** -whitespace linguist-generated
