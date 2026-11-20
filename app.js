@@ -1,4 +1,5 @@
 import { mdToHtml } from "./vendor/org.js";
+import { isChronology, mountChronology } from "./chronology.js";
 
 const ENTRY = "about-these-notes";
 const SPINE_STEP = 42;
@@ -483,6 +484,7 @@ function renderPane(slug, paneIndex, noteText, openFromPane, closeFromPane, clos
   adoptContentLinks(content, openFromPane, paneIndex);
   hintFootnoteRefs(content);
   drawDiagrams(content);
+  if (isChronology(index.notes[slug])) mountChronology(content, revealInPane);
   body.append(content, renderTestLink(slug, openFromPane, paneIndex), renderBacklinks(slug, openFromPane, paneIndex));
 
   pane.append(spine, body, renderModeline(slug, paneIndex, closeFromPane, closable, openTag));

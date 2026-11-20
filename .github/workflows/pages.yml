@@ -20,6 +20,7 @@ jobs:
       - run: uv run --project tools python tools/build_index.py notes index.json
       - run: node vendor/test_app.mjs
       - run: node vendor/test_feed.mjs
+      - run: node vendor/test_chronology.mjs
       - run: node tools/build_feed.mjs
       - uses: actions/upload-pages-artifact@v3
         with:

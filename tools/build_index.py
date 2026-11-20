@@ -37,6 +37,7 @@ def parse_md_metadata(text):
         "title": fields.get("title", heading.group(1).strip() if heading else ""),
         "date": fields.get("date", ""),
         "tags": split_words(fields.get("tags", "")),
+        "kind": fields.get("kind", ""),
     }
 
 

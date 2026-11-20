@@ -22,14 +22,18 @@ from build_index import (
     [
         (
             "---\ntitle: MD Note\ndate: 2026-07-29\ntags: [a, b]\n---\n\nBody",
-            {"title": "MD Note", "date": "2026-07-29", "tags": ["a", "b"]},
+            {"title": "MD Note", "date": "2026-07-29", "tags": ["a", "b"], "kind": ""},
         ),
         (
             "---\ntitle: Spaced Tags\ntags: x y\n---\n",
-            {"title": "Spaced Tags", "date": "", "tags": ["x", "y"]},
+            {"title": "Spaced Tags", "date": "", "tags": ["x", "y"], "kind": ""},
         ),
-        ("# Heading Title\n\nBody", {"title": "Heading Title", "date": "", "tags": []}),
-        ("just prose", {"title": "", "date": "", "tags": []}),
+        ("# Heading Title\n\nBody", {"title": "Heading Title", "date": "", "tags": [], "kind": ""}),
+        ("just prose", {"title": "", "date": "", "tags": [], "kind": ""}),
+        (
+            "---\ntitle: Space\nkind: chronology\n---\n\n- 1957 Sputnik",
+            {"title": "Space", "date": "", "tags": [], "kind": "chronology"},
+        ),
     ],
 )
 def test_parse_md_metadata(text, expected):
@@ -89,6 +93,7 @@ def test_build_index_end_to_end(tmp_path):
         "title": "Note A",
         "date": "2024-01-01",
         "tags": ["x", "y"],
+        "kind": "",
         "file": "a.md",
         "links": ["b"],
         "prompts": [],

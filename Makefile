@@ -13,6 +13,7 @@ test:
 test-js: index.json
 	node vendor/test_app.mjs
 	node vendor/test_feed.mjs
+	node vendor/test_chronology.mjs
 	node --test vendor/test_workout.mjs
 
 bundle:
