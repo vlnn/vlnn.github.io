@@ -636,6 +636,7 @@ a:focus-visible, .pane-spine:focus-visible {
 .chrono-tone-1 { --tone: var(--accent-warm); }
 .chrono-tone-2 { --tone: var(--green); }
 .chrono-tone-3 { --tone: var(--ink-soft); }
+.chrono-tone-4 { --tone: #8a4a6b; }
 
 .chrono-mark {
   position: absolute;

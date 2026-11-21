@@ -14,7 +14,7 @@ const FIT_MARGIN = 0.05;
 const FINEST_ZOOM = 3;
 
 export function isChronology(note) {
-  return note?.kind === KIND;
+  return note?.kind === KIND || Boolean(note?.tags?.includes(KIND));
 }
 
 // Date.UTC reads years 0–99 as 1900–1999, so the year is set separately
@@ -207,7 +207,7 @@ const BUTTON_ZOOM = 1.6;
 const KEY_PAN = 0.2;
 const WHEEL_ZOOM = 0.01;
 const LINE_HEIGHT = 16;
-const TONES = 4;
+const TONES = 5;
 const HINT = "drag to pan · ctrl+scroll or pinch to zoom · click an event to find it below";
 
 function el(tag, className, text) {

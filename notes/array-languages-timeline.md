@@ -1,12 +1,10 @@
 ---
 title: Array languages timeline
 date: 2026-11-20
-tags: [apl, history]
+tags: [apl, history, chronology]
 brain-id: b45204ef-ccd1-4477-8e75-7c413164b486
 ---
 
----
-## kind: chronology
 Seventy years of same idea: [notation as a tool of thought](notation-as-a-tool-of-thought.md).
 
 [Ken Iverson](ken-iverson.md) invented the notation it at Harvard while teaching under [Howard Aiken](howard-aiken.md), IBM turned it into programming language called APL, that became the ancestor to J, K, Q, BQN, Uiua .

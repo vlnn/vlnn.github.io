@@ -31,7 +31,7 @@ Footnotes are GFM (`[^1]` in the text, `[^1]: …` anywhere below) and collect a
 
 A fenced `mermaid` block renders as a diagram. Mermaid is self-hosted in `vendor/mermaid/` (code-split, rebuilt by `make bundle`) and fetched only by notes that contain a diagram; a block mermaid cannot parse stays visible as source.
 
-A note with `kind: chronology` in its frontmatter turns its dated list items into an interactive arrow of time drawn above the lists (see `notes/chronology-notes.md`). An item is dated when it starts with `YYYY`, `YYYY-MM` or `YYYY-MM-DD`; two dates joined by `..`, `–`, `/` or `-` are a range; a leading minus is BCE. Each heading gets its own colour. Drag pans, ctrl+scroll / pinch / `+` `-` zoom, `0` fits, and clicking a mark jumps to its list item. The logic lives in `chronology.js`, tested by `vendor/test_chronology.mjs`.
+A note with `kind: chronology` in its frontmatter, or with the `chronology` tag (which survives a TheBrain round trip), turns its dated list items into an interactive arrow of time drawn above the lists (see `notes/chronology-notes.md`). An item is dated when it starts with `YYYY`, `YYYY-MM` or `YYYY-MM-DD`; two dates joined by `..`, `–`, `/` or `-` are a range; a leading minus is BCE. Each heading gets its own colour. Drag pans, ctrl+scroll / pinch / `+` `-` zoom, `0` fits, and clicking a mark jumps to its list item. The logic lives in `chronology.js`, tested by `vendor/test_chronology.mjs`.
 
 Clicking such a link opens the target as a new pane; the trail is encoded compactly in `?stack=slug,slug,...` so any view is shareable (the older `?stackedNotes=a&stackedNotes=b` form still parses, so old links and feed permalinks keep working).
 

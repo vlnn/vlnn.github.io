@@ -93,6 +93,8 @@ console.log("chronology item tests passed");
 
 const kindCases = [
   [{ kind: "chronology" }, true, "isChronology should accept the chronology kind"],
+  [{ kind: "", tags: ["apl", "chronology"] }, true, "isChronology should accept the chronology tag, which survives tools that rewrite frontmatter"],
+  [{ kind: "", tags: ["apl"] }, false, "isChronology should reject notes tagged with something else"],
   [{ kind: "" }, false, "isChronology should reject ordinary notes"],
   [{}, false, "isChronology should reject notes indexed before kinds existed"],
   [undefined, false, "isChronology should reject unknown notes"],
