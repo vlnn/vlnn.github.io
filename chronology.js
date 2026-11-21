@@ -13,6 +13,12 @@ const DATED_ITEM = new RegExp(`^((${DATE})(?:${RANGE_MARK}(${DATE}))?)${LABEL_MA
 const FIT_MARGIN = 0.05;
 const FINEST_ZOOM = 3;
 
+const KIND_MARKER = new RegExp(`^kind:\\s*${KIND}$`, "i");
+
+export function isKindMarker(text) {
+  return KIND_MARKER.test(text.trim());
+}
+
 export function isChronology(note) {
   return note?.kind === KIND || Boolean(note?.tags?.includes(KIND));
 }
@@ -543,7 +549,15 @@ function buildFigure(events, headings, reveal) {
   return figure;
 }
 
+function dropKindMarker(content) {
+  const marker = [...content.children].slice(0, 2).find((node) => isKindMarker(node.textContent));
+  if (!marker) return;
+  if (marker.previousElementSibling?.tagName === "HR") marker.previousElementSibling.remove();
+  marker.remove();
+}
+
 export function mountChronology(content, reveal) {
+  dropKindMarker(content);
   const inDocumentOrder = datedEvents(content);
   if (!inDocumentOrder.length) return;
   const first = inDocumentOrder[0];

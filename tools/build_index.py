@@ -11,6 +11,7 @@ MD_TEST_RE = re.compile(r"^```test\s*\n(.*?)^```", re.DOTALL | re.MULTILINE)
 SECTION_RE = re.compile(r"^#{1,2}\s+(.*?)\s*$")
 LIST_ITEM_RE = re.compile(r"^\s*(?:[*+-]|\d+\.)\s")
 STRUCTURAL = {"list", "related"}
+BODY_KIND_RE = re.compile(r"\A(?:\s*---\s*\n)?\s*(?:#+\s*)?kind:\s*([\w-]+)\s*$", re.MULTILINE | re.IGNORECASE)
 LINK_TEXT_RE = re.compile(r"!?\[([^]]*)\]\([^)]*\)")
 
 
@@ -30,6 +31,12 @@ def frontmatter_fields(text):
     return fields
 
 
+# tools that own the frontmatter (TheBrain sync) drop unknown keys, so the body may carry the kind
+def body_kind(text):
+    marker = BODY_KIND_RE.match(FRONTMATTER_RE.sub("", text))
+    return marker.group(1).lower() if marker else ""
+
+
 def parse_md_metadata(text):
     fields = frontmatter_fields(text)
     heading = MD_HEADING_RE.search(text)
@@ -37,7 +44,7 @@ def parse_md_metadata(text):
         "title": fields.get("title", heading.group(1).strip() if heading else ""),
         "date": fields.get("date", ""),
         "tags": split_words(fields.get("tags", "")),
-        "kind": fields.get("kind", ""),
+        "kind": fields.get("kind") or body_kind(text),
     }
 
 

@@ -13,6 +13,7 @@ import {
   rangeLabel,
   isChronology,
   rowCount,
+  isKindMarker,
 } from "../chronology.js";
 
 const utc = (year, month = 1, day = 1) => Date.UTC(year, month - 1, day);
@@ -101,6 +102,14 @@ const kindCases = [
   [undefined, false, "isChronology should reject unknown notes"],
 ];
 for (const [note, expected, message] of kindCases) assert.equal(isChronology(note), expected, message);
+
+const markerCases = [
+  ["kind: chronology", true, "isKindMarker should recognise the body marker line"],
+  ["  Kind:  Chronology ", true, "isKindMarker should ignore case and spacing"],
+  ["kind: chronology of APL", false, "isKindMarker should reject longer text that merely starts like the marker"],
+  ["APL", false, "isKindMarker should reject ordinary headings"],
+];
+for (const [text, expected, message] of markerCases) assert.equal(isKindMarker(text), expected, message);
 
 const events = [span(1000, 2000), span(5000, 9000), span(3000, 3100)];
 

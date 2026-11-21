@@ -43,6 +43,31 @@ def test_parse_md_metadata(text, expected):
 
 
 @pytest.mark.parametrize(
+    "body, expected_kind",
+    [
+        ("\n---\n## kind: chronology\nSeventy years\n", "chronology"),
+        ("\nkind: chronology\n\nSeventy years\n", "chronology"),
+        ("\n# Kind: Chronology\n", "chronology"),
+        ("\nSeventy years\n\nkind: chronology\n", ""),
+        ("\nA kind: chronology note\n", ""),
+        ("\nJust prose\n", ""),
+    ],
+)
+def test_kind_from_body_marker(body, expected_kind):
+    text = f"---\ntitle: T\nbrain-id: 1\n---\n{body}"
+    assert parse_md_metadata(text)["kind"] == expected_kind, (
+        "parse_md_metadata should take the kind from a marker line opening the body when frontmatter has none"
+    )
+
+
+def test_frontmatter_kind_wins_over_body_marker():
+    text = "---\ntitle: T\nkind: essay\n---\n\nkind: chronology\n"
+    assert parse_md_metadata(text)["kind"] == "essay", (
+        "parse_md_metadata should prefer the frontmatter kind over a body marker"
+    )
+
+
+@pytest.mark.parametrize(
     "text, expected_links",
     [
         ("See [other](other-note.md).", ["other-note"]),
