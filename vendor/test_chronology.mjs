@@ -12,6 +12,7 @@ import {
   layoutRows,
   rangeLabel,
   isChronology,
+  rowCount,
 } from "../chronology.js";
 
 const utc = (year, month = 1, day = 1) => Date.UTC(year, month - 1, day);
@@ -203,4 +204,11 @@ const rowCases = [
   [[], 3, [], "layoutRows should lay out nothing for no events"],
 ];
 for (const [boxes, maxRows, expected, message] of rowCases) assert.deepEqual(layoutRows(boxes, maxRows, GAP), expected, message);
+const rowCountCases = [
+  [3, false, 3, "rowCount should not reserve more rows than there are events"],
+  [40, false, 6, "rowCount should cap the in-pane arrow at six rows"],
+  [40, true, 10, "rowCount should give the window-wide arrow ten rows"],
+  [8, true, 8, "rowCount should not pad a small chronology when wide"],
+];
+for (const [events, wide, expected, message] of rowCountCases) assert.equal(rowCount(events, wide), expected, message);
 console.log("chronology layout tests passed");

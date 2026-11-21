@@ -197,7 +197,8 @@ export function layoutRows(boxes, maxRows, gap) {
   return placed;
 }
 
-const MAX_ROWS = 6;
+const PANE_ROWS = 6;
+const WIDE_ROWS = 10;
 const POINT = 5;
 const GAP = 10;
 const MIN_ROOM = 18;
@@ -208,7 +209,11 @@ const KEY_PAN = 0.2;
 const WHEEL_ZOOM = 0.01;
 const LINE_HEIGHT = 16;
 const TONES = 5;
-const HINT = "drag to pan · ctrl+scroll or pinch to zoom · click an event to find it below";
+const HINT = "click to open wide · drag to pan · ctrl+scroll or pinch to zoom · click an event to find it in the list";
+
+export function rowCount(events, wide) {
+  return Math.min(wide ? WIDE_ROWS : PANE_ROWS, events);
+}
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
@@ -357,7 +362,7 @@ function wirePointers(stage, chart) {
       if (!dragged) return;
       dragged = false;
       event.preventDefault();
-      event.stopPropagation();
+      event.stopImmediatePropagation();
     },
     true
   );
@@ -377,7 +382,7 @@ function wireWheel(stage, chart) {
     { passive: false }
   );
   stage.addEventListener("dblclick", (event) => {
-    if (!event.target.closest(".chrono-mark")) chart.zoomAt(2, event.clientX);
+    if (stage.closest("dialog") && !event.target.closest(".chrono-mark")) chart.zoomAt(2, event.clientX);
   });
 }
 
@@ -405,6 +410,7 @@ function buildChart(events, headings, stage, readout) {
   let labelWidths = null;
   let slots = [];
   let laidOutFor = "";
+  let rows = rowCount(events.length, false);
 
   const measure = () => {
     marks.forEach((mark) => {
@@ -423,7 +429,7 @@ function buildChart(events, headings, stage, readout) {
       bar: Math.max(timeToX(view, width, event.to) - timeToX(view, width, event.from), POINT),
       label: labelWidths[position],
     }));
-    slots = layoutRows(boxes, Math.min(MAX_ROWS, events.length), GAP);
+    slots = layoutRows(boxes, rows, GAP);
   };
   const draw = () => {
     const width = stage.clientWidth;
@@ -448,14 +454,51 @@ function buildChart(events, headings, stage, readout) {
       draw();
     },
     fit: () => show(fitView(events)),
+    setWide: (wide) => {
+      rows = rowCount(events.length, wide);
+      stage.style.setProperty("--rows", rows);
+      laidOutFor = "";
+      draw();
+    },
     panBy: (pixels) => show(panView(view, (pixels / stage.clientWidth) * spanOf(view), limits)),
     zoomAt: (factor, clientX) => show(zoomView(view, factor, xToTime(view, stage.clientWidth, offsetOf(clientX)), limits)),
     zoomCentre: (factor) => show(zoomView(view, factor, (view.from + view.to) / 2, limits)),
   };
 
-  stage.style.setProperty("--rows", Math.min(MAX_ROWS, events.length));
+  stage.style.setProperty("--rows", rows);
   stage.append(ticks, el("div", "chrono-arrow"), ...marks);
   return { chart, marks };
+}
+
+// a dialog sits in the top layer, above the stacking context every pane creates
+function wideMode(figure, chart, toggle) {
+  const dialog = el("dialog", "chrono-dialog");
+  const placeholder = el("div", "chrono-placeholder");
+  const open = () => {
+    placeholder.style.height = `${figure.offsetHeight}px`;
+    figure.replaceWith(placeholder);
+    dialog.append(figure);
+    document.body.append(dialog);
+    dialog.showModal();
+    toggle.textContent = "close";
+    chart.setWide(true);
+  };
+  dialog.addEventListener("close", () => {
+    placeholder.replaceWith(figure);
+    dialog.remove();
+    toggle.textContent = "wide";
+    chart.setWide(false);
+  });
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog.addEventListener("keydown", (event) => event.stopPropagation());
+  return {
+    isOpen: () => dialog.open,
+    open,
+    close: () => dialog.open && dialog.close(),
+    toggle: () => (dialog.open ? dialog.close() : open()),
+  };
 }
 
 function buildFigure(events, headings, reveal) {
@@ -467,15 +510,21 @@ function buildFigure(events, headings, reveal) {
   stage.setAttribute("aria-label", `Arrow of time with ${events.length} events. ${HINT}`);
   const { chart, marks } = buildChart(events, headings, stage, readout);
 
+  const toggle = zoomButton("wide", "open or close the window-wide view", () => wide.toggle());
+  const wide = wideMode(figure, chart, toggle);
   marks.forEach((mark, position) => {
-    mark.addEventListener("click", () => reveal(events[position].item));
+    mark.addEventListener("click", () => {
+      wide.close();
+      reveal(events[position].item);
+    });
     linkHighlights(mark, events[position].item);
   });
   const zoom = el("span", "chrono-zoom");
   zoom.append(
     zoomButton("−", "zoom out", () => chart.zoomCentre(1 / BUTTON_ZOOM)),
     zoomButton("+", "zoom in", () => chart.zoomCentre(BUTTON_ZOOM)),
-    zoomButton("fit", "show everything", () => chart.fit())
+    zoomButton("fit", "show everything", () => chart.fit()),
+    toggle
   );
   const head = el("div", "chrono-head");
   head.append(readout, zoom);
@@ -486,6 +535,9 @@ function buildFigure(events, headings, reveal) {
   wirePointers(stage, chart);
   wireWheel(stage, chart);
   wireKeys(stage, chart);
+  stage.addEventListener("click", (event) => {
+    if (!wide.isOpen() && !event.target.closest(".chrono-mark")) wide.open();
+  });
   new ResizeObserver(chart.draw).observe(stage);
   document.fonts?.ready.then(chart.remeasure);
   return figure;

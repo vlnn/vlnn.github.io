@@ -9,7 +9,7 @@ A note with `kind: chronology` in its frontmatter, or tagged `chronology`, draws
 
 An item counts as dated when it starts with a `YYYY`, `YYYY-MM` or `YYYY-MM-DD` date. Two dates joined by `..`, `–`, `/` or `-` make a range. A date is as wide as it is precise: `1961` covers the whole year, `1961-04-12` a single day, so a mark grows from a point into a bar as you zoom in. Years are four digits, zero-padded, with a leading minus for BCE (`-0044-03-15`).
 
-Each heading starts its own colour. Drag to pan, ctrl+scroll or pinch to zoom, click a mark to find its line in the list.
+Each heading starts its own colour. Click the arrow to open it across the whole window (Esc or a click outside closes it). Drag to pan, ctrl+scroll or pinch to zoom, click a mark to find its line in the list.
 
 ## Crewed
 
